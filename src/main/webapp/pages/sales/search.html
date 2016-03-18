@@ -1,0 +1,89 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout"
+	xmlns:dt="http://github.com/dandelion/datatables" xmlns:ddl="http://www.thymeleaf.org/dandelion">
+<head><title>Sales Management</title>
+</head>
+<body th:replace="layout :: body(section_heading='Sales Order Management')">
+<div layout:fragment="header-buttons">
+		<a th:href="@{/admin/salesorder/updateQuantity}" class="btn btn-success pull-right" role="button" onClick="updateStart()">Update Product Quantity</a>
+	</div>
+	<section layout:fragment="content" class="content">
+	<!-- <form action="#" th:action="@{/admin/purchaseorder/search}" name="searchProductForm" th:object="${purchaseOrderTO}" method="post" id="searchProduct"> -->
+		<div class="row">
+		
+			<div class="col-md-12">
+				<!-- general form elements -->
+				<div class="box box-primary">
+					<div class="box-header">
+						<h3 class="box-title">Search Sales Order</h3>
+					</div>
+					<input type="hidden" th:value="*{updateStatus}" id="updateStatus"/>
+					<input type="hidden" th:value="*{updateDetails}" id="updateDetails"/>
+					<!-- /.box-header -->
+					<!-- form start -->
+					<!-- <form action="#" th:action="@{/admin/purchaseorder/search}" th:object="${purchaseOrderTO}" method="post"> -->
+						<div class="box-body" data-widget="collapse">
+							<div class="row">
+								<div class="control-group col-md-2">
+									<label>Order ID</label>
+									<div id="idFilter"></div>
+								</div>
+								<div class="control-group col-md-2">
+									<label>Customer Id</label>
+									<div id="customerIdFilter"></div>
+								</div>
+								<div class="control-group col-md-2">
+									<label>Customer Name</label>
+									<div id="customerNameFilter"></div>
+								</div>
+								<div class="control-group col-md-2">
+									<label>Shipping Name</label>
+									<div id="shippingNameFilter"></div>
+								</div>
+								<div class="control-group col-md-2">
+									<label>Store Name</label>
+									<div id="storeNameFilter"></div>
+								</div>
+						</div>	
+							<div class="box-footer">
+							<a id="filterButton" class="btn btn-primary" role="button" onClick="verify()">Search</a> <a id="filterClearButton" class="btn btn-default">Clear
+								filters</a>							
+							</div>
+					<!-- </form> -->
+					<!-- /.box -->
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-12">
+			<div  onload="updateStatus()">
+				<div class="box">
+					<div class="box-body table-responsive" ddl:bundle-includes="filtering,moment,bootstrap-datepicker">
+						<table id="myTableId" dt:table="true" class="table table-bordered table-striped"  export="csv,pdf"
+							dt:url="@{/admin/salesorder/pagination}" dt:serverside="true" dt:dom="l0rtip" dt:processing="false"
+							dt:filterplaceholder="none" dt:filterSelector="#filterButton" dt:filterClearSelector="#filterClearButton" >
+							<thead>
+								<tr>
+									<th dt:property="orderId" dt:filterCssClass="form-control"  dt:name="orderId"
+										dt:filterable="true" dt:selector="#idFilter" dt:sortInitDirection="desc" id="orderId">Order ID</th>
+									<th dt:property="customerId" dt:filterCssClass="form-control"  dt:name="customerId"
+										dt:filterable="true" dt:selector="#customerIdFilter" dt:sortInitDirection="desc" id="customerId">Customer Id</th>										
+									<th dt:property="firstName" dt:filterCssClass="form-control"  dt:name="customerName"
+										dt:filterable="true" dt:selector="#customerNameFilter" dt:sortInitDirection="desc" id="customerName">Customer Name</th>										
+									<th dt:property="shippingFirstName" dt:filterCssClass="form-control" dt:name="description" dt:filterable="true" dt:selector="#shippingNameFilter">Shipping Name</th>
+									 <th dt:property="storeName" dt:filterCssClass="form-control" dt:name="vendorName" dt:visible="true" dt:filterable="true" dt:selector="#storeNameFilter">Store Name</th> 
+									<th style="width: 10%" dt:property="id" dt:name="actions" dt:renderFunction="custom-rendering#salesOrderSearchAction">Actions</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		</div>
+		</div>
+<!-- </form> -->
+	</section>
+</body>
+</html>

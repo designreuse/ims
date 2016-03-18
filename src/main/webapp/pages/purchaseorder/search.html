@@ -1,0 +1,88 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout"
+	xmlns:dt="http://github.com/dandelion/datatables" xmlns:ddl="http://www.thymeleaf.org/dandelion">
+<head><title>Order Management</title>
+</head>
+<body th:replace="layout :: body(section_heading='Purchase Order Management')">
+<div layout:fragment="header-buttons">
+		<a th:href="@{/admin/purchaseorder/add}" class="btn btn-success pull-right" role="button"><i class="fa fa-plus"></i> Add Order</a>
+	</div>
+	<section layout:fragment="content" class="content">
+	<!-- <form action="#" th:action="@{/admin/purchaseorder/search}" name="searchProductForm" th:object="${purchaseOrderTO}" method="post" id="searchProduct"> -->
+		<div class="row">
+		
+			<div class="col-md-12">
+				<!-- general form elements -->
+				<div class="box box-primary">
+					<div class="box-header">
+						<h3 class="box-title">Search Purchase Order</h3>
+					</div>
+					<!-- /.box-header -->
+					<!-- form start -->
+					<!-- <form action="#" th:action="@{/admin/purchaseorder/search}" th:object="${purchaseOrderTO}" method="post"> -->
+						<div class="box-body" data-widget="collapse">
+							<div class="row">
+								<div class="control-group col-md-2">
+									<label>Order ID</label>
+									<div id="idFilter"></div>
+								</div>
+								<div class="control-group col-md-4">
+									<label>Product Name</label>
+									<div id="nameFilter"></div>
+								</div>
+								<div class="control-group col-md-3">
+									<label>Description</label>
+									<div id="descriptionFilter"></div>
+								</div>
+								<div class="control-group col-md-2">
+									<label>Vendor Name</label>
+									<div id="vendorNameFilter"></div>
+								</div>
+							</div>	
+							<div class="row">
+								<div class="control-group col-md-2">
+									<label>Total</label>
+									<div id="totalFilter"></div>
+								</div>
+							</div>											
+							
+							<div class="box-footer">
+							<a id="filterButton" class="btn btn-primary" role="button" onClick="verify()">Search</a> <a id="filterClearButton" class="btn btn-default">Clear
+								filters</a>							
+							</div>
+					<!-- </form> -->
+					<!-- /.box -->
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="box">
+					<div class="box-body table-responsive" ddl:bundle-includes="filtering,moment,bootstrap-datepicker">
+						<table id="myTableId" dt:table="true" class="table table-bordered table-striped"  export="csv,pdf"
+							dt:url="@{/admin/purchaseorder/pagination}" dt:serverside="true" dt:dom="l0rtip" dt:processing="false"
+							dt:filterplaceholder="none" dt:filterSelector="#filterButton" dt:filterClearSelector="#filterClearButton" >
+							<thead>
+								<tr>
+									<th dt:property="pkey" dt:filterCssClass="form-control"  dt:name="pkey"
+										dt:filterable="true" dt:selector="#idFilter" dt:sortInitDirection="desc" id="pkey" dt:renderFunction="custom-rendering#purchaseorderedit">Order ID</th>
+									<th dt:property="name" dt:filterCssClass="form-control"  dt:name="name"
+										dt:filterable="true" dt:selector="#nameFilter" dt:sortInitDirection="desc" id="name">Product Name</th>										
+									<th dt:property="description" dt:filterCssClass="form-control" dt:name="description" dt:filterable="true" dt:selector="#descriptionFilter">Description</th>
+									 <th dt:property="vendorName" dt:filterCssClass="form-control" dt:name="vendorName" dt:visible="true" dt:filterable="true" dt:selector="#vendorNameFilter">Vendor Name</th> 
+									<th dt:property="total" dt:filterCssClass="form-control" dt:visible="true" dt:name="total" dt:filterable="true"
+										dt:selector="#totalFilter">Total</th>									
+									<th style="width: 10%" dt:property="id" dt:name="actions" dt:renderFunction="custom-rendering#purchaseOrderSearchAction">Actions</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		</div>
+<!-- </form> -->
+	</section>
+</body>
+</html>

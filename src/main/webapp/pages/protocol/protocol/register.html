@@ -1,0 +1,920 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+<head>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		/*  $("#optionselect option[value=yes]").click(function() {
+		      $("#discountselection").attr("disabled", false);
+		      $("#discountselection").show(); //To Show the dropdown
+		  });
+		  $("#optionselect option[value=no]").click(function() {
+		      $("#discountselection").attr("disabled", true);
+		      $("#discountselection").hide();//To hide the dropdown
+		  }); */
+		$("#hiddendropdownforoptionselect").hide();
+		var dropdown = document.getElementById("optionselect");
+		dropdown.onchange = function(event) {
+			if (dropdown.value == "yes") {
+				$("#hiddendropdownforoptionselect").show();
+			} else if (dropdown.value == "no") {
+				$("#hiddendropdownforoptionselect").hide();
+			} else {
+				$("#hiddendropdownforoptionselect").hide();
+			}
+		}
+
+	});
+</script>
+</head>
+<body
+	th:replace="layout :: body(section_heading='Create Protocol Document')">
+	<!-- <div layout:fragment="header-buttons">
+		<a th:href="@{/admin/protocol/protocol/add}"
+			class="btn btn-success pull-right" role="button"><i
+			class="fa fa-plus"></i> Add New</a>
+	</div> -->
+	<section layout:fragment="content" class="content">
+		<div class="panel panel-default">
+
+			<!-- /.panel-heading -->
+			<div class="panel-body">
+				<form action="#" th:action="@{/admin/protocol/protocol/create}"
+					class="form-horizontal" role="form" name="registerprotocol"
+					th:object="${protocolStudyTO.protocolTO}" method="post"
+					enctype="multipart/form-data">
+					<div th:object="${protocolStudyTO}">
+						<input type="hidden" name="type" th:value="*{type}" /> <input
+							type="hidden" name="countryOfSubmission"
+							th:value="*{countryOfSubmission}" /> <input type="hidden"
+							name="studyDesign" th:value="*{studyDesign}" />
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Name of the test
+							product </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{testProductName}"
+								placeholder="Name of the test product" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Name of the
+							reference product </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{referenceProductName}"
+								placeholder="Name of the reference product" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Protocol number </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" th:field="*{protocolNo}"
+								placeholder="Protocol number" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Version </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" th:field="*{versionNo}"
+								placeholder="Version" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label"> Date </label>
+						<div class="col-sm-9">
+							<input type="date" class="form-control"
+								th:field="*{protocolDate}" />
+						</div>
+					</div>
+					<div class="form-group" th:object="${sponsorTO}">
+						<label class="col-sm-3 control-label">Name of the sponsor
+						</label>
+
+
+
+						<div class="control-group col-md-3 col-xs-3 col-lg-3 col-sm-3">
+
+							<select class="form-control" name="sponserPkey"
+								required="required">
+								<option th:each="sponser : ${sponsers}"
+									th:value="${sponser.pkey}" th:text="${sponser.name}"></option>
+
+							</select>
+						</div>
+
+					</div>
+					<!-- <div class="form-group">
+						<label class="col-sm-3 control-label">contact
+						</label>
+						<div class="col-sm-9">
+
+
+							<div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{sponsorAddressAndContactDetails}" />
+						</div>
+						</div>
+					</div> -->
+					<div class="control-group">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">No of subjects </label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control"
+									th:field="*{subjectCount}" placeholder="Subject count"
+									pattern="^[0-9]*$"
+									data-validation-pattern-message="Must be number"
+									required="true" />
+							</div>
+						</div>
+						<p class="help-block" style="padding-left: 250px;"></p>
+					</div>
+
+					<div class="control-group">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Blood Volume</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control"
+									th:field="*{bloodVolume}"
+									placeholder="Blood Volume for Each samples (e.g:5)" pattern="^[0-9]*$"
+									data-validation-pattern-message="Must be number"
+									required="true" />
+							</div>
+						</div>
+						<p class="help-block" style="padding-left: 250px;"></p>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Meal Timing </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" th:field="*{mealTime}"
+								placeholder="Meal Timing (e.g:4.00,8.00,12.00)" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label"> Gender </label>
+						<div class="col-sm-9">
+							<select class="form-control" th:field="*{gender}">
+								<option th:value="Male">Male</option>
+								<option th:value="Female">FeMale</option>
+								<option th:value="MaleOrFemale">Male/Female</option>
+							</select>
+						</div>
+					</div>
+					<div class="control-group">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Washout period </label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control"
+									th:field="*{washoutPeriod}" placeholder="Washout period (e.g:5)"
+									pattern="^[0-9]*$"
+									data-validation-pattern-message="Must be number"
+									required="true" />
+							</div>
+						</div>
+						<p class="help-block" style="padding-left: 250px;"></p>
+					</div>
+					<div class="control-group">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Water Amount </label>
+							<div class="col-sm-9">
+								<input type="text" th:field="*{waterAmount}"
+									placeholder="Water Amount" pattern="^[0-9]*$"
+									class="form-control"
+									data-validation-pattern-message="Must be number (e.g:20)"
+									required="true" />
+							</div>
+						</div>
+						<p class="help-block" style="padding-left: 250px;"></p>
+					</div>
+					<div class="form-group" id="discountselection">
+						<label class="col-sm-3 control-label">Dosing under
+							monochromatic light </label>
+						<!-- <div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{monochromaticLight}" placeholder="Dosing under monochromatic light" />
+						</div> -->
+						<div class="col-sm-8" style="padding-bottom: 15px;">
+							<select th:field="*{monochromaticLight}" class="form-control"
+								required="required">
+								<option value="select">Select</option>
+								<option value="yes">YES</option>
+								<option value="no">NO</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">HH:MM-Clinical
+							Confinement </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{clinicalConfinementHour}"
+								placeholder="HH:MM-Clinical Confinement (e.g:24:00)" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Ambulatory Visit
+							Details </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{ambulatoryVisit}"
+								placeholder="Ambulatory Visit Details" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Additional Tests</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{additionalTests}" placeholder="Additional Tests" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Sampling Schedule in
+							each period </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{samplingTimePoints}"
+								placeholder="Sampling Schedule in each period (e.g:00.00,01.00,02.00,03.00,04.00,05.00,08.00,16.00,24.00,36.00,48.00)" />
+						</div>
+					</div>
+<!-- 					<div class="form-group">
+						<label class="col-sm-3 control-label">Inhouse Stay Blood
+							Samples Count</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{inHouseBloodSample}"
+								placeholder="Inhouse Blood Sample Count" pattern="^[0-9]*$"
+									data-validation-pattern-message="Must be number"
+									required="true"/>
+						</div>
+					</div> -->
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Requirement for
+							Stabilizer and Monochromatic light </label>
+						<!-- <div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{stabilizerAndMonochromatic}" placeholder="Requirement for Stabilizer and Monochromatic light" />
+						</div> -->
+						<div class="col-sm-8" style="padding-bottom: 15px;">
+							<select th:field="*{stabilizer}"
+								class="form-control" id="optionselect" required="required">
+								<option value="Select">Select</option>
+								<option value="yes">YES</option>
+								<option value="no">NO</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group" id="hiddendropdownforoptionselect">
+						<label class="col-sm-3 control-label">values</label>
+						<!-- <div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{stabilizerAndMonochromatic}" placeholder="Requirement for Stabilizer and Monochromatic light" />
+						</div> -->
+						<div class="col-sm-8" style="padding-bottom: 15px;">
+							<input type="text" class="form-control"
+								th:field="*{stabilizerAndMonochromatic}"
+								placeholder="Requirement for Stabilizer and Monochromatic light" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Analytes Name </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{analytesName}" placeholder="Analytes Name " />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Primary PK
+							Parameters </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" th:field="*{primaryPK}"
+								placeholder="Primary PK Parameters" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Secondary PK
+							Parameters </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" th:field="*{secondaryPK}"
+								placeholder="Secondary PK Parameters" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Drug Info</label>
+						<div class="col-sm-9">
+							<textarea class="form-control" th:field="*{drugInfo}"
+								placeholder="Drug Info" ></textarea>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Name of the molecule
+						</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" th:field="*{molecule}"
+								placeholder="Name of the molecule" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Emesis criteria </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{emesisCriteria}" placeholder="Emesis criteria" />
+						</div>
+					</div>
+
+					<!-- 					<div class="form-group">
+						<label class="col-sm-3 control-label">Stay Time HH:MM </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{stayTime}" placeholder="Stay Time HH:MM" />
+						</div>
+					</div>
+ -->
+					<div class="form-group">
+						<label class="col-sm-3 control-label">check-out/ambulatory
+							sample</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{ambulatorySample}"
+								placeholder="check-out/ambulatory sample" />
+						</div>
+					</div>
+					<!-- <div class="form-group">
+						<label class="col-sm-3 control-label">Duration</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" th:field="*{duration}"
+								placeholder="Duration" />
+						</div>
+					</div> -->
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Ambulatory One</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{ambulatoryOne}" placeholder="Ambulatory One (e.g:36.00)" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Ambulatory Two</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{ambulatoryTwo}" placeholder="Ambulatory Two (e.g:36.00)" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Ambulatory Three</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{ambulatoryThree}" placeholder="Ambulatory Three (e.g:36.00)" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Ambulatory Four</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{ambulatoryFour}" placeholder="Ambulatory Four (e.g:36.00)" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Ambulatory Five</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{ambulatoryFive}" placeholder="Ambulatory Five (e.g:36.00)" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Ambulatory Six</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{ambulatorySix}" placeholder="Ambulatory Six (e.g:36.00)" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">k3EDTA</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" th:field="*{kthreeEdta}"
+								placeholder="k3EDTA" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Window Period</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{windowPeriod}" placeholder="Window Period (e.g:5)" />
+						</div>
+					</div>
+					<!-- 				<div class="form-group">
+						<label class="col-sm-3 control-label">Blood Loss</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{bloodLoss}" placeholder="Blood Loss" />
+						</div>
+					</div> -->
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Vitals Time</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" th:field="*{vitalsTime}"
+								placeholder="Vitals Time (e.g:00.00, 04.00, 06.00, 10.00, 24.00)" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Sponsor One</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" th:field="*{sponsorOne}"
+								placeholder="Sponsor One" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Sponsor Two</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" th:field="*{sponsorTwo}"
+								placeholder="Sponsor Two" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Sponsor Three</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{sponsorThree}" placeholder="Sponsor Three" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">ISR</label>
+						<!-- <div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{isr}" placeholder="ISR" />
+						</div> -->
+						<div class="col-sm-8" style="padding-bottom: 15px;">
+							<select th:field="*{isr}" class="form-control"
+								required="required">
+								<option value="select">Select</option>
+								<option value="yes">YES</option>
+								<option value="no">NO</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Statistics</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" th:field="*{statistics}"
+								placeholder="Statistics" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Metabolite</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" th:field="*{metabolite}"
+								placeholder="Metabolite" />
+						</div>
+					</div>
+					<div class="control-group">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">CV%</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" th:field="*{cv}"
+									placeholder="CV% (e.g:24-25%)"/>
+							</div>
+						</div>
+						<p class="help-block" style="padding-left: 250px;"></p>
+					</div>
+					<div class="control-group">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Evaluable Subjects</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control"
+									th:field="*{evaluableSubjects}"
+									placeholder="Evaluable Subjects" pattern="^[0-9]*$"
+									data-validation-pattern-message="Must be number"
+									required="true" />
+							</div>
+						</div>
+						<p class="help-block" style="padding-left: 250px;"></p>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Informed Consent</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{informedConsent}" placeholder="Informed Consent" />
+						</div>
+					</div>
+					<!-- 
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Sponsor details </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{sponsorAddressAndContactDetails}"
+								placeholder="Sponser details" />
+						</div>
+					</div> -->
+
+
+					<!-- <div class="form-group">
+						<label class="col-sm-3 control-label">Investigational Product Name </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{investigationalProductName}"
+								placeholder="Name of the test product" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Strength </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" th:field="*{strength}"
+								placeholder="Strength" />
+						</div>
+					
+</div>-->
+					<!-- <div class="form-group">
+						<label class="col-sm-3 control-label">Manufacturing
+							Company </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{manufacturingCompany}"
+								placeholder="Manufacturing Company " />
+						</div>
+					</div>
+
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Country </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" th:field="*{country}"
+								placeholder="Country" />
+						</div>
+					</div> 
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Seating Position </label>
+						<div class="col-sm-9">
+							<select class="form-control" th:field="*{seatingPosition}"
+								required="required">
+								<option value="-">Select Seating Position</option>
+								<option value="Ambulatory">Ambulatory</option>
+								<option value="Seated">Seated</option>
+							</select>
+						</div>
+					</div>
+
+					
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Version </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" th:field="*{versionNo}"
+								placeholder="Version" />
+						</div>
+					</div>
+					<div class="form-group" th:object="${protocolStudyTO}">
+						<label class="col-sm-3 control-label"> Date </label>
+						<div class="col-sm-9">
+							<input type="date" class="form-control" th:field="*{studyDate}" />
+
+						</div>
+					</div>-->
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Prescribing
+							Information </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{prescribingInformation}"
+								placeholder="Prescribing Information" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Clinical Principal
+							Investigator Name </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{clinicalPrincipalInvestigatorName}"
+								placeholder="Clinical Principal Investigator Name" />
+						</div>
+					</div>
+					<!-- <div class="form-group">
+						<label class="col-sm-3 control-label">Bio Analytical
+							Investigator Name </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{bioanalyticalInvestigaorName}" placeholder="Name" />
+						</div>
+					</div>-->
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Statistical
+							Investigator Name </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{statisticalInvestigaorName}"
+								placeholder="Statistical Investigator Name" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Name of the Sponsor
+							Authorized Signatory</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{authorizedSignatory}"
+								placeholder="Sponsor Authorized Signatory" />
+						</div>
+					</div>
+
+
+
+					<!-- <div class="form-group">
+						<label class="col-sm-3 control-label">Clinical study start
+							date </label>
+						<div class="col-sm-9">
+							<input type="date" class="form-control" th:field="*{startDate}"
+								placeholder="Clinical study start date " />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Clinical study end
+							date </label>
+						<div class="col-sm-9">
+							<input type="date" class="form-control" th:field="*{endDate}"
+								placeholder="Clinical study end date" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Date of report </label>
+						<div class="col-sm-9">
+							<input type="date" class="form-control" th:field="*{reportDate}"
+								placeholder="Date of report" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Date of check in </label>
+						<div class="col-sm-9">
+							<input type="date" class="form-control" th:field="*{checkIn}"
+								placeholder="Date of check in " />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Date of check out </label>
+						<div class="col-sm-9">
+							<input type="date" class="form-control" th:field="*{checkOut}"
+								placeholder="Date of check out" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Number of subjects </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" th:field="*{subject}"
+								placeholder="Number of subjects" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">No of periods</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" th:field="*{period}"
+								placeholder="No of periods" />
+						</div>
+					</div>
+					-->
+
+					<!-- <div class="form-group">
+						<label class="col-sm-3 control-label">Sampling time points
+						</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" th:field="*{time}"
+								placeholder="Sampling time points" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Total blood loss </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" th:field="*{blood}"
+								placeholder="Total blood loss" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Analytes to be
+							measured </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" th:field="*{analytes}"
+								placeholder="Analytes to be measured" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Justification of
+							sample size </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" th:field="*{sample}"
+								placeholder="Justification of sample size" />
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Percentage of
+							adverse events </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" th:field="*{adverse}"
+								placeholder="Percentage of adverse events" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Options to update
+							abbreviations </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{abbreviations}"
+								placeholder="Options to update abbreviations" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Time of dosing HH:MM
+							to HH:MM </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" th:field="*{dosing}"
+								placeholder="Time of dosing HH:MM to HH:MM" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">File to attach
+							details of concomitant medication </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{concomitantMedication}"
+								placeholder="File to attach details of concomitant medication" />
+						</div>
+					</div> -->
+
+					<!-- <div class="form-group">
+						<label class="col-sm-6 control-label">Inbuilt excel to
+							validate Details of sample collection </label></div> -->
+					<!--
+    <div class="col-sm-9">
+      <input type="text" class="form-control"  
+         placeholder="Options to update abbreviations
+">
+    </div>
+-->
+
+
+					<!-- <div class="form-group">
+						<label class="col-sm-3 control-label">Total number of
+							subjects enrolled </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{subjectsEnrolled}"
+								placeholder="Total number of subjects enrolled" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Total number of
+							sampling points </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{samplingPoints}"
+								placeholder="Total number of sampling points" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Total number of
+							samples to be collected </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control"
+								placeholder="Total number of samples to be collected" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Total number of
+							samples collected </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{sampleCollected}"
+								placeholder="Total number of samples collected" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Total number of
+							missing samples </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{missingSample}"
+								placeholder="Total number of missing samples" />
+						</div>
+					</div> -->
+
+					<!-- <div class="form-group">
+						<label class="col-sm-4 control-label">Disposition of
+							subjects </label> -->
+					<!--
+    <div class="col-sm-9">
+      <input type="text" class="form-control"  
+         placeholder="Options to update abbreviations
+">
+    </div>
+-->
+					<!-- </div> -->
+
+					<!-- <div class="form-group">
+						<label class="col-sm-3 control-label">Number of subjects
+							completed in each period </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{subjectsCompleted}"
+								placeholder="Number of subjects completed in each period" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Input box for
+							reasons for drop outs or missing subjects </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" th:field="*{dropOut}"
+								placeholder="Input box for reasons for drop outs or missing subjects" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Demographic tag file
+							from VMS software </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" th:field="*{demographic}"
+								placeholder="Demographic tag file from VMS software" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Summary of PK
+							parameters of test and reference tag files from Statistical
+							output </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" th:field="*{pk}"
+								placeholder="Summary of PK parameters of test and reference tag files from Statistical output" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Input data for mean
+							± SD values for Cmax, AUC0-t and AUC0-inf for test and reference
+							formulations </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" th:field="*{formula}"
+								placeholder="Input data for mean ± SD values for Cmax, AUC0-t and AUC0-inf for test and reference
+formulations" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">90% Confidence
+							interval input tag from Statistical department </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" th:field="*{statistical}"
+								placeholder="90% Confidence interval input tag from Statistical department" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Tag file for Missing
+							sample details </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" th:field="*{tagMissing}"
+								placeholder="Tag file for Missing sample details" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Tag file for Extent
+							of Drug Exposure </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" th:field="*{tagDrug}"
+								placeholder="Tag file for Extent of Drug Exposure" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Tag file for Brief
+							Summary of Adverse Events </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" th:field="*{tagAdverse}"
+								placeholder="Tag file for Brief Summary of Adverse Events" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">References specific
+							to the molecule </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" th:field="*{molecule}"
+								placeholder="References specific to the molecule" />
+						</div>
+					</div> -->
+
+
+
+					<button type="submit" name="submit" class="btn btn-primary">Submit</button>
+
+
+
+				</form>
+				<!-- /.table-responsive -->
+			</div>
+		</div>
+	</section>
+</body>
+
+</html>

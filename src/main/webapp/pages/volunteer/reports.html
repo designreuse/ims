@@ -1,0 +1,61 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout"
+	xmlns:dt="http://github.com/dandelion/datatables"
+	xmlns:ddl="http://www.thymeleaf.org/dandelion">
+
+<body th:replace="layout :: body(section_heading='Reports Management')">
+
+	<section layout:fragment="content" class="content">
+		<form action="#" th:action="@{/admin/volunteer/openReport}"
+			name="reportsForm" th:object="${studySearchTO}" method="post">
+			<input type="hidden" name="reportType" />
+			<div class="row">
+
+				<div class="col-md-12">
+					<!-- general form elements -->
+					<div class="box box-primary">
+
+						<div class="box-body">
+							<div class="row">
+								<div class="control-group col-md-4">
+									<label>Study No</label> <input type="text" name="studyNo" required="required"
+										class="form-control"  />
+								</div>
+								<!-- <div class="control-group col-md-4">
+									<label>Volunteer Status</label> <select name="volunteerStatus">
+										<option value="Registered">Registered</option>
+										<option value="Approved">Approved</option>
+ 										<option value="Rejected">Rejected</option>
+										<option value="BlackListed">BlackListed</option>
+										<option value="Permanently_Rejected">Permanently_Rejected</option>
+										<option value="Temporarily_Rejected">Temporarily_Rejected</option>
+									</select>
+								</div>  -->
+							</div>
+							<div class="box-footer">
+								<button type="submit" name="submit" class="btn btn-primary"
+									onClick="return setAttributes('MasterList');">Search
+									Master List</button>
+
+								<button type="submit" name="submit" class="btn btn-primary"
+									onClick="return setAttributes('Demographic');">Search
+									Demographic Report</button>
+
+								<a class="btn btn-primary" th:href="@{/admin/volunteer/openvolunteerreports}"><span>Volunteer Status Report</span> </a>
+
+<!-- <a class="btn btn-primary" role="button" th:href="@{/admin/screening/searchwithin28days/}"> Click here for list of volunteers within 28 days of screening</a> -->
+							</div>
+						</div>
+						<!-- </form> -->
+						<!-- /.box -->
+					</div>
+				</div>
+			</div>
+
+
+
+		</form>
+	</section>
+</body>
+</html>

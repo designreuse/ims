@@ -1,0 +1,154 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout"
+	xmlns:dt="http://github.com/dandelion/datatables"
+	xmlns:ddl="http://www.thymeleaf.org/dandelion">
+<head>
+<style>
+.customth {
+	padding: 3px 10px;
+}
+
+.hidden-print {
+	display: none;
+}
+
+@media print {
+	.box, .box-body {
+		overflow-x: hidden
+	}
+	.box {
+		border-top: 0;
+	}
+	.hidden-print {
+		display: block !important;
+	}
+	.borderdismissforprint {
+		border-right-color: white !important;
+	}
+	#action {
+		display: none;
+	}
+	#myTableId_length {
+		display: none;
+	}
+	#myTableId_filter {
+		display: none;
+	}
+	.dataTables_export {
+		display: none;
+	}
+	#myTableId_info {
+		display: none;
+	}
+	#myTableId_paginate {
+		display: none;
+	}
+}
+</style>
+</head>
+<body th:replace="layout :: body(section_heading='Master List')">
+
+
+	<!-- <div class="control-group col-md-2  col-xs-3 col-sm-3 col-lg-3" style="margin-top: 20px;">
+									 
+									 <a id="selectbxbutton" class="btn btn-primary" role="button" onClick="createMasterListValues()">Master List</a>
+								</div> -->
+
+
+	
+	<section layout:fragment="content" class="content">
+		<form name="masterListForm" action="#"
+			th:action="@{/admin/screening/saveMasterList}" method="post">
+
+			<!-- start -->
+
+			<div class="row">
+				<div class="col-xs-12">
+
+					<div class="box">
+						<div class="box-body table-responsive"
+							ddl:bundle-includes="filtering,moment,bootstrap-datepicker">
+							<div class="text-center hidden-print" style="margin-top: -13px;">
+								<h4 style="font-size: 22px; font-weight: 600;">Master List</h4>
+							</div>
+							<div class="pull-right hidden-print" id="Logo"
+								style="margin-top: -12px;">
+								<img src="/vms/resources/images/aziduslogo.jpg"
+									style="width: 160px;" />
+							</div>
+							<!-- <div>
+								Study No:<span th:text="*{studyNo}" style="color: blue"></span>
+								<input type="hidden" name="studyNo" th:value="${studyNo}" />
+								<input type="hidden" th:field="*{studyNo}" th:value="${studyNo}" />
+								<p />
+							</div>-->
+							<div>
+                                <div class="col-md-2  col-xs-3 col-sm-2 col-lg-2"><span style="color: #3C8DBC; font-weight: bolder;">Study No:</span><span  th:text="*{studyNo}" /> 	</div>							 
+															 
+							</div> 
+							 
+
+
+							<input type="hidden" name="subjReferences" id="subjReferences"/>
+							<table id="myTableId" class="table table-bordered table-striped"
+								dt:table="true">
+
+								<thead>
+
+									<tr>
+										<th dt:filterCssClass="form-control "
+											dt:renderFunction="custom-rendering#modifySubjNo" id="subjNo"
+											style="padding: 2px 10px">Subject No</th>
+										<th dt:filterCssClass="form-control"
+											style="width: 250px; padding: 2px">Volunteer Reg.No.</th>
+										<th dt:filterCssClass="form-control" style="padding: 2px">Name</th>
+										<!-- <th dt:filterCssClass="form-control" id="action"
+											style="padding: 2px">Actions</th> -->
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="list : *{masterList}">
+										<td
+											style="margin-top: 2px soild black; padding: 1px 10px 1px;"><div
+												th:text="*{list.subjectNo}" /></td>
+										<td style="padding: 1px 10px 1px;"><p
+												style="float: left; margin: 0">AZ</p>
+											<p style="float: left; margin: 0"
+												th:text="*{list.volunteerPkey}" /></td>
+										<td
+											style="margin-top: 2px soild black; padding: 1px 10px 1px;"><div
+												th:text="*{list.name}" /></td>
+									</tr>
+								</tbody>
+
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- <script>
+function openprintwindow(event){
+			event.preventDefault();
+			debugger;
+			var element = $(event.currentTarget);
+			var printurl = element.attr('href');
+			window.open("printurl", "", "width=200, height=100");
+		}
+		</script> -->
+			<div class="control-group col-md-2  col-xs-3 col-sm-3 col-lg-3"
+				style="margin-top: 20px;">
+
+				<!-- <a id="selectbxbutton" class="btn btn-primary" role="button" >Save Master List</a> -->
+				
+
+			</div>
+
+			<a onClick="window.print()" id="printbutton"
+				class="btn btn-primary pull-right">Print</a>
+			<!-- end -->
+		</form>
+	</section>
+
+</body>
+</html>

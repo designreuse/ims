@@ -1,0 +1,155 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout"
+	xmlns:dt="http://github.com/dandelion/datatables"
+	xmlns:ddl="http://www.thymeleaf.org/dandelion">
+<head>
+<style>
+.customtd {
+	padding: 1px 18px !important;
+}
+
+.hidden-print {
+	display: none;
+}
+
+@media print {
+	.hideaction {
+		display: none;
+	}
+	.customtd {
+		padding: 1px 18px !important;
+	}
+	.box, .box {
+		border-top: 0;
+	}
+	.hidden-print {
+		display: block !important;
+	}
+	/* @page {
+		margin-left: .2cm;
+	} */
+	#action {
+		display: none;
+	}
+	#printdisplay {
+		dispaly: block;
+	}
+	#myTableId_length {
+		display: none;
+	}
+	#myTableId_filter {
+		display: none;
+	}
+	.dataTables_export {
+		display: none;
+	}
+	#myTableId_info {
+		display: none;
+	}
+	#myTableId_paginate {
+		display: none;
+	}
+}
+</style>
+
+
+</head>
+<body th:replace="layout :: body(section_heading='Demographic Report')">
+
+	<section layout:fragment="content" class="content">
+		<form name="demographicForm" action="#"
+			th:action="@{/admin/study/demographicreport}" method="post">
+
+			<!-- start -->
+
+			<div class="row">
+				<div class="col-xs-12">
+
+					<div class="box">
+						<div class="box-body "
+							ddl:bundle-includes="filtering,moment,bootstrap-datepicker">
+							<div class="text-center hidden-print" style="margin-top: -13px">
+								<h4 style="font-size: 22px; font-weight: 600px;">Demographic
+									Report</h4>
+							</div>
+							<div class="pull-right hidden-print" id="Logo"
+								style="margin-top: -12px">
+								<img src="/vms/resources/images/aziduslogo.jpg"
+									style="width: 160px;" />
+							</div>
+							<input type="hidden" name="subjReferences" id="subjReferences" /> 
+
+							<div>
+                                <span style="color: #3C8DBC; font-weight: bolder;">Study No: </span>
+								<span  th:text="*{studyNo}" >
+								</span>
+							</div>
+							<table id="myTableId" class="table table-bordered "
+								dt:table="true">
+
+								<thead>
+									<tr>
+
+										<th dt:filterCssClass="form-control"
+											dt:renderFunction="custom-rendering#modifySubjNo"
+											style="padding: 3px 0px;width:80;">SubjectNo</th>
+										<th dt:filterCssClass="form-control"
+											style="padding: 3px 0px;width:80;">Age(Yrs)</th>
+										<th dt:filterCssClass="form-control"
+											style="padding: 3px 0px;width:80;">Height(m)</th>
+										<th dt:filterCssClass="form-control"
+											style="padding: 3px 0px;width:80;">Weight(Kg)</th>
+										<th dt:filterCssClass="form-control"
+											style="padding: 3px 0px;width:80;">BMI(kg/m2)</th>
+										<th dt:filterCssClass="form-control"
+											style="padding: 3px 0px;width:80;">Gender</th>
+										<th dt:filterCssClass="form-control"
+											style="padding: 3px 0px;width:80;">Race</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="list : *{demographicReport}">
+
+										<td
+											style="margin-top: 2px soild black; padding: 1px 10px 1px;"><div
+												th:text="*{list.subjectNo}" /></td>
+										<td class="customtd"><div th:text="*{list.age}" /></td>
+										<td class="customtd"><div th:text="*{list.height}" /></td>
+										<td class="customtd"><div th:text="*{list.weight}" /></td>
+										<td class="customtd"><div th:text="*{list.bmi}" /></td>
+										<td class="customtd"><div th:text="*{list.gender}" /></td>
+										<td class="customtd">Asian</td>
+
+ 
+									</tr>
+								</tbody>
+
+
+							</table> 
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- <script>
+		function openprintwindow(event){
+			event.preventDefault();
+			debugger;
+			var element = $(event.currentTarget);
+			var printurl = element.attr('href');
+			window.open("printurl", "", "width=200, height=100");
+		}
+		</script> -->
+			<div class="control-group col-md-2  col-xs-3 col-sm-3 col-lg-3"
+				style="margin-top: 20px;"></div>
+			<a onClick="window.print()" id="printbutton"
+				class="btn btn-primary pull-right">Print</a>
+			<!-- end -->
+
+
+		</form>
+	</section>
+
+</body>
+</html>

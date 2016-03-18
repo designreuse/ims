@@ -1,0 +1,49 @@
+<html class="bg-black" xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>IMS | Inventory Management System</title>
+<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport' />
+<link th:href="@{/webjars/bootstrap/3.3.0/css/bootstrap.min.css}" rel="stylesheet"></link>
+<link th:href="@{/webjars/font-awesome/4.2.0/css/font-awesome.min.css}" rel="stylesheet"></link>
+<!-- Theme style -->
+<link href="resources/css/AdminLTE.css" rel="stylesheet" type="text/css" />
+<script src="http://code.jquery.com/jquery-1.11.2.js"></script>
+<script type="text/javascript">
+	$(document).ready(function () {
+		var url = window.location.href;
+		var urlDetails = url.split("=");
+		if(urlDetails.length > 1){
+			document.getElementById("fpId").value = urlDetails[1];
+		}
+		
+	});
+</script>
+</head>
+<body class="bk" tiles:fragment="content">
+	<div class="form-box" id="login-box">
+		<div class="header">Inventory Management System</div>
+		<form action="#" th:action="@{/login}" method="post">
+			<div class="body bg-gray">
+				<div th:if="${param.error}" class="alert alert-error">Invalid Username and Password.</div>
+				<div th:if="${param.logout}" class="alert alert-success">You have been logged out.</div>
+				<div class="form-group">
+					<input type="text" name="username" class="form-control" placeholder="User ID" />
+				</div>
+				<div class="form-group">
+					<input type="password" name="password" class="form-control" placeholder="Password" />
+					<input type="hidden" name="fpId" id="fpId"/>
+				</div>
+			</div>
+			<div class="footer">
+				<button type="submit" class="btn bg-olive btn-block">Sign In</button>
+				<!-- <p>
+					<a href="#">I forgot my password</a>
+				</p> -->
+			</div>
+		</form>
+	</div>
+	<script th:src="@{/webjars/jquery/2.1.1/jquery.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/3.3.0/js/bootstrap.min.js}"></script>
+</body>
+</html>
+

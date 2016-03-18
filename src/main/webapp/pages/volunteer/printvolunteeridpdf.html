@@ -1,0 +1,516 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+<head>
+<script src="http://code.jquery.com/jquery-1.11.2.js"></script>
+<script type="text/javascript">
+	/*<![CDATA[*/
+	$(document).ready(function(){
+  var bmiVal = $('#bmi').text();
+        
+        if( bmiVal <= 29.4 && bmiVal >= 18){
+			 document.getElementById("BMIYES").checked = true;
+   
+		} else {
+     document.getElementById("BMINO").checked = true;   
+			
+		}
+        
+ var weightVal = $('#WEIGHT').text();
+ var illness = $('#illness').text();
+ var asses = $('#asses').text();
+        
+ if( weightVal >= 50.0 && (bmiVal <= 29.4 && bmiVal >= 18)  && asses == 'Yes' && illness == 'NO'){
+			 document.getElementById("WEIGHTYES").checked = true;
+   
+		} else {
+     document.getElementById("WEIGHTNO").checked = true;   
+			
+		}
+        
+ 
+			});	
+	/*]]>*/
+	</script>
+<style>
+.hideprint {
+	display: none;
+}
+
+@media print {
+	.desc {
+		top: 24%;
+	}
+	.wrap .reg {
+		display: block;
+		position: absolute;
+		width: 15%;
+		top: 30%;
+		left: 41%;
+		z-index: 2;
+	}
+	.wrap .date {
+		display: block;
+		position: absolute;
+		width: 15%;
+		top: 24%;
+		right: 4%;
+		z-index: 2;
+		left: 500px;
+	}
+	.hideprint {
+		display: block !important;
+	}
+}
+</style>
+</head>
+<body
+	th:replace="layout :: body(section_heading='VOLUNTEER REGISTRATION FORM')">
+	<section layout:fragment="content" class="content">
+		<!-- title row -->
+
+		<div class="row">
+			<div class="col-md-12">
+				<!-- general form elements -->
+				<div class="box box-primary">
+
+					<!-- /.box-header -->
+					<!-- form start -->
+					<form action="#" th:action="@{/admin/volunteer/newprint}"
+						name="registerVolunteer" th:object="${volunteerTO}" method="post">
+						<!-- <input type="hidden" th:field="*{volunteerStatus}" th:value="${(com.azidus.vms.domain.enums.VolunteerStatus).Registered}" /> -->
+
+						<input type="hidden" name="volunteerStatus"
+							th:value="${T(com.azidus.vms.domain.enums.VolunteerStatus).Registered}" />
+
+						<div class="box-body">
+							<div class="text-center hideprint"
+								style="font-size: 18px; font-weight: 600;">VOLUNTEER
+								REGISTRATION FORM</div>
+							<div class="row">
+								<div class="control-group col-md-12 ">
+									<div class="pull-right">
+										<img src="/vms/resources/images/aziduslogoprintform.jpg"
+											style="width: 160px;" /> <br />SOP No:AZ/CL/VM/004<br />
+										Version Number:17
+									</div>
+									<div class="pull-left">
+
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>
+											<p>
+												Date: <span
+													th:text="${#dates.format(volunteerTO.createdTime, 'dd-MMM-yyyy').toUpperCase()}"></span>
+											</p>
+
+
+										</span>
+									</div>
+									<!-- <div class="pull-right">
+										<p>
+											Date:
+												<span th:text="${#dates.format(volunteerTO.createdTime, 'dd-MMM-yyyy')}" ></span>
+														
+											
+										</p>
+									</div> -->
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="control-group col-md-12 ">
+									<table class="table table-bordered">
+										<tbody>
+											<tr>
+												<td class=" col-md-10 col-xs-10 col-lg-10 col-sm-10">
+													<div
+														class="control-group col-md-4 col-xs-4 col-lg-4 col-sm-3">
+														<label>Volunteer </label>
+														<div th:text="*{name}" autocomplete="off" />
+														<p class="help-block"></p>
+													</div>
+													<div
+														class="control-group col-md-4 col-xs-4 col-lg-4 col-sm-3">
+														<label>Father/Husband </label>
+														<div th:text="*{fatherName}" />
+													</div>
+													<div
+														class="control-group col-md-4 col-xs-4 col-lg-4 col-sm-3">
+														<label>Volunteer Consent </label>
+														<div th:text="*{consent}" />
+													</div>
+													<!--<div
+														class="control-group col-md-12 col-xs-12 col-lg-12 col-sm-3">
+														<label>Volunteer Consent </label>
+														<div th:text="*{consent}" />
+													</div>-->
+
+													<div
+														class="control-group col-md-12 col-xs-12 col-lg-12 col-sm-12">
+														<label>Contact Address</label>
+														<p>
+															<span
+																th:text="*{address1} + ' ' + *{address2} + ' ' + *{area}+ ' ' + *{city} "></span>
+														</p>
+
+													</div>
+												</td>
+												<td>
+													<div>
+														<img
+															th:src="'data:image/png;base64,' + *{cameraImageBase64String}"
+															alt="" style="width: 150px; height: 130px;" />
+													</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="row">
+								<div class="control-group col-md-12 ">
+									<table class="table table-bordered">
+										<tbody>
+											<tr>
+												<td class=" col-md-8 col-xs-8 col-lg-8 col-sm-8">
+													<div class="row">
+
+														<div
+															class="control-group col-md-3  col-xs-3 col-lg-3 col-sm-3">
+															<label>Primary Number</label>
+
+
+															<div th:text="*{mobileNo}" />
+
+														</div>
+														<div
+															class="control-group col-md-3  col-xs-2 col-lg-3 col-sm-3">
+															<label>Secondary </label>
+
+
+															<div th:text="*{landlineNo}" />
+
+														</div>
+
+														<div
+															class="control-group col-md-3  col-xs-3 col-lg-3 col-sm-3 ">
+															<input type="hidden" th:field="*{dob}"
+																onfocusout="return calucateAge()" required="required"
+																class="form-control" /> <label>Date of Birth</label>
+															<div
+																th:text="${#dates.format(volunteerTO.dob, 'dd-MMM-yyyy').toUpperCase()}" />
+															<script th:inline="javascript">
+										document.addEventListener(
+												'DOMContentLoaded', function() {
+													calucateAge();
+												}, false);
+									</script>
+														</div>
+														<div
+															class="control-group col-md-3  col-xs-4 col-lg-3 col-sm-3 ">
+															<label>Age</label><input type="text" class="form-control"
+																id="age" disabled="disabled" />
+														</div>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td>
+
+													<div class="row">
+														<div
+															class="control-group col-md-3  col-xs-3 col-lg-3 col-sm-3">
+															<label>Gender</label> <div th:text="*{gender}"/>
+														</div>
+														<div
+															class="control-group col-md-3  col-xs-3 col-lg-3 col-sm-3">
+															<label>ID Proof</label> <div th:text="*{idProof}"/>
+														</div>
+														<div
+															class="control-group col-md-3  col-xs-3 col-lg-3 col-sm-3">
+															<label>Educational Qualification</label> <div th:text="*{education}"/>
+														</div>
+														<div
+															class="control-group col-md-3  col-xs-3 col-lg-3 col-sm-3">
+															<label>Occupation</label> <div th:text="*{occupation}"/>
+														</div>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td>
+
+													<div class="row">
+														<div
+															class="control-group  col-md-3  col-xs-4 col-lg-3 col-sm-3">
+
+															<label>Dietary Habits</label><div th:text="*{foodHabit}" />
+														</div>
+														<div class=" col-md-3  col-xs-2 col-lg-3 col-sm-3 ">
+															<label>Height </label> <div th:text="*{height}" />
+														</div>
+														<div class="col-md-3  col-xs-2 col-lg-3 col-sm-3 ">
+															<label>Weight </label><div th:text="*{weight}" id="WEIGHT"/>
+														</div>
+														<div class="col-md-3  col-xs-4 col-lg-3 col-sm-3 ">
+															<label>BMI </label> <div th:text="*{bmi}" id="bmi"/>
+														</div>
+													</div>
+
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+
+
+							<div class="row">
+								<div class="control-group col-md-12 ">
+
+									<table class="table table-bordered">
+
+										<thead>
+											<tr>
+												<th><label>Language</label></th>
+												<th><label>Can read</label></th>
+												<th><label>Can Speak</label></th>
+												<th><label>Can Write</label></th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr
+												th:each="volLangMap : ${volunteerTO.volunteerLanguageMap}">
+												<td><span th:text="${volLangMap.language.name}"></span></td>
+												<td style="padding-left: 10px;">
+													<div class="row">
+														<div class="control-group">
+															<label> &nbsp;&nbsp;&nbsp;<span
+																th:if="${volLangMap.canRead ==  false}">No</span></label> <label>
+																&nbsp;&nbsp;&nbsp;<span th:if="${volLangMap.canRead}">Yes</span>
+															</label>
+														</div>
+													</div>
+												</td>
+												<td style="padding-left: 10px;">
+													<div class="row">
+														<div class="control-group">
+															<label> &nbsp;&nbsp;&nbsp;<span
+																th:if="${volLangMap.canSpeak}">Yes</span></label> <label>
+																&nbsp;&nbsp;&nbsp;<span
+																th:if="${volLangMap.canSpeak ==  false}">No</span>
+															</label>
+														</div>
+													</div>
+												</td>
+												<td style="padding-left: 10px;">
+													<div class="row">
+														<div class="control-group">
+															<label> &nbsp;&nbsp;&nbsp;<span
+																th:if="${volLangMap.canWrite}">Yes</span></label> <label>
+																&nbsp;&nbsp;&nbsp;<span
+																th:if="${volLangMap.canWrite ==  false}">No</span>
+															</label>
+														</div>
+													</div>
+												</td>
+
+											</tr>
+
+										</tbody>
+									</table>
+								</div>
+
+							</div>
+							<div class="row">
+								<div class="control-group col-md-12 ">
+									<table class="table table-bordered">
+										<tr>
+											<td style="width: 146px;"><label> Assessment
+													done </label>
+												<div th:text="*{assesment}" id="asses" /></td>
+											<td><label>Identification Marks </label>
+												<div th:text="*{identificationMark}" /></td>
+
+
+											<td style="width: 1px;"><label>Illnesses/Medication
+											</label>
+												<div th:text="*{longTermIllness}" id="illness" /></td>
+											<td><label>If YES ,details </label> <div th:text="*{remarks}"/></td>
+										</tr>
+
+									</table>
+								</div>
+							</div>
+							<!-- /.box-body -->
+
+							<div class="row">
+								<div
+									class="control-group col-md-6 col-xs-6 col-md-offset-4 col-xs-offset-4 ">
+									<label>Check list for volunteer registration </label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="control-group col-md-12 ">
+
+									<table class="table table-bordered">
+
+										<tbody>
+											<tr>
+												<td><label>1.Is BMI is within the limit</label></td>
+												<td>
+													<div class="row">
+														<div class="control-group" style="padding-left: 16px">
+															<label class="checkbox-inline"><input id="BMIYES"
+																name="BMI" type="radio"
+																style="opacity: 1 !important; position: absolute;"
+																value="yes" />Yes </label> <label class="checkbox-inline"
+																style="padding-right: 6px;"><input id="BMINO"
+																name="BMI" type="radio"
+																style="opacity: 1 !important; position: absolute;"
+																value="no" />No</label>
+														</div>
+													</div>
+												</td>
+												<td><label>2. Volunteer is eligible to register</label></td>
+												<td>
+													<div class="row">
+														<div class="control-group" style="padding-left: 16px">
+															<label class="checkbox-inline"><input
+																type="radio" id="WEIGHTYES" name="WEIGHT"
+																style="opacity: 1 !important; position: absolute;" />Yes
+															</label> <label class="checkbox-inline"
+																style="padding-right: 8px;"><input type="radio"
+																id="WEIGHTNO" name="WEIGHT"
+																style="opacity: 1 !important; position: absolute;" />No</label>
+														</div>
+													</div>
+												</td>
+											</tr>
+											<tr>
+
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="row">
+								<div class="control-group col-md-12 ">
+									<table class="table table-bordered">
+
+										<tbody>
+											<tr>
+												<td><label style="font-size: 10px"><i><strong>NOTE:The
+																answer for 1 and 2 of the above must be "YES" for the
+																volunteer to be registered</strong></i></label></td>
+												<td><label style="font-size: 10px"><i><strong>NOTE:
+																Do not register the volunteer if weight is less than
+																50kgs -NOT APPLICABLE</strong></i></label></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="row">
+								<div class="control-group col-md-12 ">
+									<table class="table table-bordered">
+
+										<tbody>
+											<tr>
+												<td style="width: 14%;"><label>Allotted
+														Registration number</label></td>
+												<td>AZ<span th:text="${volunteerTO.pkey}"></span></td>
+												<td><label>Remarks:</label></td>
+
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="row">
+								<div class="control-group col-md-12 ">
+									<table class="table table-bordered">
+
+										<tbody>
+											<tr>
+
+
+												<td class="col-md-4"><label>Registered By(sign
+														and date):</label></td>
+
+
+											</tr>
+
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="row">
+								<div class="control-group col-md-12 ">
+									<table class="table table-bordered">
+
+										<tbody>
+											<tr style="display:none">
+
+												<td class="col-md-4"><label>Checked By(sign and
+														date):</label></td>
+
+											</tr>
+
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="wrap" style="margin-top: 12%">
+								<!--<img src="/vms/resources/images/P0001.jpg" />-->
+								<p class="desc" th:text="*{name}" style="left: 260px" />
+								<p class="date"
+									th:text="${#dates.format(today, 'dd-MMM-yyyy').toUpperCase()}" />
+								<p class="reg">
+									AZ<span th:text="${volunteerTO.pkey}"></span>
+								</p>
+
+							</div>
+							<!--<div class="wrap" style="margin-top: 21%">
+
+								<img src="/vms/resources/images/P0002.jpg" />
+
+							</div>
+							<div class="wrap" style="margin-top: 22%">
+
+								<img src="/vms/resources/images/P0003.jpg" />
+
+							</div>
+							<div class="wrap" style="margin-top: 22%">
+
+								<img src="/vms/resources/images/P0004.jpg" />
+
+							</div>
+							<div class="wrap" style="margin-top: 27%">
+
+								<img src="/vms/resources/images/P0005.jpg" />
+
+							</div>
+							<div class="wrap" style="margin-top: 22%">
+
+								<img src="/vms/resources/images/P0006.jpg" />
+
+							</div>-->
+						</div>
+
+						<div class="box-footer">
+							<div class="row">
+								<a onclick="window.print()" id="printbutton"
+									class="btn btn-primary pull-right " style="margin-right: 10px;">Print</a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+	</section>
+
+
+</body>
+</html>

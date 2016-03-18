@@ -1,0 +1,199 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout">
+<head>
+<script src="http://code.jquery.com/jquery-1.11.2.js" ></script>
+	<script type="text/javascript">
+	/*<![CDATA[*/
+	$(document).ready(function(){
+  var bmiVal = $('#bmi').val();
+        
+        if( bmiVal <= 30.00 && bmiVal >= 18.50){
+			 document.getElementById("BMIYES").checked = true;
+   
+		} else {
+     document.getElementById("BMINO").checked = true;   
+			
+		}
+        
+ var weightVal = $('#WEIGHT').val();
+        
+        if( weightVal >= 50.0 ){
+			 document.getElementById("WEIGHTYES").checked = true;
+   
+		} else {
+     document.getElementById("WEIGHTNO").checked = true;   
+			
+		}
+        
+ 
+			});	
+	/*]]>*/
+	</script>
+	<style>
+        .wrap{
+	display:block !important;
+	}
+	.wrap .printimage{
+	  height: 780px;
+	}
+	.desc {
+  display: block;
+  position: absolute;
+  width: 8%;
+  top: 22%;
+  left: 190px;
+  z-index: 2;
+}
+.wrap .date {
+   display: block;
+  position: absolute;
+  width: 15%;
+  top: 22%;
+   left: 417px;
+  z-index: 2;
+}
+.wrap .tick {
+   display: block;
+  position: absolute;
+  width: 15%;
+  top: 18.7%;
+  left: 201px;
+  z-index: 2;
+}
+
+    .hideprint{
+    
+    }
+    @media print{
+    #wid{
+    width:100%;
+   
+    }
+        #img6
+    {
+    margin-top:14%;
+    }
+    #img5
+    {
+    margin-top:14%;
+    }
+    #img4
+    {
+    margin-top:14%;
+    }
+    #img3
+    {
+    margin-top:10%;
+    }
+    #img2{
+    margin-top:4%;
+    }
+    .wrap .printimage{
+	  height: 880px;
+	  width:100%;
+	}
+    .wrap .date {
+   display: block;
+  position: absolute;
+  width: 15%;
+  top: 22%;
+  left: 86% !important;
+  z-index: 2;
+}
+    .desc {
+ 
+  top: 22%;
+ left:38%;
+}
+.wrap .reg {
+  display: block;
+  position: absolute;
+  width: 15%;
+  top: 30%;
+  left: 41%;
+  z-index: 2;
+}
+.wrap .tick
+{
+display: block;
+  position: absolute;
+  width: 15%;
+  top: 18.7%;
+  left: 41.5%;
+  z-index: 2;
+}
+
+    .hideprint{
+    display: block !important;
+    }
+    }
+    </style>
+</head>
+<body th:replace="layout :: body(section_heading='VOLUNTEER CONSENT FORM')">
+	<section layout:fragment="content" class="content">
+		<!-- title row -->
+
+		<div class="row">
+			<div class="col-md-12">
+				<!-- general form elements -->
+				<div class="box box-primary">
+
+					<!-- /.box-header -->
+					<!-- form start -->
+					<form action="#" th:action="@{/admin/volunteer/newprint}"
+						name="registerVolunteer" th:object="${volunteerTO}" method="post">
+						<!-- <input type="hidden" th:field="*{volunteerStatus}" th:value="${(com.azidus.vms.domain.enums.VolunteerStatus).Registered}" /> -->
+
+						 
+						 
+						<div class="box-body">
+                            <div >
+<a onclick="window.print()" id="printbutton" class="btn btn-primary pull-right">Print</a>
+</div>
+						
+							 
+							<div class="wrap" >
+								<img class="printimage" id="wid" src="/vms/resources/images/P0001.jpg" />
+								<p class="tick">x</p>
+								<p class="desc" th:text="*{name}"  />
+							<p class="date" th:text="${#dates.format(volunteerTO.preRegistrationDate, 'dd-MMM-yyyy').toUpperCase()}"/>
+ 
+
+							</div>
+							<div class="wrap" id="img2">
+
+								<img class="printimage" src="/vms/resources/images/P0002.jpg" />
+
+							</div>
+							<div class="wrap" id="img3">
+
+								<img class="printimage" src="/vms/resources/images/P0003.jpg" />
+
+							</div>
+							<div class="wrap"  id="img4">
+
+								<img class="printimage" src="/vms/resources/images/P0004.jpg" />
+
+							</div>
+							<div class="wrap"  id="img5">
+
+								<img class="printimage" src="/vms/resources/images/P0005.jpg" />
+
+							</div>
+							<div class="wrap"   id="img6">
+
+								<img class="printimage" src="/vms/resources/images/P0006.jpg" />
+
+							</div>
+						</div>
+
+						
+					</form>
+				</div>
+			</div>
+		</div>
+
+	</section>
+
+
+</body>
+</html>

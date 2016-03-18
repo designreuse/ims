@@ -1,0 +1,55 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+<head>
+<style>
+@media print
+{
+.noprint
+{
+display:none;
+}
+.box-footer
+{
+display:none;
+}
+}
+</style>
+</head>
+
+<body th:replace="layout :: body(section_heading='Consent Form')">
+	<section layout:fragment="content" class="content">
+		<form action="#" th:action="@{/admin/volunteer/loadconsentform}" name="Volunteerconsentform" th:object="${volunteerTO}" method="POST">
+		<div class="box box-primary">
+		<div class="box-body">
+							<div class="row">
+								<div class="control-group col-md-4 noprint">
+									<label>Volunteer Name</label> <input type="text" pattern="[a-zA-Z ]{1,40}$" class=" form-control" required="required"
+										data-validation-pattern-message="Must be Alphabet and minumum 1 letter" th:field="*{name}" autocomplete="off"
+										placeholder="Name of the volunteer" />
+									<p class="help-block"></p>
+								</div>
+								  <div class="control-group col-md-4 noprint">
+									<label>Registered Date</label> <input type="date"  class=" form-control" required="required"  th:field="*{preRegistrationDate}"
+										  autocomplete="off"/>
+									
+								</div> 
+								
+								
+						</div>
+						
+						
+				</div>			
+		
+		<div class="box-footer">
+								<button type="submit" name="submit" class="btn btn-primary"  >Submit </button>
+							
+							
+							</div></div>
+							
+		</form>
+
+
+	</section>
+</body>
+
+</html>

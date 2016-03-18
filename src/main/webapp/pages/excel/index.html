@@ -1,0 +1,82 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+
+<head th:fragment="htmlhead">
+<meta charset="utf-8"></meta>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+<link rel="shortcut icon" type="image/png" th:href="@{/images/favicon.png}"></link>
+
+<title>Excel Automation Tool</title>
+
+<link th:href="@{/webjars/bootstrap/3.3.0/css/bootstrap.min.css}" rel="stylesheet"></link>
+<link th:href="@{/webjars/font-awesome/4.2.0/css/font-awesome.min.css}" rel="stylesheet"></link>
+<link th:href="@{/webjars/ionicons/1.5.2/css/ionicons.min.css}" rel="stylesheet" type="text/css" />
+<!-- DATA TABLES -->
+<link th:href="@{/webjars/datatables-plugins/9dcbecd42ad/integration/bootstrap/3/dataTables.bootstrap.css}" rel="stylesheet"
+	type="text/css" />
+<!-- Theme style -->
+<link th:href="@{/resources/css/AdminLTE.css}" rel="stylesheet" type="text/css" />
+</head>
+
+
+
+<body>
+	 
+	<section layout:fragment="content" class="content">
+		<div class="row">
+			<div class="col-md-12">
+				<!-- general form elements -->
+				<div class="box box-primary">
+					<div class="box-header">
+						<h3 class="box-title" style="color: blue;"> Excel Automation Tool </h3>
+					</div>
+					<!-- /.box-header -->
+					<!-- form start -->
+					<form action="#" th:action="@{/excel/upload}" th:object="${excelInputOutputTO}" method="post" enctype="multipart/form-data">
+						<div class="box-body">
+							   
+							<div class="row">
+								<div class="control-group col-md-6">
+									<label for="photo">Upload QA Concentration Excel File</label> <input type="file" name="inputFileNameII" id="inputFileNameII" />
+									<p class="help-block">Upload excel file of max size 5MB</p>
+								</div>
+								<div class="control-group col-md-6">
+									<label for="photo">Upload Randomization schedule Excel File</label> <input type="file" name="randomizationSchFileName" id="randomizationSchFileName" />
+									<p class="help-block">Upload excel file of max size 5MB</p>
+								</div>
+							</div>
+							<div class="row">
+								<div class="control-group col-md-6">
+								<label for="photo">Name of the output file<font style="color: red;">(without dot or .xlsx after filename)</font></label> 
+								
+								<input type="text"  class=" form-control"
+										 required="required"
+										th:field="*{outputFileNameII}" autocomplete="off" />
+								
+ 								</div>
+								</div>
+							<div class="row">
+								<div class="control-group col-md-6">
+									<ul>
+									<li>Please note that the format has to be exactly same as the initial sample provided.</li>
+									<li>Any change in the format like heading change,Structure changes will result in failure.</li>
+									</ul>
+								</div>
+								 
+							</div>
+						</div>
+
+						<!-- /.box-body -->
+
+						<div class="box-footer">
+							<button type="submit" name="submit" class="btn btn-primary">Submit</button>
+						</div>
+					</form>
+
+					<!-- /.box -->
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

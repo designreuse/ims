@@ -1,0 +1,219 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout"
+	xmlns:dt="http://github.com/dandelion/datatables"
+	xmlns:ddl="http://www.thymeleaf.org/dandelion">
+<head>
+ <style>
+ #subjReference{
+ float:left;  margin-right: 42%;
+ }
+         @media print{
+         #subno{
+         padding-right:35px;
+         }
+         #subjReference{
+display:none;
+}
+    #referenceno{
+    border:0px;}
+   #savedemographicreport{
+   display:none;
+   }
+    }
+    .customtd
+    {
+    padding: 1px 18px !important;
+   
+    }
+    .hidden-print{display: none;}
+        
+        @media print{
+        .hideaction{
+        display:none;
+        }
+          .customtd{
+       padding: 1px 18px !important;
+   
+    }
+            .box,.box{border-top: 0;}
+            .hidden-print{display: block !important;}
+            
+       
+      /*  @page
+    {
+    margin-left:.2cm;
+
+    } */
+         #action{display:none;}
+         #printdisplay{dispaly:block;}
+         #myTableId_length{display: none;}
+         #myTableId_filter{display: none;}
+         .dataTables_export {display: none;}
+         #myTableId_info{display: none;}
+         #myTableId_paginate{display: none;}
+            }
+    </style>
+  
+    
+    </head>
+<body th:replace="layout :: body(section_heading='Demographic Report')">
+	
+	<section layout:fragment="content" class="content">
+ <form name="demographicForm" action="#"
+			th:action="@{/admin/study/demographicreport}" method="post">
+
+<!-- start -->
+  
+<div class="row">
+			<div class="col-xs-12">
+			
+				<div class="box">
+					<div class="box-body "
+						ddl:bundle-includes="filtering,moment,bootstrap-datepicker">
+                        <div class="text-center hidden-print" style="margin-top:-13px"><h4 style="font-size:22px;font-weight:600px;">Demographic Report </h4></div>
+                        <div class="pull-right hidden-print" id="Logo" style="margin-top:-12px">
+										<img src="/vms/resources/images/aziduslogo.jpg"  style="width: 160px;" />
+									</div>
+							<div>
+                                <div class="col-md-2  col-xs-3 col-sm-2 col-lg-2"><span style="color: #3C8DBC; font-weight: bolder;">Study No:</span><span  th:text="*{studyNo}" /> 	</div>							 
+															 
+							</div> 
+                    <input type="hidden" name="subjReferences" id="subjReferences"/>
+                   
+							<input type="hidden" name="studyNo" th:value="${studyNo}" />
+						<table id="myTableId" class="table table-bordered "  dt:table="true">
+
+							<thead>
+								<tr>
+                                    
+									<th dt:filterCssClass="form-control" dt:renderFunction="custom-rendering#modifySubjNoScreening" style="padding: 3px 18px;width:50px" dt:sortInitDirection="asc">SubjectNo</th>
+									<th dt:filterCssClass="form-control" style="  padding: 3px 0px;">Age(Yrs)</th>
+									<th dt:filterCssClass="form-control" style="  padding: 3px 0px;">Height(m)</th>
+									<th dt:filterCssClass="form-control" style="  padding: 3px 0px;">Weight(Kg)</th>
+									<th dt:filterCssClass="form-control" style="  padding: 3px 0px;">BMI(kg/m2)</th>
+									<th dt:filterCssClass="form-control" style="  padding: 3px 0px;">Gender</th>
+									<th dt:filterCssClass="form-control"  style="  padding: 3px 0px;">Race</th>
+									<th dt:filterCssClass="form-control" id="action" style="  padding: 3px 18px;">Actions</th>
+								</tr>
+							</thead>
+							<tbody>
+ 								<tr th:each="volunteerTO,iterationStatus : *{volunteers}" >
+									<td class="customtd" ><input type="checkbox" disabled="disabled"
+											name="subjReference" id="subjReference"
+											th:value="*{iterationStatus.count}+'|'+*{volunteerTO.pkey}+'|'+*{volunteerTO.age}+'|'+*{volunteerTO.height}+'|'+*{volunteerTO.weight}+'|'+*{volunteerTO.bmi}+'|'+*{volunteerTO.gender}" /><div  th:text="*{iterationStatus.count}" style="float: right; " id="subno" /></td>
+									<td class="customtd"><div th:text="*{volunteerTO.age}" /></td>
+									<td class="customtd"><div th:text="*{volunteerTO.height}" /></td>
+									<td class="customtd"><div th:text="*{volunteerTO.weight}" /></td>
+									<td class="customtd"><div th:text="*{volunteerTO.bmi}" /></td>
+									<td class="customtd"><div th:text="*{volunteerTO.gender}" /></td>
+									<td class="customtd">Asian</td>
+                        
+<!--
+									<td><a
+										th:href="@{/vms/admin/study/print/}+${volunteerTO.pkey}">Print
+											Subject Id Card</a></td>
+-->
+
+                                    
+                                    <td style="padding: 1px 18px;" class="hideaction">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-success " style="padding-bottom: 1px;padding-left: 6px;padding-right: 6px;padding-top: 3px;">Action</button>
+                                            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" style="padding-bottom: 10px; padding-top: 10px;">
+                                                <span class="caret"></span>
+                                                <span class="sr-only">Toggle Dropdown</span>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li><a th:href="@{/admin/study/print/}+${volunteerTO.pkey}+@{?(subjectNo=*{iterationStatus.count})}"  onclick="window.open(this.href,'','width=940,height=480,resizable,scrollbars,toolbar,menubar');return false;" class="popup" >PrintSubject ID Card</a></li></ul>
+                                        </div>
+                                    </td>
+                                    
+                                    
+                                    
+                                    
+                                    
+								</tr> 
+							</tbody>
+
+
+						</table>
+
+
+
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- <script>
+		function openprintwindow(event){
+			event.preventDefault();
+			debugger;
+			var element = $(event.currentTarget);
+			var printurl = element.attr('href');
+			window.open("printurl", "", "width=200, height=100");
+		}
+		</script> -->
+<div class="control-group col-md-2  col-xs-3 col-sm-3 col-lg-3"
+				style="margin-top: 20px;">
+
+				 
+				<button type="submit" name="submit" class="btn btn-primary" id="savedemographicreport" onClick="return createDemographicList();">Save
+					Demographic Report</button>
+			</div>
+<a onClick="window.print()" id="printbutton" class="btn btn-primary pull-right">Print</a>
+<!-- end -->
+
+
+		<!-- <div class="row">
+			<div class="col-xs-12">
+				<div class="box">
+					<div class="box-body table-responsive"
+						ddl:bundle-includes="filtering,moment,bootstrap-datepicker">
+						<table>
+
+							<thead>
+								<tr>
+									<th>Subject</th>
+									<th>Age</th>
+									<th>Height</th>
+									<th>Weight</th>
+									<th>BMI</th>
+									<th>Gender</th>
+									<th>Race</th>
+									<th>Actions</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="volunteerTO,iterationStatus : *{volunteers}">
+									<td><div th:text="*{iterationStatus.count}" /></td>
+									<td><div th:text="*{volunteerTO.age}" /></td>
+									<td><div th:text="*{volunteerTO.height}" /></td>
+									<td><div th:text="*{volunteerTO.weight}" /></td>
+									<td><div th:text="*{volunteerTO.bmi}" /></td>
+									<td><div th:text="*{volunteerTO.gender}" /></td>
+									<td>Asian</td>
+									<td><a
+										th:href="@{/vms/admin/study/print/}+${volunteerTO.pkey}">Print
+											Subject Id Card</a></td>
+
+								</tr>
+							</tbody>
+
+
+						</table>
+
+
+
+
+
+					</div>
+				</div>
+			</div>
+		</div> -->
+</form>
+	</section>
+	
+</body>
+</html>

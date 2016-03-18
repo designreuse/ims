@@ -1,0 +1,112 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout">
+<head><title>User Management</title>
+</head>
+<body th:replace="layout :: body(section_heading='User Management', page_heading='Edit user')">
+	<div layout:fragment="header-buttons">
+		<a th:href="@{/admin/user}" class="btn btn-primary pull-right" role="button"><i class="fa fa-list-ul"></i> List Users</a>
+	</div>
+	<section layout:fragment="content" class="content">
+		<div class="row">
+			<div class="col-md-12">
+				<!-- general form elements -->
+				<div class="box box-primary">
+					<div class="box-header">
+						<h3 class="box-title">Edit User</h3>
+					</div>
+					<!-- /.box-header -->
+					<!-- form start -->
+					<form action="#" th:action="@{/admin/user/update}" th:object="${userTO}" method="post" enctype="multipart/form-data">
+						<input type="hidden" th:field="*{pkey}" th:value="${pkey}" />
+						<div class="box-body">
+							<div class="row">
+								<div class="control-group col-md-6">
+									<label>User Name</label> <input disabled="disabled" type="text" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{5,20}$"
+										class=" form-control" required="required"
+										data-validation-pattern-message="Must be between 5 to 20 with Alphanumberic, -, ." th:field="*{name}" autocomplete="off" />
+									<p class="help-block"></p>
+								</div>
+								<div class="control-group col-md-6">
+									<label> </label> <input class="btn btn-primary" type="button" id="btnEnablePasswordUpdate" value="Update Password" /> <input
+										type="button" id="btnDisablePasswordUpdate" value="Remove Password Update" class="btn btn-default" /><br />
+								</div>
+							</div>
+							<div class="row">
+								<div class="control-group col-md-6">
+									<label>Password</label> <input disabled="disabled" type="password" th:field="*{password}" class=" form-control"
+										pattern="(?=^.{8,20}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[a-z]).*$" autocomplete="off"
+										data-validation-pattern-message="Lowercase, number between 8 to 20 " />
+									<p class="help-block"></p>
+								</div>
+								<div class="control-group col-md-6">
+									<label>Confirm Password</label> <input disabled="disabled" type="password" name="passwordAgain" id="passwordAgain"
+										class=" form-control" data-validation-matches-match="password"
+										data-validation-matches-message="Must match passwrod entered above" />
+									<p class="help-block"></p>
+								</div>
+
+							</div>
+							<div class="row">
+								<div class="control-group col-md-6">
+									<label>First name</label> <input type="text" th:field="*{firstName}" class=" form-control" pattern="[a-zA-Z ]*$"
+										data-validation-pattern-message="Must be Alphabet" required="required" />
+									<p class="help-block"></p>
+								</div>
+								<div class="control-group col-md-6">
+									<label>Last name</label> <input type="text" th:field="*{lastName}" class=" form-control" pattern="[a-zA-Z ]*$"
+										data-validation-pattern-message="Must be Alphabet" required="required" />
+									<p class="help-block"></p>
+								</div>
+							</div>
+							<div class="row">
+								<div class="control-group col-md-6">
+									<label>Email</label> <input type="email" th:field="*{email}" required="required" class=" form-control" />
+									<p class="help-block"></p>
+								</div>
+								<div class="control-group col-md-6">
+									<label>Contact Number</label>
+									<div class="input-group">
+										<div class="input-group-addon">
+											<i class="fa fa-phone"></i>
+										</div>
+										<input type="text" th:field="*{contactNumber}" class="form-control"
+											data-inputmask="'mask': ['999-999-9999', '+099 99 99 9999[9]']" data-mask="" />
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="control-group col-md-6">
+									<label>Department</label> <input type="text" th:field="*{department}" class=" form-control" pattern="[a-zA-Z ]*$"
+										data-validation-pattern-message="Must be Alphabet"/>
+									<p class="help-block"></p>	
+								</div>
+								<div class="control-group col-md-6">
+									<label>Role</label> <select th:field="*{role.pkey}" class="form-control" required="required">
+										<option value="0">Select Role</option>
+										<option th:each="availableRole : *{availableRoles}" th:value="${availableRole.pkey}" th:text="${availableRole.name}"></option>
+									</select>
+
+								</div>
+
+							</div>
+							<div class="row">
+								<div class="control-group col-md-6">
+									<label for="photo">Upload Photo</label> <input type="file" name="photo" id="photo" />
+									<p class="help-block">Upload Jpeg/PNG file of max size 5MB</p>
+								</div>
+							</div>
+						</div>
+
+						<!-- /.box-body -->
+
+						<div class="box-footer">
+							<button type="submit" name="submit" class="btn btn-primary">Submit</button>
+						</div>
+					</form>
+
+					<!-- /.box -->
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout"
+	xmlns:dt="http://github.com/dandelion/datatables" xmlns:ddl="http://www.thymeleaf.org/dandelion">
+
+<body th:replace="layout :: body(section_heading='Screening')">
+	<div layout:fragment="header-buttons">
+		<a th:href="@{/admin/volunteer/register}" class="btn btn-success pull-right" role="button"><i class="fa fa-plus"></i>Register
+			New Volunteer</a>
+	</div>
+	<section layout:fragment="content" class="content">
+	<form action="#" th:action="@{/admin/screening/search}"  name="searchVolunteerScreeningForm"  th:object="${screeningSearchTO}" method="post">
+		<div class="row">
+			<div class="col-md-12">
+				<!-- general form elements -->
+				<div class="box box-primary">
+					<div class="box-header">
+						<h3 class="box-title">MasterList Search</h3>
+					</div>
+					<!-- /.box-header -->
+					<!-- form start -->
+					
+						<div class="box-body"  data-widget="collapse">
+							<div class="row">  
+								<div class="control-group col-md-4">
+									<label>Volunteer ID</label>
+									<div id="pkeyFilter"></div>
+								</div>
+								<div class="control-group col-md-4">
+									<label>Screening Date</label>
+									<div id="lastScreeningCompletionDateFilter"></div>
+								</div>
+								<div class="control-group col-md-4">
+									 
+									<label>Screening Status </label>    
+									<div id="screeningStatusFilter"></div>
+								</div>
+							</div>
+
+							<!-- /.box-body -->
+						</div>
+                    <div class="box-body"  data-widget="collapse">
+							<div class="row"> 
+								<div class="control-group col-md-1 col-xs-1 col-sm-1 col-lg-1" style="margin-top: 20px;">
+									<a id="filterButton" class="btn btn-primary" role="button">Search</a>
+								</div>
+								<div class="control-group col-md-2  col-xs-2 col-sm-2 col-lg-2" style="margin-top: 20px;">
+									 
+									<a id="filterClearButton" class="btn btn-default">Clear filters</a>
+								</div>
+                                <div class="control-group col-md-2  col-xs-3 col-sm-3 col-lg-3" style="margin-top: 20px;">
+									 
+									 <a id="selectbxbutton" class="btn btn-primary" role="button" onClick="checkBoxValues()">Selection of Eligible Subjects</a>
+								</div>
+								<div class="control-group col-md-2  col-xs-3 col-sm-3 col-lg-3" style="margin-top: 20px;">
+									 
+									 <a id="selectbxbutton" class="btn btn-primary" role="button" onClick="createMasterListValues()">Master List</a>
+								</div>
+                                 <div class="control-group col-md-3  col-xs-3 col-sm-3 col-lg-3" style="width: 24%;">
+					
+									 <label>Study Date for Bulk Update<input type="date"
+											th:field="*{bulkStudyUpdateDate}"
+											class="form-control" style="width: 170px;" /></label>
+								</div>
+                                 <div class="control-group col-md-3  col-xs-3 col-sm-3 col-lg-3">
+									 
+									 <label>Study No for Bulk Update/Master List<input type="text"
+											th:field="*{bulkStudyStudyNo}"
+											class="form-control" style="width: 170px;" /></label>	
+								</div>
+							</div>
+
+							<!-- /.box-body -->
+						</div>
+<!--
+						<div class="box-footer">
+							<a id="filterButton" class="btn btn-primary" role="button">Search</a>
+							 <a id="filterClearButton" class="btn btn-default">Clear filters</a>
+							 <a id="selectbxbutton" class="btn btn-primary" role="button" onClick="checkBoxValues()">Bulk Update for Study</a>
+							 <label>Study Date for Bulk Update<input type="date"
+											th:field="*{bulkStudyUpdateDate}"
+											class="form-control" style="width: 170px;" /></label>
+							<label>Study No for Bulk Update<input type="text"
+											th:field="*{bulkStudyStudyNo}"
+											class="form-control" style="width: 170px;" /></label>				
+						</div>
+-->
+
+					
+
+					<!-- /.box -->
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-12"> 
+				<div class="box">
+					<div class="box-body table-responsive" ddl:bundle-includes="filtering,moment,bootstrap-datepicker">
+						<table id="scrnTableId" dt:table="true" class="table table-bordered table-striped" dt:url="@{/admin/screening/search/pagination}" dt:serverside="true" dt:dom="l0rtip"
+							dt:processing="true" dt:filterplaceholder="none" dt:filterSelector="#filterButton"
+							dt:filterClearSelector="#filterClearButton">
+							<thead>
+								<tr>
+									<th dt:property="pkey" dt:filterCssClass="form-control" dt:renderFunction="custom-rendering#screeningView" dt:name="pkey"
+										dt:filterable="true" dt:selector="#pkeyFilter" dt:sortInitDirection="desc">ID</th>
+									<th dt:property="name" dt:name="name" dt:filterable="false" dt:selector="#nameFilter">Name</th>
+									<th dt:property="screeningStatus" dt:filterType="select"
+										dt:filterValues="['Qualified','Rejected']"
+										 dt:filterCssClass="form-control" dt:name="screeningStatus"
+										dt:selector="#screeningStatusFilter" dt:filterable="true">Screening Status</th>										
+									
+									<th dt:property="lastScreeningCompletionDate" dt:filterDateFormat="dd-mm-yyyy" dt:name="lastScreeningCompletionDate" dt:filterCssClass="form-control"
+										dt:renderFunction="custom-rendering#dtConversionView" dt:filterable="true" dt:selector="#lastScreeningCompletionDateFilter">Screening Date</th>
+									<th dt:property="mobileNo" dt:name="mobileNo" dt:filertable="false">Mobile</th>
+									<th style="width:10%" dt:property="actions" dt:name="actions" dt:renderFunction="custom-rendering#volunteerScreeninghAction" >Actions</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+</form>
+	</section>
+</body>
+</html>

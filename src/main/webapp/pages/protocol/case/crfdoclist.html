@@ -1,0 +1,70 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+
+
+<body
+	th:replace="layout :: body(section_heading='CRF List')">
+	<div layout:fragment="header-buttons">
+		<a th:href="@{/admin/protocol/case/load}"
+			class="btn btn-success pull-right" role="button"><i
+			class="fa fa-plus"></i> Add New</a>
+	</div>
+	<section layout:fragment="content" class="content">
+		<form action="#" th:action="@{/admin/protocol/case/search}"
+			name="searchVolunteerForm" th:object="${volunteerSearchTO}"
+			method="post">
+			<div class="row">
+
+				<div class="col-md-12">
+					<!-- general form elements -->
+					<div class="box box-primary">
+						 
+						<!-- /.box-header -->
+						<!-- form start -->
+						<div class="box-body" data-widget="collapse">
+
+
+							<!-- /.box-body -->
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="box">
+						<div class="box-body table-responsive"
+							ddl:bundle-includes="filtering,moment,bootstrap-datepicker">
+							<table id="myTableId" dt:table="true"
+								class="table table-bordered table-striped" export="csv,pdf"
+								dt:url="@{/admin/protocol/case/pages}" dt:serverside="true"
+								dt:dom="l0rtip" dt:processing="false" dt:filterplaceholder="none"
+								dt:filterSelector="#filterButton"
+								dt:filterClearSelector="#filterClearButton">
+								<thead>
+									<tr>
+										<th dt:property="createdTime" dt:filterCssClass="form-control"
+											dt:name="createdTime" dt:filterable="false"
+											dt:visible="false" dt:selector="#createdTimeFilter"
+											dt:sortInitDirection="desc">Created Date</th>
+										<th dt:property="studyNo" dt:filterCssClass="form-control"
+											dt:name="studyNo" dt:filterable="false" dt:visible="true"
+											dt:selector="#studyNoFilter" dt:sortInitDirection="desc">Study
+											No</th>
+										<th style="width: 10%" dt:property="studyNo" dt:name="actions"
+											dt:renderFunction="custom-rendering#getCrf">Actions</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</form>
+	</section>
+</body>
+
+</html>

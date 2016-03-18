@@ -1,0 +1,60 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout">
+<head><title>User Management</title>
+</head>
+<body th:replace="layout :: body(section_heading='Job Management', page_heading='Edit job')">
+	<div layout:fragment="header-buttons">
+		<a th:href="@{/admin/job}" class="btn btn-primary pull-right" role="button"><i class="fa fa-list-ul"></i> List Jobs</a>
+	</div>
+	<section layout:fragment="content" class="content">
+		<div class="row">
+			<div class="col-md-12">
+				<!-- general form elements -->
+				<div class="box box-primary">
+					<div class="box-header">
+						<h3 class="box-title">Edit Job</h3>
+					</div>
+					<!-- /.box-header -->
+					<!-- form start -->
+					<form action="#" th:action="@{/admin/job/update}" th:object="${jobTO}" method="post" enctype="multipart/form-data">
+						<input type="hidden" th:field="*{id}" th:value="${id}" />
+						<div class="box-body">
+							<div class="row">
+								<div class="control-group col-md-6">
+									<label>Job Name</label> <input readonly="readonly" type="text" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{4,20}$"
+										class=" form-control" required="required"
+										data-validation-pattern-message="Must be between 5 to 20 with Alphanumberic, -, ." th:field="*{name}" autocomplete="off" />
+									<p class="help-block"></p>
+								</div>
+								<div class="control-group col-md-6">
+									<label>Cron Expression</label> <input type="text" th:field="*{cronExpression}" class=" form-control" required="required" />
+									<p class="help-block"></p>
+								</div>
+								<div class="control-group col-md-6">
+									<label>Schedule</label>
+									<select th:field="*{schedule}" class="form-control" required="required">
+										<option value="Yes">Yes</option>
+										<option value="No">No</option>
+									</select>
+								</div>
+								<div class="control-group col-md-6">
+									<label>Job Type</label> <input readonly="readonly" type="text" th:field="*{jobType}" class=" form-control" required="required" />
+									<p class="help-block"></p>
+								</div>								
+							</div>
+						
+						</div>
+
+						<!-- /.box-body -->
+
+						<div class="box-footer">
+							<button type="submit" name="submit" class="btn btn-primary">Submit</button>
+						</div>
+					</form>
+
+					<!-- /.box -->
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

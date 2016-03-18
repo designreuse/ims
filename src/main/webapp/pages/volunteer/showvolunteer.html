@@ -1,0 +1,356 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout">
+
+<body th:replace="layout :: body(section_heading='Volunteer Management')">
+	
+	<section layout:fragment="content" class="content">
+		<div class="row">
+			<div class="col-md-12">
+				<!-- general form elements -->
+				<div class="box box-primary">
+					<div class="box-header">
+						<h3 class="box-title">
+							Update Volunteer : ID AZ<span th:text="*{pkey}"></span>
+						</h3>
+					</div>
+					<!-- /.box-header -->
+					<!-- form start -->
+					<form action="#" th:action="@{/admin/volunteer/update}" name="updateVolunteer" th:object="${volunteerTO}" method="post"  enctype="multipart/form-data">
+						<input type="hidden" th:field="*{pkey}" th:value="${pkey}" />
+
+						<div class="box-body">
+							<div class="row">
+								<div class="control-group col-md-3">
+									<label>Volunteer Name</label><input placeholder="Volunteer's Name" type="text" th:field="*{name}" class="form-control"  th:readonly="true" />
+									<p class="help-block"></p>
+								</div>
+								<div class="control-group col-md-3">
+									<label>Father's/Husband's Name</label> <input placeholder="Father's/Husband's Name" type="text" th:field="*{fatherName}" class="form-control"  th:readonly="true" />
+								</div>
+								<div class="control-group col-md-3 col-xs-3 col-lg-3 col-sm-3">
+									<label>Married</label>
+									<select th:field="*{married}" class="form-control"  th:readonly="true">
+										<option value="true">Yes</option>
+											<option value="false">No</option>
+									</select>
+								</div>
+								<div class="col-md-3 col-xs-3 ">
+									<label>Volunteer Status </label> <select th:field="*{volunteerStatus}" class="form-control" required="required">
+										<option th:each="volunteerStatus : ${T(com.azidus.vms.domain.enums.VolunteerStatus).values()}"
+											th:value="${volunteerStatus.name()}" th:text="${volunteerStatus.value}"></option>
+									</select>
+									<p class="help-block"></p>
+								</div>
+							</div>
+							<div class="row">
+								<div class="control-group col-md-3 col-xs-3 col-lg-3 col-sm-3">
+									<label>Volunteer Consent</label>
+									<select th:field="*{consent}" class="form-control"  th:readonly="true">
+										<option value="Yes">Yes</option>
+										<option value="No">No</option>
+									</select>
+								</div>
+								<div class="control-group col-md-3 col-xs-3 col-lg-3 col-sm-3">
+									<label>Date of Birth</label><input type="date" th:field="*{dob}" onfocusout="return calucateAge()"  th:readonly="true"
+										class="form-control" />
+									<script th:inline="javascript">
+										document.addEventListener(
+												'DOMContentLoaded', function() {
+													calucateAge();
+												}, false);
+									</script>
+								</div>
+								<div class="control-group col-md-3 col-xs-3 col-lg-3 col-sm-3">
+									<label>Age</label><input type="text" class="form-control" id="age" th:readonly="true" />
+								</div>
+								<div class="control-group col-md-3 col-xs-3 col-lg-3 col-sm-3">
+									<label>Gender</label> <select th:field="*{gender}" class="form-control"  th:readonly="true">
+										<option th:each="gender : ${T(com.azidus.vms.domain.enums.Gender).values()}" th:value="${gender.name()}"
+											th:text="${gender.value}" th:selected="${gender == T(com.azidus.vms.domain.enums.Gender).Male}"></option>
+									</select>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="control-group col-md-6">
+									<label>Address Line1</label> <input placeholder="Address Line1" type="text" th:field="*{address1}" class="form-control" th:readonly="true"
+										 />
+								</div>
+								<div class="control-group col-md-6">
+									<label>Address Line2</label> <input placeholder="Address Line2" type="text" th:field="*{address2}" class="form-control" th:readonly="true" />
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="control-group col-md-6">
+									<label>Area</label> <input placeholder="Area" type="text" th:field="*{area}" class="form-control" th:readonly="true"/>
+								</div>
+								<div class="control-group col-md-6">
+									<label>City</label> <input placeholder="City" type="text" th:field="*{city}" class="form-control"   />
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="control-group col-md-6">
+									<label>Pincode</label> <input placeholder="Pincode" type="text" th:field="*{pincode}" class="form-control" th:readonly="true" />
+								</div>
+								<div class="control-group col-md-6">
+									<label>State</label> <select th:field="*{state}" class="form-control"  th:readonly="true">
+										<option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+										<option value="Andhra Pradesh">Andhra Pradesh</option>
+										<option value="Arunachal Pradesh">Arunachal Pradesh</option>
+										<option value="Assam">Assam</option>
+										<option value="Bihar">Bihar</option>
+										<option value="Chandigarh">Chandigarh</option>
+										<option value="Chhattisgarh">Chhattisgarh</option>
+										<option value="Dadra and Nagar Haveli">Dadra and Nagar Haveli</option>
+										<option value="Daman and Diu">Daman and Diu</option>
+										<option value="Delhi">Delhi</option>
+										<option value="Goa">Goa</option>
+										<option value="Gujarat">Gujarat</option>
+										<option value="Haryana">Haryana</option>
+										<option value="Himachal Pradesh">Himachal Pradesh</option>
+										<option value="Jammu and Kashmir">Jammu and Kashmir</option>
+										<option value="Jharkhand">Jharkhand</option>
+										<option value="Karnataka">Karnataka</option>
+										<option value="Kerala">Kerala</option>
+										<option value="Lakshadweep">Lakshadweep</option>
+										<option value="Madhya Pradesh">Madhya Pradesh</option>
+										<option value="Maharashtra">Maharashtra</option>
+										<option value="Manipur">Manipur</option>
+										<option value="Meghalaya">Meghalaya</option>
+										<option value="Mizoram">Mizoram</option>
+										<option value="Nagaland">Nagaland</option>
+										<option value="Odisha">Odisha</option>
+										<option value="Puducherry">Puducherry</option>
+										<option value="Punjab">Punjab</option>
+										<option value="Rajasthan">Rajasthan</option>
+										<option value="Sikkim">Sikkim</option>
+										<option value="Tamilnadu" selected="selected">Tamilnadu</option>
+										<option value="Tripura">Tripura</option>
+										<option value="Uttar Pradesh">Uttar Pradesh</option>
+										<option value="Uttarakhand">Uttarakhand</option>
+										<option value="West Bengal">West Bengal</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="control-group col-md-6">
+									<label>Occupation</label> <input placeholder="Occupation" type="text" th:field="*{occupation}" class="form-control" th:readonly="true" />
+								</div>
+								<div class="control-group col-md-6">
+									<label>ID Proof</label> <input placeholder="Id Proof" type="text" th:field="*{idProof}" class="form-control" th:readonly="true"
+										 />
+								</div>
+								
+								 
+							</div>
+
+							<div class="row">
+								<div class="control-group col-md-4 col-xs-4 ">
+									<label>Email </label> <input placeholder="email@example.com" type="email" th:field="*{email}" class="form-control" th:readonly="true" />
+								</div>
+
+								<div class="control-group col-md-4">
+									<label>Mobile</label>
+									<div class="input-group">
+										<div class="input-group-addon">
+											<i class="fa fa-phone"></i>
+										</div>
+										<input type="text" th:field="*{mobileNo}" class="form-control" required="required"  />
+									</div>
+								</div>
+								<div class="col-md-4 col-xs-4 ">
+									<label>Land Line </label>
+									<div class="input-group">
+										<div class="input-group-addon">
+											<i class="fa fa-phone"></i>
+										</div>
+										<input type="text" th:field="*{landlineNo}" class="form-control"  th:readonly="true"/>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-2 ">
+									<label>Language 1 </label> <select th:field="*{volunteerLanguageMap[0].language.pkey}" class="form-control" th:readonly="true"
+										>
+										<option value="0">Select Language</option>
+										<option th:each="availableLanguage : *{availableLanguages}" th:value="${availableLanguage.pkey}"
+											th:text="${availableLanguage.name}"></option>
+									</select>
+								</div>
+								<div style="margin-top: 20px;" class="checkbox col-md-2">
+									<input type="checkbox" th:field="*{volunteerLanguageMap[0].canRead}" th:readonly="true"/> Read <input type="checkbox"
+										th:field="*{volunteerLanguageMap[0].canWrite}" th:readonly="true"/> Write<input type="checkbox"
+										th:field="*{volunteerLanguageMap[0].canSpeak}" th:readonly="true" /> Speak
+								</div>
+								<div class="col-md-2 ">
+									<label>Language 2</label> <select th:field="*{volunteerLanguageMap[1].language.pkey}" class="form-control" th:readonly="true"
+										>
+										<option value="0">Select Language</option>
+										<option th:each="availableLanguage : *{availableLanguages}" th:value="${availableLanguage.pkey}"
+											th:text="${availableLanguage.name}"></option>
+									</select>
+								</div>
+								<div style="margin-top: 20px;" class="checkbox col-md-2">
+									<input type="checkbox" th:field="*{volunteerLanguageMap[1].canRead}" th:readonly="true" /> Read <input type="checkbox"
+										th:field="*{volunteerLanguageMap[1].canWrite}" th:readonly="true"/> Write<input type="checkbox"
+										th:field="*{volunteerLanguageMap[1].canSpeak}" th:readonly="true"/> Speak
+								</div>
+								<div class="col-md-2 ">
+									<label>Other Language</label> <select th:field="*{volunteerLanguageMap[2].language.pkey}" class="form-control" th:readonly="true"
+										>
+										<option value="0">Select Language</option>
+										<option th:each="availableLanguage : *{availableLanguages}" th:value="${availableLanguage.pkey}"
+											th:text="${availableLanguage.name}"></option>
+									</select>
+								</div>
+								<div style="margin-top: 20px;" class="checkbox col-md-2">
+									<input type="checkbox" th:field="*{volunteerLanguageMap[2].canRead}" th:readonly="true" /> Read <input type="checkbox"
+										th:field="*{volunteerLanguageMap[2].canWrite}" th:readonly="true"/> Write<input type="checkbox"
+										th:field="*{volunteerLanguageMap[2].canSpeak}" th:readonly="true" /> Speak
+								</div>
+							</div>
+							<div class="row">
+								<div class="control-group col-md-3 col-xs-3 col-lg-3 col-sm-3">
+									<label>Assessment Completed</label> 
+									<select th:field="*{assesment}" class="form-control"  th:readonly="true">
+										<option value="Yes">Yes</option>
+										<option value="No">No</option>
+									</select>
+								</div>
+							
+								<div class="control-group col-md-3 col-xs-3 col-lg-3 col-sm-3">
+									<label>Height </label> <input type="text" th:field="*{height}" class="form-control"  th:readonly="true" />
+								</div>
+								<div class="control-group col-md-3 col-xs-3 col-lg-3 col-sm-3">
+									<label>Weight </label> <input type="text" th:field="*{weight}" class="form-control"  th:readonly="true"
+										onfocusout="return calcBmiKgForEdit()" />
+								</div>
+								<div class="control-group col-md-3 col-xs-3 col-lg-3 col-sm-3">
+									<label>BMI </label> <input type="text" th:field="*{bmi}" class="form-control" th:readonly="true" th:readonly="true" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-4 col-xs-4 ">
+									<label>Food Habit </label> <select th:field="*{foodHabit}" class="form-control"  th:readonly="true">
+										<option th:each="foodHabit : ${T(com.azidus.vms.domain.enums.FoodHabit).values()}" th:value="${foodHabit.name()}"
+											th:text="${foodHabit.value}" th:selected="${foodHabit == T(com.azidus.vms.domain.enums.FoodHabit).Veg}"></option>
+									</select>
+								</div>
+								<div class="col-md-4 col-xs-4 ">
+									<label>Smoking Habit </label> <select th:field="*{smokingHabit}" class="form-control"  th:readonly="true">
+										<option th:each="smokingHabit : ${T(com.azidus.vms.domain.enums.SmokingHabit).values()}"
+											th:value="${smokingHabit.name()}" th:text="${smokingHabit.value}"
+											th:selected="${smokingHabit == T(com.azidus.vms.domain.enums.SmokingHabit).Smoker}"></option>
+									</select>
+								</div>
+								<div class="col-md-4 col-xs-4 ">
+									<label>Alcohol Habit </label> <select th:field="*{alcoholHabit}" class="form-control"  th:readonly="true">
+										<option th:each="alcoholHabit : ${T(com.azidus.vms.domain.enums.AlcoholHabit).values()}"
+											th:value="${alcoholHabit.name()}" th:text="${alcoholHabit.value}"
+											th:selected="${alcoholHabit == T(com.azidus.vms.domain.enums.AlcoholHabit).Non_Drinker}"></option>
+									</select>
+								</div>
+
+							</div>
+							<div class="row">
+								<div class="col-md-4 col-xs-4 ">
+									<label>Identification Mark</label> <input placeholder="Identification Mark" type="text" th:readonly="true"
+										th:field="*{identificationMark}" class="form-control" />
+								</div>
+								<div class="col-md-4 col-xs-4 ">
+									<label>LongTerm Illness</label> <input placeholder="LongTerm Illness" type="text" th:field="*{longTermIllness}" th:readonly="true"
+										class="form-control" />
+								</div>
+								<div class="col-md-4 col-xs-4 ">
+									<label>Educational Qualification</label> <input placeholder="Educational Qualification" type="text" th:field="*{education}" th:readonly="true"
+										class="form-control" />
+								</div>
+							</div>
+							<div class="row">
+									<div class="col-md-4 col-xs-4 ">
+										<label>Allergies</label> <input placeholder="Allergies" type="text" th:field="*{allergies}" class="form-control" th:readonly="true" />
+									</div>
+									<div class="col-md-4 col-xs-4 ">
+										<label>Remarks</label> <input placeholder="Remarks" type="text" th:field="*{remarks}" class="form-control" th:readonly="true" />
+									</div>								
+									<div class="col-md-4 col-xs-4 ">
+										<label>Finger Print ID</label> <input placeholder="fingerPrintId" type="text" th:field="*{fingerPrintId}" class="form-control"/>
+									</div>
+							</div>
+							<div class="row">
+							<div class="col-md-4 col-xs-4 ">
+							<label>Name of the Nominee</label> <input placeholder="Name of the Nominee" type="text" th:field="*{nomineeName}" class="form-control" />
+							</div>
+							<div class="col-md-4 col-xs-4 ">
+							<label>Annual Income of the Subject</label> <input placeholder="Annual Income of the Subject" type="text" th:field="*{income}" class="form-control" />
+							</div>
+							<div class="col-md-4 col-xs-4 ">
+							<label>Address of  Nominee</label><input placeholder="Address of  Nominee" type="text" th:field="*{nomineeAddress}" class="form-control" />
+							</div>
+							<div class="col-md-4 col-xs-4 ">
+							<label>Phone number of Nominee</label><input placeholder="Phone number of Nominee" type="text" th:field="*{nomineeMobileNo}" class="form-control" />
+							</div>
+							
+							<div class="col-md-4 col-xs-4 ">
+							<label>Relationship of the Nominee</label><input placeholder="Relationship of the Nominee" type="text" th:field="*{nomineeRelationship}" class="form-control" />
+							</div>
+							</div>
+							<div class="row">
+							<div class="col-md-4 col-xs-4 ">
+									<label for="photo">Upload Scanned Consent form</label> <input type="file" name="consentForm" id="consentForm" />
+									<p class="help-block">Upload file of max size 5MB</p>
+									</div>
+									<div class="col-md-4 col-xs-4 ">
+									<label for="photo">Upload Scanned Volunteer ID Proof</label> <input type="file" name="volunteerIdProof" id="volunteerIdProof"  />
+									<p class="help-block">Upload file of max size 5MB</p>
+									</div>
+							 </div>	
+							 <div class="row">	 
+								<div class="col-md-4 col-xs-4 ">
+									<label for="photo">Click     
+ 									<a
+													th:href="@{/admin/volunteer/showVolunteerDocs(pkey=${volunteerTO.pkey},type=consent)}"
+													onclick="window.open(this.href,'','width=940,height=480,resizable,scrollbars,toolbar,menubar');return false;">
+														here </a>to view the current consent form</label>
+									
+									
+								</div> 
+								
+								<div class="col-md-4 col-xs-4 ">
+									<label for="photo">Click     
+ 									<a
+													th:href="@{/admin/volunteer/showVolunteerDocs(pkey=${volunteerTO.pkey},type=idProof)}"
+													onclick="window.open(this.href,'','width=940,height=480,resizable,scrollbars,toolbar,menubar');return false;">
+														here </a>to view the current ID Proof</label>
+									
+									
+								</div> 
+								</div>
+								</div>
+								<div class="row"> 
+								<div class="row col-md-12">
+									<div class="control-group col-md-8">
+										<p class="help-block"></p>
+										<label>Volunteer Photo </label> <img th:src="'data:image/png;base64,' + *{cameraImageBase64String}" alt="" />
+									</div>
+								</div>
+							
+							<!-- /.box-body -->
+
+							<div class="box-footer">
+								<button type="submit" name="submit" class="btn btn-primary">Update Volunteer</button>
+							</div>
+						</div>
+					</form>
+
+					<!-- /.box -->
+				</div>
+			</div>
+		</div>
+
+
+	</section>
+</body>
+</html>

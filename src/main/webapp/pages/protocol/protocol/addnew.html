@@ -1,0 +1,65 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+<body
+	th:replace="layout :: body(section_heading='Study Filter')">
+	<!-- <div layout:fragment="header-buttons">
+		<a th:href="@{/admin/protocol/protocol/add}"
+			class="btn btn-success pull-right" role="button"><i
+			class="fa fa-plus"></i> Add New</a>
+	</div> -->
+	
+		<section layout:fragment="content" class="content" th:object="${studyTO}">
+		<form action="#" th:action="@{/admin/protocol/protocol/load}"
+		name="addnewprotocol"  method="post">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">Country of
+							Submission</label>
+						<div class="col-sm-8" style="padding-bottom: 15px;">
+							<select th:field="*{countryOfSubmission}" class="form-control"
+								required="required">
+								<option value="US">US FDA</option>
+								<option value="BRAZIL">Brazil</option>
+								<option value="CHILE">Chile</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-4 control-label">Study Design</label>
+						<div class="col-sm-8" style="padding-bottom: 15px;">
+							<select th:field="*{studyDesign}" class="form-control"
+								required="required">
+							<!-- 	<option value="singleperiod">Single Period</option> -->
+								<option value="twoperiod">Two period</option>
+								<option value="threeperiod">Three period</option>
+								<option value="fourperiod">Four period</option>
+								<option value="parallel">Parallel design</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-4 control-label">Type of Study</label>
+						<div class="col-sm-8">
+							<select th:field="*{type}" class="form-control"
+								required="required">
+								<option value="fasting">Fasting</option>
+								<option value="fed">Fed</option>
+								<option value="applesauce">Apple Sauce</option>
+							</select>
+						</div>
+					</div>
+<button type="submit" name="submit" class="btn btn-primary">Submit</button>
+					
+	 
+	<!-- /.table-responsive -->
+	</div>
+
+	</div>
+	</form>
+	</section>
+	
+</body>
+
+</html>

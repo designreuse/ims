@@ -1,0 +1,114 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout"
+	xmlns:dt="http://github.com/dandelion/datatables"
+	xmlns:ddl="http://www.thymeleaf.org/dandelion">
+
+<body th:replace="layout :: body(section_heading='Product Management')">
+
+	<section layout:fragment="content" class="content">
+		<div class="row">
+
+			<div class="col-md-12">
+				<!-- general form elements -->
+				<div class="box box-primary">
+					<div class="box-header">
+						<h3 class="box-title">Add Product</h3>
+					</div>
+					<form action="#" th:action="@{/admin/product/register}"
+						th:object="${productTO}" method="post">
+						<div class="box-body">
+							<div class="row">
+								<div class="control-group col-md-4">
+									<label>Product Name</label> 
+									<div>
+									<input type="text"
+										placeholder="Product Name" th:field="*{productName}"
+										required="required" />
+									</div>	
+								</div>
+								<div class="control-group col-md-4">
+									<label>Model</label> 
+									<div>
+									<input type="text" placeholder="Model"
+										th:field="*{model}" th:value="*{model}" />
+									</div>	
+								</div>
+								<div class="control-group col-md-4">
+									<label>Sku</label> 
+									<div>
+										<input type="text" placeholder="Sku"
+										th:field="*{sku}" required="required" />
+									</div>
+								</div>
+								<div class="control-group col-md-4">
+									<label>Location</label> 
+									<div>
+									<input type="text"
+										placeholder="Location" th:field="*{location}"
+										required="required" /></div>
+								</div>
+								<div class="control-group col-md-4">
+									<label>Quantity</label><div> <input type="text" placeholder="Sku"
+										th:field="*{quantity}" required="required" /></div>
+								</div>
+								<div class="control-group col-md-4">
+									<label>Price</label> 
+									<div>
+									<input type="text" placeholder="Sku"
+										th:field="*{price}" required="required" />
+										</div>
+								</div>
+								<div class="control-group col-md-4">
+									<label>Weight</label> 
+									<div>
+									<input type="text" placeholder="Weight"
+										th:field="*{weight}" required="required" />
+										</div>
+								</div>
+								<div class="control-group col-md-4">
+									<label>Status</label> 
+									<div>
+									<input type="text" placeholder="Status"
+										th:field="*{status}" required="required" />
+										</div>
+								</div>
+
+								<div class="control-group col-md-4">
+									<label>Added Date</label> 
+									<div>
+									<input type="date"
+										placeholder="Added Date" th:field="*{dateAdded}"
+										required="required" />
+									</div>	
+								</div>
+								<div class="control-group col-md-4">
+									<label>Modified Date</label> 
+									<div>
+									<input type="date"
+										placeholder="Modified Date" th:field="*{dateModified}"
+										required="required" />
+									</div>	
+								</div>
+								<div class="control-group col-md-4">
+									<label>Reorder Quantity</label> 
+									<div>
+									<input type="text"
+										placeholder="Reorder Quantity" th:field="*{reorderQuantity}"
+										required="required" />
+									</div>	
+								</div> 
+							</div> 	
+							<div class="box-footer">
+									<button type="submit" name="submit" class="btn btn-primary">Submit</button>
+									<a class="btn btn-primary" role="button"
+										th:href="@{/admin/product/search}">Back</a>
+								</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout"
+	xmlns:dt="http://github.com/dandelion/datatables" xmlns:ddl="http://www.thymeleaf.org/dandelion">
+
+<body th:replace="layout :: body(section_heading='Stock Management')">
+	
+	<section layout:fragment="content" class="content">
+	<!-- <form action="#" th:action="@{/admin/product/search}" name="searchProductForm" th:object="${productSearchTO}" method="post" id="searchProduct"> -->
+		<div class="row">
+		
+			<div class="col-md-12">
+				<!-- general form elements -->
+				<div class="box box-primary">
+					<div class="box-header">
+						<h3 class="box-title">Search Stock</h3>
+					</div>
+					<!-- /.box-header -->
+					<!-- form start -->
+					<!-- <form action="#" th:action="@{/admin/stock/search}" th:object="${productSearchTO}" method="post"> -->
+						<div class="box-body" data-widget="collapse">
+							<div class="row">
+								<div class="control-group col-md-2">
+									<label>Stock ID</label>
+									<div id="pkeyFilter"></div>
+								</div>
+								<div class="control-group col-md-4">
+									<label>Current Stock</label>
+									<div id="productFilter"></div>
+								</div>
+								<div class="control-group col-md-2">
+									<label>Product Name</label>
+									<div id="nameFilter"></div>
+								</div>
+								<div class="control-group col-md-4">
+									<label>StockValue</label>
+									<div id="stockValueFilter"></div>
+								</div>
+								<div class="control-group col-md-2">
+									<label>Product ID</label>
+									<div id="idFilter"></div>
+								</div>
+							</div>	
+							<div class="row">
+							</div>											
+							
+							<div class="box-footer">
+							<a id="filterButton" class="btn btn-primary" role="button" onClick="verify()">Search</a> <a class="btn btn-primary" role="button" th:href="@{/admin/stock/add}">Add Stock</a> <a id="filterClearButton" class="btn btn-default">Clear
+								filters</a>							
+							</div>
+					<!-- </form> -->
+					<!-- /.box -->
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="box">
+					<div class="box-body table-responsive" ddl:bundle-includes="filtering,moment,bootstrap-datepicker">
+						<table id="myTableId" dt:table="true" class="table table-bordered table-striped"  export="csv,pdf"
+							dt:url="@{/admin/stock/pagination}" dt:serverside="true" dt:dom="l0rtip" dt:processing="false"
+							dt:filterplaceholder="none" dt:filterSelector="#filterButton" dt:filterClearSelector="#filterClearButton" >
+							<thead>
+								<tr>
+								<th dt:property="pkey" dt:filterCssClass="form-control"  dt:name="pkey"
+										dt:filterable="true" dt:selector="#pkeyFilter" dt:sortInitDirection="desc" id="pkey" dt:renderFunction="custom-rendering#stockedit">ID</th>
+									<th dt:property="productName" dt:filterCssClass="form-control"  dt:name="productName"
+										dt:selector="#nameFilter" dt:filterable="true" dt:sortInitDirection="desc" id="name">ProductName</th>
+									<th dt:property="productId" dt:filterCssClass="form-control"  dt:name="productId"
+										dt:filterable="true" dt:selector="#idFilter" dt:sortInitDirection="desc" id="id">ProductID</th>
+									<th dt:property="currentStock" dt:filterCssClass="form-control"  dt:name="currentStock"
+										dt:selector="#productFilter" dt:filterable="true" dt:sortInitDirection="desc" id="name">currentStock</th>						
+										<th dt:property="stockValue" dt:filterCssClass="form-control"  dt:name="stockValue"
+										dt:selector="#stockValueFilter" dt:filterable="true" dt:sortInitDirection="desc" id="name">StockValue</th>
+									<th style="width: 10%" dt:property="action" dt:name="actions" dt:renderFunction="custom-rendering#stockSearchAction">Actions</th>											
+								</tr>
+							</thead>
+						</table>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		</div>
+<!-- </form> -->
+	</section>
+</body>
+</html>

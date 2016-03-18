@@ -1,0 +1,38 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout"
+	xmlns:dt="http://github.com/dandelion/datatables">
+<head><title>User Management</title>
+</head>
+<body th:replace="layout :: body(section_heading='User Management', page_heading='List of users')">
+	<div layout:fragment="header-buttons">
+		<a th:href="@{/admin/user/add}" class="btn btn-success pull-right" role="button"><i class="fa fa-plus"></i> Add User</a>
+	</div>
+	<section layout:fragment="content" class="content">
+
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="box">
+					<div class="box-body table-responsive">
+						<table id="page" class="table table-bordered table-striped" dt:info="true" dt:table="true"
+							dt:url="@{/admin/user/pagination}" dt:serverside="true" dt:processing="false" dt:filterable="true" dt:filterDelay="100000"
+							dt:filterMinLength="1">
+							<thead>
+								<tr>
+									<th dt:property="pkey" dt:name="pkey" dt:renderFunction="custom-rendering#userView" >UserId</th>
+									<th dt:property="name" dt:name="name">Name</th>
+									<th dt:property="firstName" dt:name="firstName">Firstname</th>
+									<th dt:property="lastName" dt:name="lastName">Lastname</th>
+									<th style="width: 10%" dt:property="pkey" dt:name="actions" dt:renderFunction="custom-rendering#userMgmtAction">Actions</th>
+								</tr>
+							</thead>
+
+
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	</section>
+</body>
+</html>

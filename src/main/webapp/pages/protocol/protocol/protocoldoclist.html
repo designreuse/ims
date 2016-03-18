@@ -1,0 +1,85 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+<body
+	th:replace="layout :: body(section_heading='Protocol Document List')">
+	<div layout:fragment="header-buttons">
+		<a th:href="@{/admin/protocol/protocol/add}"
+			class="btn btn-success pull-right" role="button"><i
+			class="fa fa-plus"></i> Add New Protocol</a>
+	</div>
+	<section layout:fragment="content" class="content">
+		<form action="#" th:action="@{/admin/protocol/protocol/search}"
+			name="searchVolunteerForm" th:object="${volunteerSearchTO}"
+			method="post">
+			<div class="row">
+
+				<div class="col-md-12">
+					<!-- general form elements -->
+					<div class="box box-primary">
+						<div class="box-header">
+							<h3 class="box-title">Protocol List</h3>
+						</div>
+						<!-- /.box-header -->
+						<!-- form start -->
+						<!-- <form action="#" th:action="@{/admin/product/search}" th:object="${volunteerSearchTO}" method="post"> -->
+						<div class="box-body" data-widget="collapse">
+
+
+							<!-- /.box-body -->
+						</div>
+						<!-- <div class="box-footer">
+							<a id="filterButton" class="btn btn-primary" role="button">Search</a> <a id="filterClearButton" class="btn btn-default">Clear
+								filters</a> 
+						</div> -->
+
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="box">
+						<div class="box-body table-responsive"
+							ddl:bundle-includes="filtering,moment,bootstrap-datepicker">
+							<table id="myTableId" dt:table="true"
+								class="table table-bordered table-striped" export="csv,pdf"
+								dt:url="@{/admin/protocol/pages}" dt:serverside="true"
+								dt:dom="l0rtip" dt:processing="false" dt:filterplaceholder="none"
+								dt:filterSelector="#filterButton"
+								dt:filterClearSelector="#filterClearButton">
+								<thead>
+									<tr>
+										<th dt:property="createdTime" dt:filterCssClass="form-control"
+											dt:name="createdTime" dt:filterable="false" dt:visible="false"
+											dt:selector="#createdTimeFilter"  dt:sortInitDirection="desc">Created Date</th>
+											<th dt:property="protocolNo" dt:filterCssClass="form-control"
+											dt:name="protocolNo" dt:filterable="false"
+											dt:selector="#protocolNoFilter">Protocol No</th>
+										<th dt:property="referenceProductName"
+											dt:filterCssClass="form-control"
+											dt:name="referenceProductName" dt:filterable="false"
+											dt:selector="#referenceProductNameFilter">Reference
+											Product Name</th>
+										<!-- <th dt:property="sponsorName" dt:filterCssClass="form-control"
+											dt:name="sponsorName" dt:filterable="false"
+											dt:selector="#sponsorNameNameFilter">Sponsor Name</th> -->
+										<th dt:property="testProductName"
+											dt:filterCssClass="form-control" dt:name="testProductName"
+											dt:filterable="false" dt:selector="#testProductNameFilter">Test
+											Product Name</th>
+										<th style="width: 10%" dt:property="protocolNo" dt:name="actions"
+											dt:renderFunction="custom-rendering#getProtocolDoc">Actions</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</form>
+	</section>
+</body>
+
+</html>

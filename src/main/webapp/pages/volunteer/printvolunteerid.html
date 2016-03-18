@@ -1,0 +1,98 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+
+<body th:replace="layout :: body(section_heading='Volunteer Management System')">
+	<section layout:fragment="content" class="content">
+		<div class="row">
+			<div class="col-md-12 ">
+				<!-- general form elements -->
+				<div class="box box-primary">
+					<div class="box-header">
+						<h3 class="box-title">Volunteer ID Card</h3>
+					</div>
+					<!-- /.box-header -->
+					<!-- form start -->
+					 <div class="container" id="printarea">
+    <div class="row">
+					 <div class="boxsize"> 
+					 <div class="insidebox color">
+    <div style="float:right">
+    <img src="/vms/resources/images/logoforidcard.jpg"/>
+    </div>
+    <div style="float:right;margin-right:25px;" class="text-center">
+        <p style="font-size:9px;  font-weight:bold;">AZIDUS LABORATORIES LIMITED</p>
+        <p style="font-size:9px; font-weight:bold;">No.23rd School Road,Vandalur Chennai - 600 048,Tamilnadu,INDIA</p> 
+         <p style="font-size:9px; font-weight:bold;">Office Tel. +91-44-27405244;Tamil Nadu, India</p>
+    </div>
+     </div>
+       <div class="inside1box toplessborder">
+    <div style="float:left">
+  <img th:src="'data:image/png;base64,' + *{volunteerTO.cameraImageBase64String}" alt=""  width="110px" height="125px;"/>
+    </div>
+    <div  style="float:right;width: 250px;">
+     <table class="fontsize">
+                       
+   <tbody>
+      <tr >
+         <td>Name</td>
+         <td th:text="${volunteerTO.name}" />
+      </tr>
+      <tr class="toplessborder">
+																<td>DOB</td>
+																<td th:text="${#dates.format(volunteerTO.dob, 'dd-MMM-yyyy').toUpperCase()}"/>
+															</tr>
+															<tr class="toplessborder">
+																<td>Volunteer Registration</td>
+                                                                <td ><span>AZ</span><span th:text="${volunteerTO.pkey}" /></td>
+															</tr>
+															<tr class="toplessborder">
+																<td>Phone No</td>
+																<td th:text="${volunteerTO.mobileNo}" />
+															</tr>
+															<tr class="toplessborder">
+																<td>Address</td>
+																<td> 
+																<p th:text="${volunteerTO.address1}  + ' ' + ${volunteerTO.address2}  + ' ' + ${volunteerTO.area} + ' ' + ${volunteerTO.city} "/>
+																 <!-- <p th:text="${volunteerTO.address2}  + ' ' + ${volunteerTO.area} + ' ' + ${volunteerTO.city}" /> -->
+																
+																</td>
+															</tr>
+
+       
+   </tbody>
+                            
+                            
+</table>
+        
+    </div>
+           </div>
+          
+          
+     
+           
+            
+                <div >
+            <table class="marginsize text-center color ">
+                
+                </table>
+                    </div>
+                
+                
+           
+           
+                
+                 <div class=" toplessborder text-center color" style="background-color:#87CEEB;"  ><strong>This ID card valid for verfication at Azdius only</strong></div>
+           
+                
+        
+</div>
+</div></div>
+<a onClick="window.print()" id="printbutton" class="btn btn-primary pull-right">Print</a>
+					<!-- /.box -->
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

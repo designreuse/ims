@@ -1,0 +1,313 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+<head>
+<script src="http://code.jquery.com/jquery-1.11.2.js" ></script>
+<script th:inline="javascript">
+	$(document).ready(function () {
+		var currentUrl = window.location.href;
+		var urlContents = currentUrl.split('/');
+		var pkey = urlContents[urlContents.length-1];
+		var volunteerInfo=window.location.protocol+"//"+window.location.host+"/vms/admin/screening/volunteer/"+pkey;
+		var isXrayInfo = false;
+		var lastXrayDate = "";
+		$.ajax({
+			url:volunteerInfo,
+			type:"GET",
+			success:function(data){
+				isXrayInfo = data.xrayStatus;
+				lastXrayDate = data.lastXrayDate;
+				if(isXrayInfo){
+					$("#xrayStatus").val("true");
+					$("#xrayUnComplete").hide();
+					var theDate = new Date(lastXrayDate);
+					var year = theDate.getFullYear();
+					var monthIndex = ("0" + (theDate.getMonth()+1)).slice(-2);
+					var day = ("0" + theDate.getDate()).slice(-2);
+					document.getElementById("xrayDate").value = year+"-"+monthIndex+"-"+day;
+				}
+			}
+		});
+		}); 
+		 </script>
+</head>
+<body th:replace="layout :: body(section_heading='Screening')">
+	<section layout:fragment="content" class="content">
+		<div class="row">
+			<div class="col-md-12">
+				<!-- general form elements -->
+				<div class="box box-primary">
+					<div class="box-header">
+						<h3 class="box-title">
+							Registration ID  AZ<span th:text="*{pkey}"></span>
+						</h3>
+					</div>
+
+					<!-- form start -->
+					<form action="#" th:action="@{/admin/screening/register}"
+						th:object="${volunteerTO}" method="post">
+						<input type="hidden" name="pkey" th:value="${pkey}" />
+						<div class="box-body">
+							<div class="row">
+								<div class="col-md-4 col-xs-4">
+									<label>Volunteer Name</label> <strong><p
+											th:text="*{name}" style="color: blue;" /></strong>
+									<p class="help-block"></p>
+								</div>
+								<div class="col-md-4 col-xs-4">
+									<label>Date of Birth</label>
+									<p th:text="${#dates.format(volunteerTO.dob, 'dd-MMM-yyyy').toUpperCase()}" />
+								</div>
+
+								<div class="col-md-4 col-xs-4">
+									<label>Gender</label>
+									<p th:text="*{gender}" />
+								</div>
+								<div class="col-md-4 col-xs-4">
+									<label>Mobile</label>
+									<p th:text="*{mobileNo}" />
+								</div>
+								<div class="col-md-4 col-xs-4">
+									<label>Address</label>
+									<p th:text="${volunteerTO.address1}  + ' ' + ${volunteerTO.address2}  + ' ' + ${volunteerTO.area} + ' ' + ${volunteerTO.city} "/>
+								</div>
+								<div class="col-md-4 col-xs-4">
+								<label>Occupation</label> <p th:text="*{occupation}"/>
+							</div>
+							<div class="col-md-4 col-xs-4">
+								<label>NomineeName</label> <p th:text="*{nomineeName}"/>
+							</div>
+							<div class="col-md-4 col-xs-4">
+								<label>Annual income of the subject</label> <p th:text="*{income}"/>
+							</div>
+							<div class="col-md-4 col-xs-4">
+								<label>Address of  Nominee</label> <p th:text="*{nomineeAddress}"/>
+							</div>
+							<div class="col-md-4 col-xs-4">
+								<label>Relationship of the Nominee</label> <p th:text="*{nomineeRelationship}"/>
+							</div>
+							
+							</div>
+							<div class="row"></div>
+
+							<div class="row">
+								<p />
+							</div>
+							<div class="row">
+								<p />
+							</div>
+
+							<div class="row">
+								<p />
+							</div>
+							<div class="row">
+								<p />
+							</div>
+							<div class="row">
+								<p />
+							</div>
+							<!-- start -->
+							<div th:object="${screeningTO}">
+							 <input
+							type="hidden" name="volunteerPkey"
+							id="volunteerPkey" th:value="${pkey}" />
+								<div class="row">
+									<div class="control-group col-md-4">
+
+										<label>ECG Completed </label> <select
+											th:field="*{ecgCompleted}">
+											<option value="true">Yes</option>
+											<option value="false">No</option>
+										</select>
+
+									</div>
+
+									<div class="col-md-4 col-xs-4">
+
+										<label>Blood sample received </label> <select
+											th:field="*{bloodSampleReceived}">
+											<option value="true">Yes</option>
+											<option value="false">No</option>
+										</select>
+
+									</div>
+
+									<div class="col-md-4 col-xs-4">
+
+										<label>Urine sample received </label> <select
+											th:field="*{urineSampleCollected}">
+											<option value="true">Yes</option>
+											<option value="false">No</option>
+										</select>
+
+									</div>
+
+								</div>
+								<div class="row">
+									<p />
+								</div>
+								<div class="row">
+									<p />
+								</div>
+								<div class="row">
+									<div class="col-md-4 col-xs-4">
+										<label>Lab results available</label> <select
+											th:field="*{labResultAvailable}">
+											<option value="true">Yes</option>
+											<option value="false">No</option>
+										</select>
+									</div>
+									<div class="col-md-4 col-xs-4">
+										<label>X-Ray completed</label> <select
+											th:field="*{xrayCompleted}" id="xrayStatus">
+											<option id="xrayComplete" value="true">Yes</option>
+											<option id="xrayUnComplete" value="false">No</option>
+										</select>
+									</div>
+								</div>
+								<div class="row">
+									<p />
+								</div>
+								<div class="row">
+									<p />
+								</div>
+								<div class="row"> 
+
+									<div class="control-group col-md-4">
+										<label>Date of Screening </label><input type="date"
+											required="required" th:field="*{screeningDate}"
+											class="form-control" style="width: 150px;" />
+									</div>
+									
+									<div class="control-group col-md-4">
+										<label>Date of X-Ray </label><input type="date"
+											 th:field="*{lastXrayDate}"
+											class="form-control" style="width: 150px;" id="xrayDate"/>
+																						
+									</div>
+									
+
+								</div>
+								 
+							</div>
+							<!-- end -->
+							<div class="row">
+								<p />
+							</div>
+							<div class="row">
+								<p />
+							</div>
+							<div class="row">
+								<!-- <div class="control-group col-md-4">
+
+									<label>Volunteer status update</label> <select
+										th:field="*{volunteerStatus}" class="form-control"
+										required="required" style="width: 180px;">
+										<option value="Rejected">Rejected</option>
+										<option value="Eligible_for_Screening">Eligible for
+											Screening</option>
+									</select>
+
+								</div> -->
+
+								<div class="control-group col-md-4">
+									<button type="submit" name="submit" class="btn btn-primary">Save</button>
+								</div>
+							</div>
+
+							<!-- Data table start -->
+
+							<div class="row">
+								<div class="col-xs-12">
+									<div class="box">
+										<div class="box-body table-responsive"
+											ddl:bundle-includes="filtering,moment,bootstrap-datepicker">
+											<table id="myTableId" dt:table="true"
+												class="table table-bordered table-striped"
+												dt:url="@{/admin/screening/search/screeninglist(pkey=${pkey})}"
+												dt:name="pkey" dt:serverside="true" dt:dom="l0rtip"
+												dt:processing="true" dt:filterplaceholder="none"
+												dt:filterSelector="#filterButton"
+												dt:filterClearSelector="#filterClearButton">
+												<thead>
+													<tr>
+														<th dt:property="screeningDate"
+															dt:filterDateFormat="dd-mm-yyyy"
+															dt:filterCssClass="form-control" dt:name="screeningDate"
+															dt:renderFunction="toDate" dt:sortInitDirection="desc">Screening Date</th>
+														<th dt:property="nextScreeningDate"
+															dt:filterDateFormat="dd-mm-yyyy"
+															dt:filterCssClass="form-control" dt:name="nextScreeningDate"
+															dt:renderFunction="toDate" dt:sortInitDirection="desc">Next Screening Date</th>
+															
+															
+															
+														<th dt:property="ecgCompleted"
+															dt:filterCssClass="form-control"  dt:renderFunction="custom-rendering#toStatus"  dt:name="ecgCompleted" >Ecg
+															</th>
+														<th dt:property="xrayCompleted"
+															dt:filterCssClass="form-control"  dt:renderFunction="custom-rendering#toStatus" dt:name="xrayCompleted">X-Ray
+															</th>
+														<th dt:property="bloodSampleReceived"
+															dt:filterCssClass="form-control"  dt:renderFunction="custom-rendering#toStatus" dt:name="bloodSampleReceived">Blood
+															</th>
+														<th dt:property="urineSampleCollected"
+															dt:filterCssClass="form-control"  dt:renderFunction="custom-rendering#toStatus" dt:name="urineSampleCollected">Urine
+															</th>
+														<th dt:property="labResultAvailable"
+															dt:filterCssClass="form-control"  dt:renderFunction="custom-rendering#toStatus" dt:name="labResultAvailable">Lab Results </th>														 	
+														<th dt:property="screeningStatus"
+															dt:filterCssClass="form-control"  dt:name="screeningStatus">Screening Status</th>														 	
+														<th dt:property="rejectionReason"
+															dt:filterCssClass="form-control"  dt:name="rejectionReason"> Reason</th>
+													</tr>
+												</thead>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<!--  Data table end -->
+
+
+
+							<!-- 
+							<div class="box-footer">
+								<button type="submit" name="submit" class="btn btn-primary">Save</button>
+							</div>
+							<div class="control-group">
+								<label>Name</label>
+								 <p th:text="*{name}"/>
+							</div>
+							<div class="control-group">
+								<label>Screening Date</label> <p th:text="*{screeningDate}" required="required"/>
+							</div>
+							<div class="control-group">
+								<label>Next Screening Date</label> <p th:text="*{nextScreeningDate}"/>
+							</div>
+							<TABLE border="1">
+								<tr>
+									<th>Screening Date</th>
+									<th>ECG</th>
+									<th>X-RAY</th>
+									<th>Screening Status</th>
+								</tr>
+								<tr>
+									<td>&nbsp;</td>
+									<td>&nbsp;</td>
+									<td>&nbsp;</td>
+									<td>&nbsp;</td>
+								</tr>
+
+							</TABLE> -->
+						</div>
+					</form>
+
+
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

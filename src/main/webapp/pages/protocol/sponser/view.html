@@ -1,0 +1,40 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+
+
+<body th:replace="layout :: body(section_heading='Sponsor Document List')" >
+
+	<section layout:fragment="content" class="content">
+	 <div class="panel panel-default">
+	
+	  <div class="panel-body">
+                     <form action="#"  th:action="@{/admin/protocol/update}"  class="form-horizontal" role="form" name="registersponser" th:object="${sponserTO}" method="post" enctype="multipart/form-data">
+                                   
+                                   <input type="hidden" th:field="*{pkey}" th:value="${pkey}" />
+                                    <div class="form-group">
+    <label  class="col-sm-3 control-label">	Name of the sponsor</label>
+    <div class="col-sm-9">
+      <input type="text" th:field="*{name}" name="name" class="form-control"  placeholder="Name of the sponsor " required="required"/>
+    </div>
+   </div>
+                           <div class="form-group">
+    <label  class="col-sm-3 control-label">Sponsor Address </label>
+    <div class="col-sm-9">
+      <input type="text" th:field="*{address}" class="form-control" name="sponseraddress" placeholder="Name of the reference product" required="required"/>
+    </div>
+   </div>
+                              <div class="form-group">
+    <label  class="col-sm-3 control-label">Contact details of the sponsor company </label>
+    <div class="col-sm-9">
+      <input type="text" th:field="*{contactDetails}" class="form-control" name="companyDetail" placeholder="contact details of the sponsor company" required="required"/>
+    </div>
+   </div>
+                            <button type="submit" name="submit" class="btn btn-primary pull-right">Update</button>
+                            </form>
+                            <!-- /.table-responsive -->
+                        </div>
+                        </div>
+	</section>
+</body>
+
+</html>

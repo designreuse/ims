@@ -1,0 +1,174 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout"
+	xmlns:dt="http://github.com/dandelion/datatables"
+	xmlns:ddl="http://www.thymeleaf.org/dandelion">
+<head>
+<style>
+    .hideimage{
+        display: none;
+    }
+    .hideprint{
+    display: none;
+    }
+@media print{
+ .dataTables_length{
+  display: none;
+ }
+ #displaynone
+ {display:none;}
+    .dataTables_filter{
+    display: none;
+    }
+    .dataTables_export   { 
+    display: none;
+    }
+    .dataTables_info{
+        display: none;
+    }
+    #myTableId_paginate{
+        display: none;
+    }
+    .box{
+      border-top: 0px;
+    }
+    .hideimage{
+    display: block !important;
+    }
+    .hideprint{
+    display: block !important;
+    }
+}
+</style>
+</head>
+<body th:replace="layout :: body(section_heading='Study Search Results')">
+	
+	<section layout:fragment="content" class="content">
+
+
+<!-- start -->
+  <div class="pull-right hideimage">
+										<img src="/vms/resources/images/aziduslogoprintform.jpg"  style="width: 160px;" />
+									</div>
+<div class="row">
+			<div class="col-xs-12">
+			
+				<div class="box">
+				<div class="text-center hideprint" style="font-size: 18px;font-weight: 600;">
+						Study Results    </div>
+					<div class="box-body table-responsive"
+						ddl:bundle-includes="filtering,moment,bootstrap-datepicker">
+						<table id="myTableId" class="table table-bordered table-striped"  dt:table="true" dt:export="pdf">
+
+							<thead>
+								<tr>
+                                    
+									<!-- <th dt:filterCssClass="form-control" >Subject</th> -->
+									<th dt:filterCssClass="form-control">Study No</th>
+									<th dt:filterCssClass="form-control">Registration ID</th>
+									<th dt:filterCssClass="form-control">Study Completion</th> 
+								</tr>
+							</thead>
+							<tbody>
+ 								<tr th:each="volunteerStudyMapTO,iterationStatus : *{volunteerStudyMapTOs}" >
+									<!-- <td><div th:text="*{iterationStatus.count}" /></td> -->
+									<td><div th:text="*{volunteerStudyMapTO.studyNo}" /></td>
+									<td><div th:text="*{volunteerStudyMapTO.volunteerPkey}" /></td>
+									<td>
+									<div th:if="${volunteerStudyMapTO.studyCompletionDate} != null" th:text="${#dates.format(volunteerStudyMapTO.studyCompletionDate, 'dd-MMM-yyyy')}" />
+ 									
+									</td>
+                         
+<!--
+									<td><a
+										th:href="@{/vms/admin/study/print/}+${volunteerTO.pkey}">Print
+											Subject Id Card</a></td>
+-->
+
+                                    
+                                    <!-- <td id="displaynone">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-success " style="padding-bottom: 1px;padding-left: 6px;padding-right: 6px;padding-top: 3px;">Action</button>
+                                            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" style="padding-bottom: 10px; padding-top: 10px;">
+                                                <span class="caret"></span>
+                                                <span class="sr-only">Toggle Dropdown</span>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li><a th:href="@{/admin/study/print/}+${volunteerStudyMapTO.volunteerPkey}">PrintSubject ID Card</a></li> 
+                                                </ul>
+                                        </div>
+                                    </td> -->
+                                    
+                                    
+                                    
+                                    
+                                    
+								</tr> 
+							</tbody>
+
+
+						</table>
+
+
+
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+<a onClick="window.print()" id="printbutton" class="btn btn-primary pull-right">Print</a>
+<!-- end -->
+
+
+		<!-- <div class="row">
+			<div class="col-xs-12">
+				<div class="box">
+					<div class="box-body table-responsive"
+						ddl:bundle-includes="filtering,moment,bootstrap-datepicker">
+						<table>
+
+							<thead>
+								<tr>
+									<th>Subject</th>
+									<th>Age</th>
+									<th>Height</th>
+									<th>Weight</th>
+									<th>BMI</th>
+									<th>Gender</th>
+									<th>Race</th>
+									<th>Actions</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="volunteerTO,iterationStatus : *{volunteers}">
+									<td><div th:text="*{iterationStatus.count}" /></td>
+									<td><div th:text="*{volunteerTO.age}" /></td>
+									<td><div th:text="*{volunteerTO.height}" /></td>
+									<td><div th:text="*{volunteerTO.weight}" /></td>
+									<td><div th:text="*{volunteerTO.bmi}" /></td>
+									<td><div th:text="*{volunteerTO.gender}" /></td>
+									<td>Asian</td>
+									<td><a
+										th:href="@{/vms/admin/study/print/}+${volunteerTO.pkey}">Print
+											Subject Id Card</a></td>
+
+								</tr>
+							</tbody>
+
+
+						</table>
+
+
+
+
+
+					</div>
+				</div>
+			</div>
+		</div> -->
+
+	</section>
+</body>
+</html>

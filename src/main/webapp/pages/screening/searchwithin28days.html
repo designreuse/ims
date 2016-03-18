@@ -1,0 +1,296 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout"
+	xmlns:dt="http://github.com/dandelion/datatables"
+	xmlns:ddl="http://www.thymeleaf.org/dandelion">
+<head>
+<script src="http://code.jquery.com/jquery-1.11.2.js"></script>
+<script type="text/javascript">
+	/*<![CDATA[*/
+	$(document)
+			.ready(
+					function() {
+						$("#hdnCheckBoxValues").val($('#session').val());
+						nolength();
+						setTimeout(
+								function() {
+									$("table#myTableId")
+											.on(
+													"click",
+													"tbody",
+													function(event) {
+														var hiddenChkVal;
+														if ($(
+																"#hdnCheckBoxValues")
+																.val() != null) {
+															hiddenChkVal = ($("#hdnCheckBoxValues")
+																	.val());
+															var hiddenChkValues = (hiddenChkVal != "") ? hiddenChkVal
+																	.split(',')
+																	: [];
+														} else
+															var hiddenChkValues = [];
+
+														var elementId = event.target.id;
+														if ($("#" + elementId)
+																.is(':checked'))
+															hiddenChkValues
+																	.push(elementId);
+														else {
+															var index = hiddenChkValues
+																	.indexOf(elementId);
+															if (index > -1) {
+																hiddenChkValues
+																		.splice(
+																				index,
+																				1);
+															}
+														}
+
+														if (hiddenChkValues.length > 1)
+															$(
+																	"#hdnCheckBoxValues")
+																	.val(
+																			hiddenChkValues
+																					.join(','));
+														else {
+															$(
+																	"#hdnCheckBoxValues")
+																	.val(
+																			hiddenChkValues
+																					.join());
+														}
+														nolength();
+													});
+								}, 1000);
+
+						setTimeout(
+								function() {
+									$("table#myTableId")
+											.on(
+													"click",
+													"tbody",
+													function(event) {
+														var hiddenChkVal;
+														if ($(
+																"#hdnCheckBoxBulkValues")
+																.val() != null) {
+															hiddenChkVal = ($("#hdnCheckBoxBulkValues")
+																	.val());
+															var hiddenChkValues = (hiddenChkVal != "") ? hiddenChkVal
+																	.split(',')
+																	: [];
+
+														} else
+															var hiddenChkValues = [];
+
+														var elementId = event.target.id;
+														if ($("#" + elementId)
+																.is(':checked'))
+															hiddenChkValues
+																	.push(elementId);
+														else {
+															var index = hiddenChkValues
+																	.indexOf(elementId);
+															if (index > -1) {
+																hiddenChkValues
+																		.splice(
+																				index,
+																				1);
+															}
+														}
+
+														if (hiddenChkValues.length > 1)
+															$(
+																	"#hdnCheckBoxBulkValues")
+																	.val(
+																			hiddenChkValues
+																					.join(','));
+														else
+															$(
+																	"#hdnCheckBoxBulkValues")
+																	.val(
+																			hiddenChkValues
+																					.join());
+													});
+
+								}, 1000);
+
+						uncheck();
+
+					});
+
+	/*]]>*/
+</script>
+
+
+
+
+</head>
+<body th:replace="layout :: body(section_heading='')">
+	<!-- <div layout:fragment="header-buttons">
+		<a th:href="@{/admin/volunteer/register}" class="btn btn-success pull-right" role="button"><i class="fa fa-plus"></i>Register
+			New Volunteer</a>
+	</div> -->
+	<section layout:fragment="content" class="content">
+		<div class="box-body" data-widget="collapse">
+			<div class="row">
+				<div class="box box-primary">
+					<div class="box-header">
+						<h3 class="box-title">List of Volunteers within 28 days of
+							screening</h3>
+
+						<div class="pull-right col-md-6" style="left: 120px;">
+							<div class="control-group col-md-6">
+								<label style="margin-top: 8px;">No.Volunteers Selected:</label>
+							</div>
+							<div class="control-group ">
+								<label id="displaycheckboxlength"
+									style="margin-left: -93px; margin-top: 8px; color: blue;"></label>
+
+							</div>
+						</div>
+
+
+					</div>
+					<!-- /.box-header -->
+					<!-- form start -->
+					<!-- <form action="#" th:action="@{/admin/product/search}" th:object="${volunteerSearchTO}" method="post"> -->
+
+				</div>
+
+				<form action="#" th:action="@{/admin/screening/bulkUpdate}"
+					th:object="${screeningSearchTO}" name="bulkUpdateForm"
+					method="post">
+					<div class="control-group col-md-3  col-xs-3 col-sm-3 col-lg-3">
+
+						<label>Study No<input type="text"
+							th:field="*{bulkStudyStudyNo}" class="form-control"
+							style="width: 170px;" required="required" name="numberstudy"
+							placeholder="Study No" onchange="bulkFunction()" /></label>
+					</div>
+					<div class="control-group col-md-3  col-xs-3 col-sm-3 col-lg-3"
+						style="width: 24%;">
+
+						<label>Study Date for Bulk Update<input type="date"
+							th:field="*{bulkStudyUpdateDate}" class="form-control"
+							style="width: 170px;" required="required"
+							onchange="dateFunction()" /></label>
+					</div>
+					<div class="control-group col-md-1  col-xs-1 col-sm-1 col-lg-1"
+						style="margin-top: 20px; left: 100px;">
+						<input type="submit" value="Demographic Report"
+							class="btn btn-primary"/>
+						<!-- 	<a id="selectbxbutton" class="btn btn-primary" role="button" onClick="createMasterListValues()">Master List</a> -->
+					</div>
+
+					<input type="hidden" id="hdnCheckBoxBulkValues" name="pkeys"
+						value="" /> <input type="hidden" id="studyvalue" name="studyNo"
+						value="" /> <input type="hidden" id="datevalue" name="datemsg"
+						value="" />
+				</form>
+				<form action="#" th:action="@{/admin/screening/createMasterList}"
+					th:object="${screeningSearchTO}" name="masterForm" method="post">
+					<!--  <div class="control-group col-md-3  col-xs-3 col-sm-3 col-lg-3">
+									 
+									 <label>Study No<input type="text"
+											th:field="*{bulkStudyStudyNo}"
+											class="form-control" style="width: 170px;" name="numberstudy" placeholder="Study No" required="required" onchange="studyFunction()"/></label>	
+								</div> -->
+
+					<div class="control-group col-md-1  col-xs-1 col-sm-1 col-lg-1"
+						style="margin-top: 20px; right: 100px;">
+						<input type="button" value="Master List" class="btn btn-primary"
+							onclick="masteralertchekboxempty()" />
+
+					</div>
+					<input type="hidden" id="countmaster" name="countmastername" /> <input
+						type="hidden" id="hdnCheckBoxValues" name="pkeys" value="" /> <input
+						type="hidden" id="studyvalue" name="studyNo" value="" />
+
+				</form>
+
+			</div>
+		</div> 
+		<input type="hidden" id="session" th:value="${session.mySessionAttribute}"/>
+	<form action="#" th:action="@{/admin/volunteer/search}" name="searchVolunteerFormDays" th:object="${screeningSearchTO}" method="post">
+		
+		<div class="row">
+		<div class="row" style="padding-left: 20px;">
+								<div class="control-group col-md-2">
+									<label>Gender</label>
+									<div id="genderFilter"></div>
+								</div>
+								<div class="control-group col-md-2">
+									<label>Food</label>
+									<div id="foodHabitFilter"></div>
+								</div>
+								<div class="control-group col-md-2">
+									<label>Alchohol</label>
+									<div id="alcoholHabitFilter"></div>
+								</div>
+								<div class="control-group col-md-2">
+									<label>Smoking</label>
+									<div id="smokingHabitFilter"></div>
+								</div>
+								<div class="control-group col-md-2">
+									<label>BMI</label>
+									<div id="bmiLimitFilter"></div>
+								</div>
+								
+								<div class="control-group col-md-2">
+									<label>Age</label>
+									<div id="ageLimitFilter"></div>
+								</div>
+							
+							</div>
+							<div class="box-footer" style="padding-top: 10px;padding-bottom: 20px;padding-left: 20px;">
+							<a id="filterButton" class="btn btn-primary" role="button">Search</a> <a id="filterClearButton" class="btn btn-default">Clear
+								filters</a>
+								
+
+						</div>
+
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="box">
+					<div class="box-body table-responsive" ddl:bundle-includes="filtering,moment,bootstrap-datepicker">
+						<table id="myTableId" dt:table="true" class="table table-bordered table-striped"  
+							dt:url="@{/admin/screening/search28days}" dt:serverside="true" dt:dom="l0rtip" dt:processing="false"
+							dt:filterplaceholder="none" dt:filterSelector="#filterButton" dt:filterClearSelector="#filterClearButton">
+							<thead>
+								<tr>
+									<th dt:property="pkey" dt:filterCssClass="form-control" dt:renderFunction="custom-rendering#screeningView" dt:name="pkey"
+										dt:filterable="false" dt:selector="#pkeyFilter" dt:sortInitDirection="desc" >ID</th>
+									<th dt:property="name" dt:filterCssClass="form-control" dt:name="name" dt:filterable="false" dt:selector="#nameFilter">Name</th>
+									 <th dt:property="gender" dt:filterCssClass="form-control" dt:name="gender" dt:filterType="select"  dt:filterValues="['Male','Female']"		dt:visible="true" dt:filterable="true" dt:selector="#genderFilter">Gender</th> 
+									 <th dt:property="bmi" dt:filterCssClass="form-control" dt:name="bmi" dt:visible="true">BMI</th> 
+									<th dt:property="smokingHabit" dt:filterCssClass="form-control" dt:visible="true" dt:name="smokingHabit" dt:filterType="select"  dt:filterValues="['Smoker','Non_Smoker','Past_Smoker']"	 dt:filterable="true" dt:renderFunction="custom-rendering#volunteerStatusView"
+										dt:selector="#smokingHabitFilter">Smoking Status</th>
+									<th dt:property="alcoholHabit" dt:filterCssClass="form-control" dt:visible="true" dt:name="alcoholHabit" dt:filterType="select"  dt:filterValues="['Drinker','Non_Drinker','Past_Drinker']"	 dt:filterable="true" dt:renderFunction="custom-rendering#volunteerStatusView"
+										dt:selector="#alcoholHabitFilter">Alcohol Status</th>
+									<th dt:property="foodHabit" dt:filterCssClass="form-control" dt:name="foodHabit" dt:filterType="select"  dt:filterValues="['Veg','Non_Veg']"		dt:visible="true" dt:filterable="true" dt:renderFunction="custom-rendering#volunteerStatusView" dt:selector="#foodHabitFilter">Food Habit</th>		
+									<th dt:property="mobileNo" dt:filterCssClass="form-control" dt:name="mobileNo" dt:filterable="false"
+										dt:selector="#mobileNoFilter">Mobile</th>
+									<th dt:property="dob"  dt:name="dob" dt:filterCssClass="form-control"  
+										dt:renderFunction="custom-rendering#toDateTemp" dt:visible="true">DOB</th>
+									<th dt:property="lastScreeningCompletionDate"  dt:filterCssClass="form-control" dt:name="lastScreeningCompletionDate"
+										dt:selector="#lastScreeningCompletionDateFilter" dt:renderFunction="custom-rendering#toDateTemp"  dt:visible="true"  dt:filterable="false" >Screening Date</th>
+ 									<th dt:property="bmi" dt:filterCssClass="form-control" dt:name="bmi" dt:visible="false" dt:filterable="true" dt:selector="#bmiLimitFilter">BMIFrom-BmiTo</th> 
+									<th dt:property="dob"  dt:name="dob" dt:filterCssClass="form-control"  
+										dt:filterable="true" dt:visible="false" dt:selector="#ageLimitFilter">AgeFrom-AgeTo</th>
+									
+									<!-- <th style="width: 10%" dt:property="actions" dt:name="actions" dt:renderFunction="custom-rendering#volunteerSearchAction">Actions</th> -->
+								</tr>
+							</thead>
+						</table>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+		</form>
+	</section>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout"
+	xmlns:dt="http://github.com/dandelion/datatables"
+	xmlns:ddl="http://www.thymeleaf.org/dandelion">
+<head>
+<style>
+.customth {
+	padding: 3px 10px;
+}
+
+.hidden-print {
+	display: none;
+}
+
+@media print {
+	#subjReference {
+		display: none;
+	}
+	#masterListReference {
+		border: 0px;
+	}
+	#savemasterlist {
+		display: none;
+	}
+	.box, .box-body {
+		overflow-x: hidden
+	}
+	.box {
+		border-top: 0;
+	}
+	.hidden-print {
+		display: block !important;
+	}
+	.borderdismissforprint {
+		border-right-color: white !important;
+	}
+	#action {
+		display: none;
+	}
+	#myTableId_length {
+		display: none;
+	}
+	#myTableId_filter {
+		display: none;
+	}
+	.dataTables_export {
+		display: none;
+	}
+	#myTableId_info {
+		display: none;
+	}
+	#myTableId_paginate {
+		display: none;
+	}
+}
+</style>
+</head>
+<body
+	th:replace="layout :: body(section_heading='Adverse Event Details')">
+
+
+	<section layout:fragment="content" class="content">
+		<form name="masterListForm" action="#"
+			th:action="@{/admin/screening/saveMasterList}" method="post">
+			<div class="box-header" th:object="${volunteerTO}">
+				<h3 class="box-title">
+					Registration ID AZ<span th:text="*{pkey}"></span>
+				</h3>
+			</div>
+			<!-- start -->
+			<div class="row" th:object="${volunteerTO}">
+				<div class="col-md-4 col-xs-4">
+					<label>Volunteer Name</label> <p
+						th:text="${volunteerTO.name}" /> 
+					 
+				</div><!-- 
+				<div class="col-md-4 col-xs-4">
+					<label>Date of Birth</label>
+					<p
+						th:text="${#dates.format(volunteerTO.dob, 'dd-MMM-yyyy').toUpperCase()}" />
+				</div> -->
+
+				<div class="col-md-4 col-xs-4">
+					<label>Gender</label>
+					<p th:text="*{gender}" />
+				</div>
+				<div class="col-md-4 col-xs-4">
+					<label>Mobile</label>
+					<p th:text="*{mobileNo}" />
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-xs-12">
+
+					<div class="box">
+						<div class="box-body table-responsive"
+							ddl:bundle-includes="filtering,moment,bootstrap-datepicker">
+							<div class="text-center hidden-print" style="margin-top: -13px;">
+								<h4 style="font-size: 22px; font-weight: 600;">Master List</h4>
+							</div>
+							<div class="pull-right hidden-print" id="Logo"
+								style="margin-top: -12px;">
+								<img src="/vms/resources/images/aziduslogo.jpg"
+									style="width: 160px;" />
+							</div>
+
+							<table id="myTableId" class="table table-bordered table-striped"
+								dt:table="true">
+
+								<thead>
+
+									<tr>
+										<th dt:filterCssClass="form-control "
+											dt:renderFunction="custom-rendering#modifySubjNo" id="subjNo"
+											style="padding: 2px 10px">S.No</th>
+										<th dt:filterCssClass="form-control "
+											dt:renderFunction="custom-rendering#modifySubjNo" id="subjNo"
+											style="padding: 2px 10px">Study No</th>
+										<th dt:filterCssClass="form-control"
+											style="width: 250px; padding: 2px">Event Details</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="study,iterationStatus : *{events}">
+										<td style="padding: 1px 10px 1px;">
+											<div th:text="*{iterationStatus.count}" />
+										</td>
+										<td style="padding: 1px 10px 1px;">
+											<p style="float: left; margin: 0" th:text="*{study.studyNo}" />
+										</td>
+										<td
+											style="margin-top: 2px soild black; padding: 1px 10px 1px;"><div
+												th:text="*{study.adverseEventDetails}" /></td>
+									</tr>
+								</tbody>
+							</table>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- end -->
+		</form>
+	</section>
+
+</body>
+</html>

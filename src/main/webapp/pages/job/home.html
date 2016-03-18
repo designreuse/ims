@@ -1,0 +1,37 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout"
+	xmlns:dt="http://github.com/dandelion/datatables">
+<head><title>Job Management</title>
+</head>
+<body th:replace="layout :: body(section_heading='Job Management', page_heading='List of jobs')">
+	<section layout:fragment="content" class="content">
+
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="box">
+					<div class="box-body table-responsive">
+						<table id="page" class="table table-bordered table-striped" dt:info="true" dt:table="true"
+							dt:url="@{/admin/job/pagination}" dt:serverside="true" dt:processing="false" dt:filterable="true" dt:filterDelay="100000"
+							dt:filterMinLength="1">
+							<thead>
+								<tr>
+									<th dt:property="id" dt:name="id" dt:renderFunction="custom-rendering#jobView" >Job Id</th>
+									<th dt:property="name" dt:name="name">Name</th>
+									<th dt:property="jobType" dt:name="jobType">Job Type</th>									
+									<th dt:property="cronExpression" dt:name="cronExpression">Cron Expression</th>
+									<th dt:property="schedule" dt:name="schedule" dt:renderFunction="custom-rendering#jobSchedule">Schedule</th>
+									<!-- <th dt:property="status" dt:name="lastName">Status</th> -->
+									<th style="width: 10%" dt:property="id" dt:name="actions" dt:renderFunction="custom-rendering#jobMgmtAction">Actions</th>
+								</tr>
+							</thead>
+
+
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	</section>
+</body>
+</html>

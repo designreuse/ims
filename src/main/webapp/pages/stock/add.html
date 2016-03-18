@@ -1,0 +1,72 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout"
+	xmlns:dt="http://github.com/dandelion/datatables" xmlns:ddl="http://www.thymeleaf.org/dandelion">
+
+<body th:replace="layout :: body(section_heading='Product Management')">
+	
+	<section layout:fragment="content" class="content">
+	<!-- <form action="#" th:action="@{/admin/product/search}" name="searchProductForm" th:object="${productSearchTO}" method="post" id="searchProduct"> -->
+		<div class="row">
+		
+			<div class="col-md-12">
+				<!-- general form elements -->
+				<div class="box box-primary">
+					<div class="box-header">
+						<h3 class="box-title">Search Product</h3>
+					</div>
+					<!-- /.box-header -->
+					<!-- form start -->
+					<form action="#" th:action="@{/admin/stock/register}" th:object="${stockTO}" method="post">
+						<div>
+							<div class="row">
+								<div class="control-group col-md-4">
+									<label>Product ID</label>
+									<input type="text" placeholder="Product ID" th:field="*{productId}" required="required"/>
+								</div>
+								<div class="control-group col-md-4">
+									<label>Current Stock</label>
+									<input type="text" placeholder="Current Stock" th:field="*{currentStock}" required="required"/>
+								</div>
+								<div class="control-group col-md-4">
+									<label>Stock Value</label>
+									<input type="text" placeholder="Stock Value" th:field="*{stockValue}" required="required"/>
+								</div>
+								
+								
+							</div>	
+							<div class="box-footer">
+							<button type="submit" name="submit" class="btn btn-primary">Submit</button>
+							 <a class="btn btn-primary" role="button" th:href="@{/admin/stock/search}">Back</a>
+							</div>
+							</div>
+					 </form>
+					<!-- /.box -->
+				</div>
+			</div>
+		</div>
+
+<!-- 		<div class="row">
+			<div class="col-xs-12">
+				<div class="box">
+					<div class="box-body table-responsive" ddl:bundle-includes="filtering,moment,bootstrap-datepicker">
+						<table id="myTableId" dt:table="true" class="table table-bordered table-striped"  export="csv,pdf"
+							dt:url="@{/admin/stock/pagination}" dt:serverside="true" dt:dom="l0rtip" dt:processing="false"
+							dt:filterplaceholder="none" dt:filterSelector="#filterButton" dt:filterClearSelector="#filterClearButton" >
+							<thead>
+								<tr>
+									<th dt:property="productId" dt:filterCssClass="form-control"  dt:name="productId"
+										dt:filterable="true" dt:selector="#idFilter" dt:sortInitDirection="desc" id="pkey" dt:renderFunction="custom-rendering#stockedit">ID</th>
+									<th dt:property="currentStock" dt:filterCssClass="form-control"  dt:name="currentStock"
+										dt:selector="#productFilter" dt:filterable="true" dt:sortInitDirection="desc" id="name">currentStock</th>										
+								</tr>
+							</thead>
+						</table>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		</div> -->
+<!-- </form> -->
+	</section>
+</body>
+</html>

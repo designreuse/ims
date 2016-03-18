@@ -1,0 +1,101 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+
+<body
+	th:replace="layout :: body(section_heading='Screening Management')">
+	<section layout:fragment="content" class="content">
+		<div class="row">
+			<div class="col-md-12">
+				<!-- general form elements -->
+				<div class="box box-primary">
+					<div class="box-header">
+						<h3 class="box-title">Register for Screenings</h3>
+					</div>
+					 
+					<!-- form start -->
+					<form action="#" th:action="@{/admin/screening/find}"
+						th:object="${volunteerTO}" method="post">
+						<div class="box-body">
+						
+							<div class="form-group col-md-12 ">
+								<div class="col-md-6 col-xs-6 "><label>Registration ID</label> <input type="text"
+									class="form-control" th:field="*{registrationId}" autocomplete="off" /></div>
+							</div>
+							
+							<div class="form-group col-md-12">
+							
+							<div class="col-md-8 col-xs-8">
+								<button type="submit" name="submit" class="btn btn-primary ">Search
+									a Volunteer</button>
+                                <button type="submit" name="submit" class="btn btn-primary ">Get
+									All Approved Volunteers</button>
+                                <button type="submit" name="submit" class="btn btn-primary ">Update
+									Volunteer Status</button>
+                                </div>
+							</div>
+                           
+							<div class="form-group">
+								<label>Name</label>     <p th:text="*{name}"/>  
+							</div>
+							 <div class="form-group">
+								<label>Screening Date</label> <input type="text"
+									class="form-control" th:field="*{screening.screeningDate}" autocomplete="off" />
+ 							</div>  
+							<div class="form-group">
+								<label>Next Screening Date</label> <p th:text="*{screening.nextScreeningDate}"/>
+							</div> 
+							
+							<div class="table-responsive">
+                                <table class="table" border="1">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Screening Date</th>
+                                            <th>ECG</th>
+                                            <th>X-RAY</th>
+                                            <th>Screening Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="success">
+                                            <td>1</td>
+                                            <td>Mark</td>
+                                            <td>yes</td>
+                                            <td>yes</td>
+                                           <td> Pending</td>
+                                        </tr>
+                                        <tr class="info">
+                                            <td>2</td>
+                                            <td>Jacob</td>
+                                             <td>yes</td>
+                                            <td>yes</td>
+                                           <td> Pending</td>
+                                        </tr>
+                                        <tr class="warning">
+                                            <td>3</td>
+                                            <td>Larry</td>
+                                             <td>yes</td>
+                                            <td>yes</td>
+                                           <td> Pending</td>
+                                        </tr>
+                                        <tr class="danger">
+                                            <td>4</td>
+                                            <td>John</td>
+                                             <td>yes</td>
+                                            <td>yes</td>
+                                           <td> Pending</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+							</div>
+					</form>
+
+					 
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

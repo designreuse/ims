@@ -1,0 +1,206 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout"
+	xmlns:dt="http://github.com/dandelion/datatables" xmlns:ddl="http://www.thymeleaf.org/dandelion">
+<head>
+<script src="http://code.jquery.com/jquery-1.11.2.js" ></script>
+	<script type="text/javascript">
+	/*<![CDATA[*/
+	$(document).ready(function () {
+		
+		
+		setTimeout(function(){
+		$("table#scrnTableId").on("click", "tbody", function(event){
+			var hiddenChkVal;
+			if($("#hdnCheckBoxValues").val()!=null){
+				hiddenChkVal=($("#hdnCheckBoxValues").val());
+				var hiddenChkValues= (hiddenChkVal != "") ? hiddenChkVal.split(',') : [];
+			}
+			else
+				var hiddenChkValues=[];
+			
+			var elementId = event.target.id;
+			if($("#"+elementId).is(':checked'))
+				hiddenChkValues.push(elementId);
+			else
+			{
+				var index = hiddenChkValues.indexOf(elementId);
+				if (index > -1) {
+					hiddenChkValues.splice(index, 1);
+				}
+			}
+			
+			if(hiddenChkValues.length>1)	
+				$("#hdnCheckBoxValues").val(hiddenChkValues.join(','));
+			else
+				$("#hdnCheckBoxValues").val(hiddenChkValues.join());
+		});
+		}, 1000);
+		
+		setTimeout(function(){
+			$("table#scrnTableId").on("click", "tbody", function(event){
+				var hiddenChkVal;
+				if($("#hdnCheckBoxBulkValues").val()!=null){
+					hiddenChkVal=($("#hdnCheckBoxBulkValues").val());
+					var hiddenChkValues= (hiddenChkVal != "") ? hiddenChkVal.split(',') : [];
+				}
+				else
+					var hiddenChkValues=[];
+				
+				var elementId = event.target.id;
+				if($("#"+elementId).is(':checked'))
+					hiddenChkValues.push(elementId);
+				else
+				{
+					var index = hiddenChkValues.indexOf(elementId);
+					if (index > -1) {
+						hiddenChkValues.splice(index, 1);
+					}
+				}
+				
+				if(hiddenChkValues.length>1)	
+					$("#hdnCheckBoxBulkValues").val(hiddenChkValues.join(','));
+				else
+					$("#hdnCheckBoxBulkValues").val(hiddenChkValues.join());
+			});
+			}, 1000);
+		
+	});
+	
+	
+	/*]]>*/
+	</script>
+	
+	
+	
+	
+</head>
+<body th:replace="layout :: body(section_heading='Screening')">
+	
+	<section layout:fragment="content" class="content">
+	<div style="display:none">
+	 <form action="#" th:action="@{/admin/screening/createMasterList}"  th:object="${screeningSearchTO}" name="masterForm"  method="post">
+	 <div class="control-group col-md-3  col-xs-3 col-sm-3 col-lg-3">
+									 
+									 <label>Study No<input type="text"
+											th:field="*{bulkStudyStudyNo}"
+											class="form-control" style="width: 170px;" name="numberstudy" placeholder="Study No" onchange="studyFunction()"/></label>	
+								</div>
+								 
+								<div class="control-group col-md-1  col-xs-1 col-sm-1 col-lg-1" style="margin-top: 20px;">
+								 <input type="submit" value="Submit" class="btn btn-primary"/>
+									
+								</div>
+								
+									<input type="hidden" id="hdnCheckBoxValues" name ="pkeys" value="" />
+									<input type="hidden" id="studyvalue" name="studyNo" value="" />
+									
+								</form> 
+								<form action="#" th:action="@{/admin/screening/bulkUpdate}"  th:object="${screeningSearchTO}" name="bulkUpdateForm"  method="post">
+	 <div class="control-group col-md-3  col-xs-3 col-sm-3 col-lg-3">
+									 
+									 <label>Study No<input type="text"
+											th:field="*{bulkStudyStudyNo}"
+											class="form-control" style="width: 170px;" name="numberstudy" placeholder="Study No" onchange="bulkFunction()"/></label>	
+								</div>
+								 <div class="control-group col-md-3  col-xs-3 col-sm-3 col-lg-3" style="width: 24%;">
+					
+									 <label>Study Date for Bulk Update<input type="date"
+											th:field="*{bulkStudyUpdateDate}"
+											class="form-control" style="width: 170px;" onchange="dateFunction()"/></label>
+								</div>
+								<div class="control-group col-md-1  col-xs-1 col-sm-1 col-lg-1" style="margin-top: 20px;">
+								 <input type="submit" value="Submit" class="btn btn-primary"/>
+									<a id="selectbxbutton" class="btn btn-primary" role="button" onClick="createMasterListValues()">Master List</a>
+								</div>
+								
+									<input type="hidden" id="hdnCheckBoxBulkValues" name ="pkeys" value="" />
+									<input type="hidden" id="studyvalue" name="studyNo" value="" />
+									<input type="hidden" id="datevalue" name="datemsg" value="" />
+								</form> 
+								</div>
+
+	<form action="#" th:action="@{/admin/screening/search}"  name="searchVolunteerScreeningForm"  th:object="${screeningSearchTO}" method="post" id="searchVolunteer">
+		<div class="row">
+			<div class="col-md-12">
+				<!-- general form elements -->
+				<div class="box box-primary">
+					<div class="box-header">
+						<h3 class="box-title">Search Volunteer for Screening</h3>
+					</div>
+					<!-- /.box-header -->
+					<!-- form start -->
+					
+						<div class="box-body"  data-widget="collapse">
+							<div class="row">  
+								<div class="control-group col-md-3">
+									<label>Volunteer ID</label>
+									<div id="pkeyFilter"></div>
+								</div>
+								<div class="control-group col-md-3" style="display:none">
+									<label>Screening Date</label>
+									<div id="lastScreeningCompletionDateFilter"></div>
+								</div>
+								<div class="control-group col-md-3">
+									 
+									<label>Screening Status </label>    
+									<div id="screeningStatusFilter"></div>
+								</div>
+                                <div class="control-group col-md-1 col-xs-1 col-sm-1 col-lg-1" style="margin-top: 20px;">
+									<a id="filterButton" class="btn btn-primary" role="button" onClick="verify()">Search</a>
+								</div>
+								<div class="control-group col-md-2  col-xs-2 col-sm-2 col-lg-2" style="margin-top: 20px;">
+									 
+									<a id="filterClearButton" class="btn btn-default">Clear filters</a>
+								</div>
+							
+							</div>
+
+							<!-- /.box-body -->
+						</div>
+                    <div class="box-body"  data-widget="collapse">
+							
+ 							<div class="row">
+								 <div class="control-group col-md-3  col-xs-3 col-sm-3 col-lg-3" style="margin-top: 13px;">
+								 <a class="btn btn-primary" role="button" th:href="@{/admin/screening/searchwithin28days/}"> Click here for list of volunteers within 28 days of screening</a> 
+                                    </div>
+                            </div>  
+							<!-- /.box-body -->
+						</div>
+
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-12"> 
+				<div class="box">
+					<div class="box-body table-responsive" ddl:bundle-includes="filtering,moment,bootstrap-datepicker">
+						<table id="scrnTableId" dt:table="true" class="table table-bordered table-striped display" dt:url="@{/admin/screening/search/pagination}" dt:serverside="true" dt:dom="l0rtip"
+							dt:processing="false" dt:filterplaceholder="none" dt:filterSelector="#filterButton"
+							dt:filterClearSelector="#filterClearButton">
+							<thead>
+								<tr>
+									<th dt:property="pkey" dt:filterCssClass="form-control" dt:renderFunction="custom-rendering#screeningView" dt:name="pkey"
+										dt:filterable="true" dt:selector="#pkeyFilter" dt:sortInitDirection="desc">ID</th>
+									<th dt:property="name" dt:name="name" dt:filterable="false" dt:selector="#nameFilter">Name</th>
+									<th dt:property="screeningStatus" dt:filterType="select"
+										dt:filterValues="['Qualified','Rejected']"
+										 dt:filterCssClass="form-control" dt:name="screeningStatus"
+										dt:selector="#screeningStatusFilter" dt:filterable="true">Screening Status</th>										
+									
+									<th dt:property="lastScreeningCompletionDate" dt:filterDateFormat="dd-mm-yyyy" dt:name="lastScreeningCompletionDate" dt:filterCssClass="form-control"
+										dt:renderFunction="custom-rendering#toDateTemp" dt:filterable="false" dt:selector="#lastScreeningCompletionDateFilter">Screening Date</th>
+									<th dt:property="mobileNo" dt:name="mobileNo" dt:filertable="false">Mobile</th>
+									<th style="width:10%" dt:property="actions" dt:name="actions" dt:renderFunction="custom-rendering#volunteerScreeninghAction" >Actions</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				
+				</div>
+			</div>
+		</div>
+</form>
+	</section>
+	
+</body>
+</html>

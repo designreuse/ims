@@ -1,0 +1,88 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+
+
+<body
+	th:replace="layout :: body(section_heading='Case Report Form Document')">
+	 
+	<section layout:fragment="content" class="content">
+		<div class="panel panel-default">
+
+			<!-- /.panel-heading -->
+			<div class="panel-body">
+			<form action="#" th:action="@{/admin/protocol/case/create}"
+					class="form-horizontal" role="form" name="createCrf"
+					th:object="${crfTO}" method="post" >
+
+
+				<div class="table-responsive"> 
+					<div class="form-group">
+						<label class="col-sm-3 control-label"> Study No
+							  </label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control"
+								th:field="*{studyNo}"
+								placeholder="Study No" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Protocol No
+						</label>
+						<div class="">
+
+							<div class="control-group col-md-3 col-xs-3 col-lg-3 col-sm-3"  th:object="${protocolTO}">
+
+								<select class="form-control" th:field="*{pkey}"
+									required="required">
+									<option th:each="protocol : ${studies}"
+										th:value="${protocol.protocolTO.pkey}" th:text="${protocol.protocolTO.protocolNo}"></option>
+
+								</select>
+							</div>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-3 control-label"> Check in Date PI
+							  </label>
+						<div class="col-sm-9">
+							<input type="date" class="form-control"
+								th:field="*{checkinDate}"
+								placeholder="Date of Checkin" />
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-3 control-label"> Dosing Time
+							  </label>
+						<div class="col-sm-9">
+							<input type="time" class="form-control"
+								th:field="*{dosingTime}"
+								placeholder="Dosing time" />
+						</div>
+					</div>
+				<!-- 	<div class="form-group">
+						<label class="col-sm-3 control-label"> Day0/1/2
+							  </label>
+							  <div class="control-group col-md-3 col-xs-3 col-lg-3 col-sm-3">
+						<select th:field="*{dayOption}" class="form-control"
+								required="required">
+								<option value="day0">Day-0</option>
+								<option value="day01">Day-0+Day-1</option>
+								<option value="day012">Day-0+Day-1+Day-2</option>
+							</select>
+							</div>
+					</div> -->
+
+				</div>
+				<button type="submit" name="submit" class="btn btn-primary">Submit</button>
+				<!-- /.table-responsive -->
+				</form>
+			</div>
+			<!-- /.panel-body -->
+		</div>
+	</section>
+</body>
+
+</html>

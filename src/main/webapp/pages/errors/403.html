@@ -1,0 +1,24 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout"
+	xmlns:dt="http://github.com/dandelion/datatables">
+
+<body th:replace="layout :: body(section_heading='Access Denied')">
+	<section layout:fragment="content" class="content">
+
+		<div class="error-page">
+			<h2 class="headline">403</h2>
+			<div class="error-content">
+				<h3>
+					<i class="fa fa-warning text-red"></i> You don't have permission to access this page
+				</h3>
+				<p>
+					Please check with administrator <a th:href="@{/logout}">Login as different user</a> 
+				</p>
+				
+			</div>
+		</div>
+		<!-- /.error-page -->
+
+
+	</section>
+</body>
+</html>

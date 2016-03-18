@@ -1,0 +1,112 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout"
+	xmlns:dt="http://github.com/dandelion/datatables" xmlns:ddl="http://www.thymeleaf.org/dandelion">
+
+<body th:replace="layout :: body(section_heading='Study')">
+	
+	<section layout:fragment="content" class="content">
+	<form action="#" th:action="@{/admin/study/search}" th:object="${studySearchTO}" method="post" name="searchStudyForm" id="searchVolunteer">
+					<div class="box-header">
+		<div class="row">
+			<div class="col-md-12">
+				<!-- general form elements -->
+				<div class="box box-primary">
+				<div class="box-header">
+						<h3 class="box-title">Search Volunteer for Study</h3></div>
+					
+					
+					<!-- /.box-header -->
+					<!-- form start -->
+					
+						<div class="box-body"  data-widget="collapse">
+							<div class="row">
+								<div class="control-group col-md-3">
+									<label>Volunteer ID</label>
+									<div id="volunteerPkeyFilter"></div>
+								</div>
+								<div class="control-group col-md-3">
+									<label>Study No</label>
+									<div id="studyNoFilter"></div>
+								</div> 
+								<div class="control-group col-md-4">
+									<!-- <label>Study Completion</label>
+									<div id="studyCompletionDateFilter">
+									</div> -->
+									
+								<!--<div class="control-group col-md-4">
+									<label>Area</label>
+									<div id="areaFilter"></div>
+								</div>
+							</div> -->
+							<div class="row"> 
+					
+								<!-- <div class="control-group col-md-4">
+									<label>Study Date</label>
+									<input type="date" name="studyCompletionDate"/>
+								</div> -->
+								 
+								 
+							</div>
+
+							<!-- /.box-body -->
+							
+						</div>
+						<div class="box-footer">
+							<!-- <a id="filterButton" class="btn btn-primary" role="button">Search</a>
+							 <a id="filterClearButton" class="btn btn-default">Clear filters</a> -->
+							 
+							 <div class="row">
+							 <div class="control-group col-md-2  col-xs-3 col-sm-3 col-lg-3" style="margin-top: 13px;">
+									 
+									<!--  <a id="selectbxbutton" class="btn btn-primary" role="button" >Search for Study</a> -->
+									<a id="filterButton" class="btn btn-primary" role="button" onClick="return setValues()">Search</a> <a id="filterClearButton" class="btn btn-default">Clear
+								filters</a>
+								</div>
+							 </div>
+						</div>
+
+					<!-- /.box -->
+					</div>
+				</div>
+				
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="box">
+					<div class="box-body table-responsive" ddl:bundle-includes="filtering,moment,bootstrap-datepicker">
+						<table id="scrnTableId" dt:table="true" class="table table-bordered table-striped" dt:url="@{/admin/studysearch/pagination}" dt:serverside="true" dt:dom="l0rtip"
+							dt:processing="false" dt:filterplaceholder="none" dt:filterSelector="#filterButton"
+							dt:filterClearSelector="#filterClearButton">
+							<thead>
+								<tr>
+									<th dt:property="volunteerPkey" dt:renderFunction="custom-rendering#studyView" dt:name="volunteerPkey" dt:filterable="true" dt:selector="#volunteerPkeyFilter"   dt:filterCssClass="form-control">ID</th>
+									<th dt:property="volunteerName" dt:filterCssClass="form-control" dt:name="volunteerName" dt:filterable="false" dt:selector="#nameFilter">Name</th> 
+									<th dt:property="studyNo"  dt:name="studyNo" dt:filterable="true" dt:selector="#studyNoFilter" dt:filterCssClass="form-control">Study No</th> 
+									<!-- <th dt:property="lastScreeningDate"   dt:name="lastScreeningDate" dt:filterable="false" dt:selector="#lastScreeningDateFilter" dt:renderFunction="custom-rendering#toDateTemp" dt:sortInitDirection="desc" dt:filterCssClass="form-control">Screening Date</th> -->
+									<th dt:property="studyCompletionDate"   dt:name="studyCompletionDate" dt:filterable="false" dt:selector="#studyCompletionDateFilter" dt:renderFunction="custom-rendering#toDateTemp" dt:sortInitDirection="desc" dt:filterCssClass="form-control">Study Completion</th>
+									<th dt:property="eligibleForNextStudy"     dt:name="eligibleForNextStudy" dt:filterable="false" dt:selector="#eligibleForNextStudyFilter" >Eligible For NextStudy</th>
+									<th dt:property="eligibleFor181Days"     dt:name="eligibleFor181Days" dt:filterable="false" dt:selector="#eligibleFor181DaysFilter" >Eligible For 181Days</th>
+									<th dt:property="next91Days"  dt:renderFunction="custom-rendering#toDateTemp"  dt:name="next91Days" dt:filterable="false" dt:selector="#next91DaysFilter" >Next91 Days</th>
+									<th dt:property="next181Days"   dt:renderFunction="custom-rendering#toDateTemp" dt:name="next181Days" dt:filterable="false" dt:selector="#next181DaysFilter" >Next181 Days</th>
+									<th dt:property="adverseEventDetails"     dt:name="adverseEventDetails" dt:filterable="false" dt:selector="#adverseEventDetailsFilter" >Adverse Event</th>
+									
+									 
+<!-- 									<th dt:property="pkey"  dt:name="pkey" dt:filterable="false" dt:selector="#pkeyFilter">Id</th> 
+									<th dt:property="volunteerStatus" dt:renderFunction="custom-rendering#volunteerStatusView" dt:name="volunteerStatus" dt:filterable="false" dt:selector="#areaFilter">Volunteer Status</th>
+									<th dt:property="dob" dt:renderFunction="toDate" dt:name="dob" dt:filertable="false">DOB</th>
+									<th dt:property="mobileNo" dt:name="mobileNo" dt:filertable="false">Mobile</th>
+									<th style="width:10%" dt:property="actions" dt:name="actions" dt:renderFunction="custom-rendering#volunteerStudyAction" >Actions</th> --> 
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+		</div>
+</form>
+	</section>
+</body>
+</html>

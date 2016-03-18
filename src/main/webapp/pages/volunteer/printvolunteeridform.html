@@ -1,0 +1,788 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout">
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.2.js" ></script>
+	<script type="text/javascript">
+	/*<![CDATA[*/
+	
+	
+	$(document).ready(function(){
+  var bmiVal = $('#bmi').val();
+        
+        if( bmiVal <= 30.00 && bmiVal >= 18.50){
+			 document.getElementById("BMIYES").checked = true;
+   
+		} else {
+     document.getElementById("BMINO").checked = true;   
+			
+		}
+        
+ var weightVal = $('#WEIGHT').val();
+        
+        if( weightVal >= 50.0 ){
+			 document.getElementById("WEIGHTYES").checked = true;
+   
+		} else {
+     document.getElementById("WEIGHTNO").checked = true;   
+			
+		}
+        
+        
+ 
+			});	
+	function myFunction() {
+		var NewWei = parseFloat($('#WEIGHT').val());
+		var OldWei = parseFloat($('.scweight').text());
+		
+		var NewHei = parseFloat($('#HEIGHT').val())
+		var oldHei = parseFloat($('.scheight').text());
+		 var differ = "";
+		
+		
+		 if(NewWei == OldWei && NewHei == oldHei){
+			alert("There is no change in the height or weight. Plesae change height/weight and submit again. ");
+		} 
+		if(NewHei != oldHei && NewWei == OldWei){
+			ChkReturn = confirm("Current Height has been changed from :"+oldHei+"m to "+ NewHei +"m. Press Ok to continue, Cancel to abort");
+			if(ChkReturn == true){
+				updateAttributes();
+			}
+		}
+		else if(OldWei > NewWei )
+		{
+			differ = OldWei - NewWei;
+			if(NewHei == oldHei && differ > 5){
+				ChkReturn = confirm("Current Weight has been changed from "+OldWei+"kg to "+ NewWei +"kg . Press Ok to continue, Cancel to abort");
+				if(ChkReturn == true){
+					updateAttributes();
+				}
+			}
+			else if(NewHei == oldHei && differ <= 5){
+				updateAttributes();
+			}
+			else if(NewHei != oldHei && differ > 5) {
+				ChkReturn = confirm("Current Weight has been changed from "+OldWei+"kg to "+ NewWei +"kg Current Height has been changed from"+oldHei +"m to "+NewHei+"m. Press Ok to continue, Cancel to abort");
+				if(ChkReturn == true){
+					updateAttributes();
+				}
+			}
+			else if(NewHei != oldHei && differ <= 5){
+				ChkReturn = confirm("Current Height has been changed from"+oldHei +"m to "+NewHei+"m. Press Ok to continue, Cancel to abort");
+				if(ChkReturn == true){
+					updateAttributes();
+				}
+			}
+		}
+		else if(OldWei < NewWei)
+		{
+			differ = NewWei - OldWei;
+			if(NewHei == oldHei && differ > 5){
+				ChkReturn = confirm("Current Weight has been changed from "+OldWei+"kg to "+ NewWei +"kg . Press Ok to continue, Cancel to abort");
+				if(ChkReturn == true){
+					updateAttributes();
+				}
+			}
+			else if(NewHei == oldHei && differ <= 5){
+				updateAttributes();
+			}
+			else if(NewHei != oldHei && differ > 5)
+			{
+				ChkReturn = confirm("Current Weight has been changed from "+OldWei+"kg to "+ NewWei +"kg Current Height has been changed from"+oldHei +"m to "+NewHei+"m. Press Ok to continue, Cancel to abort");
+				if(ChkReturn == true){
+					updateAttributes();
+				}
+			}
+			else if(NewHei != oldHei && differ < 5){
+				ChkReturn = confirm("Current Height has been changed from"+oldHei +"m to "+NewHei+"m. Press Ok to continue, Cancel to abort");
+				if(ChkReturn == true){
+					updateAttributes();
+				}
+			}
+		}
+	}
+	/* $(document).ready(function()
+	{
+		$('updatebutton').click(function(){
+		
+		var newweight=$('#WEIGHT').val();
+		var oldweight=$('.scweight').val();
+		var c=newweight+oldweight;
+		alert(c);});
+	}); */
+	
+	/*]]>*/
+	</script>
+	
+
+	<style>
+	.scwrap {
+  position: relative;
+  clear: none;
+  overflow: hidden;
+  font-size: 11px;
+  font-weight: normal;
+  }
+	.scdesc {
+  display: block;
+  position: absolute;
+  width: 15%;
+  top: 207px;
+  left: 589px;
+  z-index: 2;
+  }
+  .scdate {
+  display: block;
+  position: absolute;
+  width: 15%;
+  top: 223px;
+  left: 589px;
+  z-index: 2;
+}
+.scbday {
+  display: block;
+  position: absolute;
+  width: 15%;
+  top: 245px;
+  left: 158px;
+  z-index: 2;
+}
+.scage {
+  display: block;
+  position: absolute;
+  width: 15%;
+  top: 251px;
+  left: 369px;
+  z-index: 2;
+}
+.scweight {
+  display: block;
+  position: absolute;
+  width: 15%;
+  top: 277px;
+  left: 372px;
+  z-index: 2;
+}
+.scheight {
+  display: block;
+  position: absolute;
+  width: 15%;
+  top: 276px;
+  left: 616px;
+  z-index: 2;
+}
+.scgender {
+  display: block;
+  position: absolute;
+  width: 15%;
+  top: 282px;
+  left: 80px;
+  z-index: 2;
+}
+.scfood {
+  display: block;
+  position: absolute;
+  width: 15%;
+  top: 324px;
+  left: 165px;
+  z-index: 2;
+}
+.scbmi {
+  display: block;
+  position: absolute;
+  width: 15%;
+    top: 319px;
+  left: 602px;
+  z-index: 2;
+}
+.scsmooker {
+  display: block;
+  position: absolute;
+  width: 15%;
+  top: 395px;
+  left: 608px;
+  z-index: 2;
+}
+.scalcohol {
+  display: block;
+  position: absolute;
+  width: 15%;
+  top: 418px;
+  left: 608px;
+  z-index: 2;
+}
+.sclongTermIllness {
+  display: block;
+  position: absolute;
+  width: 15%;
+  top: 440px;
+  left: 608px;
+  z-index: 2;
+}
+	.married {
+  display: block;
+  position: absolute;
+  width: 15%;
+  top: 246px;
+  left: 617px;
+  z-index: 2;
+}
+.screcentstudy {
+  display: block;
+  position: absolute;
+  width: 15%;
+  top: 364px;
+  left: 608px;
+  z-index: 2;
+}
+	@media print
+	{
+	.scwrap img
+	{
+	margin-top:-22px;
+	}
+	.width{
+	height:910px;
+	width:100%;
+	}
+	.secimg{
+	width:100%;
+	}
+	.wrap .tick
+{
+display: block;
+  position: absolute;
+  width: 15%;
+  top: 18.8%;
+  left: 59%;
+  z-index: 2;
+}
+.scwrap {
+  
+  font-weight: normal;
+  }
+	.desc {
+  display: block;
+  position: absolute;
+  width: 15%;
+  top: 22%;
+  left: 41% ;
+  z-index: 2;
+}
+	.wrap .reg {
+  display: block;
+  position: absolute;
+  width: 15%;
+  top: 28%;
+  left: 38%;
+  z-index: 2;
+}
+	.married {
+  display:block;
+	  position:absolute;
+      width:15%; 
+	  top:164px;
+	 
+	  left:495px;
+	  z-index:2;
+}
+	.hiddenprint
+	{
+	display:none;
+	}
+	p
+	{
+	font-size:12px;
+	}
+	.scdesc {
+	  display:block;
+	  position:absolute;
+      width:15%; 
+	  top:130px;
+	  left:440px;
+	  z-index:2;
+	}
+	 .scdate {
+	  display:block;
+	  position:absolute;
+      width:15%; 
+      
+	  top:145px;
+	  left:440px;
+	  z-index:2;
+	}
+	.scbday
+	{
+	display:block;
+	  position:absolute;
+      width:15%; 
+	  top:164px;
+	 
+	  left:100px;
+	  z-index:2;
+	}
+	.scgender
+	{
+	display:block;
+	  position:absolute;
+      width:15%; 
+	  top:187px;
+	 
+	  left:55px;
+	  z-index:2;
+	
+	}
+	 .scheight {
+	  display:block;
+	  position:absolute;
+      width:15%; 
+	  top:183px;
+	  
+	  left:490px;
+	  z-index:2;
+	}
+	.scweight {
+	  display:block;
+	  position:absolute;
+      width:15%; 
+	  top:183px;
+	  left:285px;
+	  z-index:2;
+	}
+	.scfood
+	{
+	display:block;
+	  position:absolute;
+      width:15%; 
+	   top:216px;
+	 
+	  left:114px;
+	  z-index:2;
+	}
+	.screcentstudy
+	{
+	 display:block;
+	  position:absolute;
+      width:15%; 
+	 top:249px;
+	 
+	  left:440px;
+	  z-index:2;
+	}
+	.scsmooker
+	{
+	 display:block;
+	  position:absolute;
+      width:15%; 
+	  top:275px;
+	
+	  left:440px;
+	  z-index:2;
+	}
+
+	.scalcohol
+	{
+	 display:block;
+	  position:absolute;
+      width:15%; 
+	  top:294px;
+	 
+	  left:440px;
+	  z-index:2;
+	}
+	.sclongTermIllness
+	{
+	display:block;
+	  position:absolute;
+      width:15%; 
+	  top:310px;
+	 
+	  left:440px;
+	  z-index:2;
+	  }
+	  .scage
+	  {
+	    display:block;
+	  position:absolute;
+      width:15%; 
+	  top:165px;
+	  
+	  left:285px;
+	  z-index:2;
+	  }
+	.scbmi {
+	  display:block;
+	  position:absolute;
+      width:15%; 
+	  top:214px;
+	  
+	  left:480px;
+	  z-index:2;
+	}
+	}
+	</style>
+	
+</head>
+<body th:replace="layout :: body(section_heading='VOLUNTEER SCREENING RECORD ')">
+	<section layout:fragment="content" class="content">
+		<!-- title row -->
+
+		<div class="row">
+			<div class="col-md-12">
+				<!-- general form elements -->
+				<div class="box box-primary">
+
+					<!-- /.box-header -->
+					<!-- form start -->
+					<form action="#" th:action="@{/admin/volunteer/updateVolunteerAttribute}" name="updateVolunteer" th:object="${volunteerTO}" method="post">
+						<input type="hidden" name="pkey" id="pkey" th:field="*{pkey}" th:value="${pkey}" />
+						<!-- <input type="hidden" th:field="*{volunteerStatus}" th:value="${(com.azidus.vms.domain.enums.VolunteerStatus).Registered}" /> -->
+
+						<input type="hidden" name="volunteerStatus"
+							th:value="${T(com.azidus.vms.domain.enums.VolunteerStatus).Registered}" />
+						<div class="box-body">
+						 <!-- <div class="row"><h3><center><label>VOLUNTEER SCREENING RECORD</label></center></h3></div>
+						<div class="row"><center><label>Form No.CL-010</label></center></div>
+							<div class="row">
+                               
+								<div class="control-group col-md-12 ">
+									<div class="pull-right">
+										<img src="/vms/resources/images/aziduslogoprintform.jpg"  style="width: 160px;" />
+									</div>
+									<div class="pull-left">
+										<p>SOP No:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										&nbsp;&nbsp;Version Number:</p>
+										  
+									</div>
+									 
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="control-group col-md-12 ">
+									<table class="table table-bordered">
+										<tbody>
+											<tr>
+												<td class=" col-md-10 col-xs-10 col-lg-10 col-sm-10">
+													<div
+														class="control-group col-md-4 col-xs-4 col-lg-4 col-sm-3">
+														<label>Volunteer Registration No</label>
+														  :  AZ<span th:text="*{pkey}"></span>
+													</div>
+													 
+												</td>
+												 
+											</tr>
+											<tr>
+												<td class=" col-md-10 col-xs-10 col-lg-10 col-sm-10">
+													<div
+														class="control-group col-md-4 col-xs-4 col-lg-4 col-sm-3">
+														<label>Volunteer </label>
+														<div th:text="*{name}" autocomplete="off" />
+														<p class="help-block"></p>
+													</div>
+													 
+												</td>
+												 
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="row">
+								<div class="control-group col-md-12 ">
+									<table class="table table-bordered">
+										<tbody>
+											<tr>
+												<td class=" col-md-8 col-xs-8 col-lg-8 col-sm-8">
+													<div class="row">
+
+														<div class="col-md-4 col-xs-4 ">
+															<input type="hidden" th:field="*{dob}"
+																onfocusout="return calucateAge()" required="required"
+																class="form-control" /> <label>Date of Birth</label>
+															<div
+																th:text="${#dates.format(volunteerTO.dob, 'dd-MMM-yyyy').toUpperCase()}" />
+															<script th:inline="javascript">
+										document.addEventListener(
+												'DOMContentLoaded', function() {
+													calucateAge();
+												}, false);
+									</script>
+														</div>
+														<div class="col-md-4 col-xs-4 ">
+															<label>Age</label><input type="text" class="form-control"
+																id="age" disabled="disabled" />
+														</div>
+														<div class="col-md-4 col-xs-4 ">
+															<label>Gender</label> <select th:field="*{gender}"
+																class="form-control" required="required">
+																<option
+																	th:each="gender : ${T(com.azidus.vms.domain.enums.Gender).values()}"
+																	th:value="${gender.name()}" th:text="${gender.value}"
+																	th:selected="${gender == T(com.azidus.vms.domain.enums.Gender).Male}"></option>
+															</select>
+														</div>
+													</div>
+													
+												</td>
+												 
+											</tr>
+											 
+											<tr>
+												<td>
+
+													<div class="row">
+														<div
+															class="control-group  col-md-3  col-xs-4 col-lg-3 col-sm-3">
+
+															<label>Dietary Habits</label> <select
+																th:field="*{foodHabit}" class="form-control"
+																required="required">
+																<option
+																	th:each="foodHabit : ${T(com.azidus.vms.domain.enums.FoodHabit).values()}"
+																	th:value="${foodHabit}" th:text="${foodHabit.value}"
+																	th:selected="${foodHabit == T(com.azidus.vms.domain.enums.FoodHabit).Veg}"></option>
+															</select>
+														</div>
+														<div class=" col-md-3  col-xs-2 col-lg-3 col-sm-3 ">
+															<label>Height </label> <input type="text"
+																th:field="*{height}" class="form-control"
+																required="required" />
+														</div>
+														<div class="col-md-3  col-xs-2 col-lg-3 col-sm-3 ">
+															<label>Weight </label> <input type="text"
+																th:field="*{weight}" id="WEIGHT" class="form-control"
+																required="required" onfocusout="return calcBmiKgForEdit()" />
+														</div>
+
+														<div class="col-md-3  col-xs-4 col-lg-3 col-sm-3 ">
+															<label>BMI </label> <input type="text" th:field="*{bmi}"
+																id="bmi" class="form-control" th:readonly="true" />
+														</div>
+													</div>
+
+												</td>
+											</tr>
+											<tr><td>
+											<div class="col-md-4 col-xs-4 ">
+											<label>Smoking Habit </label> <select th:field="*{smokingHabit}" class="form-control" required="required">
+										<option th:each="smokingHabit : ${T(com.azidus.vms.domain.enums.SmokingHabit).values()}"
+											th:value="${smokingHabit.name()}" th:text="${smokingHabit.value}"
+											th:selected="${smokingHabit == T(com.azidus.vms.domain.enums.SmokingHabit).Smoker}"></option>
+									</select>
+									</div>
+									
+									<div class="col-md-4 col-xs-4 ">
+									<label>Alcohol Habit </label> <select th:field="*{alcoholHabit}" class="form-control" required="required">
+										<option th:each="alcoholHabit : ${T(com.azidus.vms.domain.enums.AlcoholHabit).values()}"
+											th:value="${alcoholHabit.name()}" th:text="${alcoholHabit.value}"
+											th:selected="${alcoholHabit == T(com.azidus.vms.domain.enums.AlcoholHabit).Non_Drinker}"></option>
+									</select>
+								</div>
+											</td></tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="row">
+								<div class="control-group col-md-12 ">
+									<table class="table table-bordered">
+										 <tr>
+											<td style="width: 1px;"><label>Whether participated in a study or donated blood within the last 90/180 days
+											
+											</label><div th:text="${participatedInRecentStudy}" />
+											</td>
+												 
+										</tr> 
+
+									</table>
+								</div>
+							</div> 
+							 
+							<div class="row">
+								<div class="control-group col-md-12 ">
+									<table class="table table-bordered">
+										<tr>
+											<td style="width: 1px;"><label>Illnesses/Medication
+											</label>
+												<div th:text="*{longTermIllness}" /></td>
+											<td><label>If YES ,details </label> <input type="text"
+												th:field="*{remarks}" class="form-control" /></td>
+										</tr>
+
+									</table>
+								</div>
+							</div>-->  
+							
+							
+								<!-- <div style="position: relative;">
+								<div style="position:absolute;"><p class="reg">
+									AZ-<span th:text="${volunteerTO.pkey}"></span>
+								</p></div>
+								
+								</div> -->
+                            <div class="col-md-12 hiddenprint"><div class="col-md-2"><label>Weight:<span th:text="*{weight}"></span>kg</label></div>
+								<div class="col-md-2"><label>Height:<span th:text="*{height}"></span>m</label></div>
+								<div class="col-md-2"><label>BMI:<span th:text="*{bmi}"></span></label></div>
+								</div>
+								<div class="row hiddenprint" >
+								<div class="form-group col-md-3  col-xs-2 col-lg-3 col-sm-3 ">
+															<label>Weight </label> <input type="text"
+																th:field="*{weight}" name="weight" id="WEIGHT" class="form-control"
+																required="required" onfocusout="return calcBmiKgForEdit()" />
+																<input type="hidden" th:field="*{bmi}"
+                                                                       id="bmi" class="form-control" th:readonly="true" /></div>
+                                    <div class="form-group col-md-3  col-xs-2 col-lg-3 col-sm-3 ">
+																<label>Height </label>
+																<input type="text" name="height" id="HEIGHT" th:field="*{height}" class="form-control"
+																required="required" onfocusout="return calcBmiKgForEdit()" />
+																<!-- <input type="text"
+																th:field="*{weight}" name="weight" class="form-control"
+																required="required" id="hiddenvalue" /> -->
+														</div>
+														</div>
+														
+							<div class="row">
+							<div class="control-group col-md-3  pull-left">
+							<a onClick="myFunction()" id="updatebutton" class="btn btn-primary pull-right update">Update Weight/Height/BMI </a>
+							</div>
+							</div>
+							
+						
+						
+								<div class="scwrap"  >
+								<img src="/vms/resources/images/screeningprint.jpg" class="width"  />
+								
+									<p class="scdesc">
+									AZ<span th:text="${volunteerTO.pkey}"></span>
+								</p>
+								<p class="scdate"><span  th:text="${#dates.format(today, 'dd-MMM-yyyy').toUpperCase()}"></span></p>
+								<p th:text="${#dates.format(volunteerTO.dob, 'dd-MMM-yyyy').toUpperCase()}" class="scbday"></p>
+								<p th:text="*{gender}" class="scgender"></p>
+								<p th:text="*{weight}" class="scweight"></p>
+								<p th:text="*{height}"  class="scheight"></p>
+								<p th:text="*{bmi}"  class="scbmi"></p>
+								<p th:text="*{(married == true)?'Yes' : 'No'}"  class="married" id="married"></p>
+								<p th:text="*{foodHabit}"  class="scfood"></p>	
+								<p th:text="${participatedInRecentStudy}"  class="screcentstudy"></p>
+								<p th:text="*{smokingHabit}"  class="scsmooker"></p>
+								<p th:text="*{alcoholHabit}"  class="scalcohol"></p>
+								<p th:text="*{longTermIllness}" class="sclongTermIllness" />
+								<div th:text="*{age}"   id="age" class="scage" />
+							</div>
+							<div class="scwrap" style="margin-top: 7%;">
+								<img src="/vms/resources/images/scn.jpg" class="secimg" />
+							</div>
+							<div class="wrap" >
+								<img src="/vms/resources/images/P0001.jpg" style="height:900px;width:100%" />
+								<p class="tick">x</p>
+								<p class="desc" th:text="*{name}" style="left: 240px" />
+								<span class="desc" th:text="${#dates.format(today, 'dd-MMM-yyyy').toUpperCase()}" style="left: 542px"></span>
+								 
+								 
+								<p class="reg">
+									AZ<span th:text="${volunteerTO.pkey}"></span>
+								</p>
+
+							</div>
+							<div class="wrap" >
+
+								<img src="/vms/resources/images/P0002.jpg" style="width:100%;"  />
+
+							</div>
+							<div class="wrap">
+
+								<img src="/vms/resources/images/P0003.jpg" />
+
+							</div>
+							<div class="wrap" style="margin-top: 5%;">
+
+								<img src="/vms/resources/images/P0004.jpg" />
+
+							</div>
+							<div class="wrap" style="margin-top:3%;">
+
+								<img src="/vms/resources/images/P0005.jpg" />
+
+							</div>
+							<div class="wrap"  >
+
+								<img src="/vms/resources/images/P0006.jpg" />
+
+							</div>
+							<div class="row" style="margin-top: 13%;">
+							<div class="pull-right">
+										<img src="/vms/resources/images/aziduslogoprintform.jpg" style="width: 160px;" /> 
+									</div>
+														<div class="col-md-12   ">
+						<h2 class="text-center">Subject Details</h2>
+						</div>
+						</div>
+							<div class="row">
+						<div class="col-md-12 ">
+                            <div class="col-md-8 col-xs-8"><h4><label>Registration number:</label>AZ<span th:text="${volunteerTO.pkey}"></span></h4></div>
+                            <div class="col-md-4 col-xs-4"><h4><label>Study number:</label></h4></div>
+						</div>
+						</div>
+						
+						<table  class=" table table-bordered" >
+						<tbody>
+						<tr>
+                            <td><label>Name of the Subject</label></td>
+						<td><p th:text="*{name}"/></td>
+						</tr>
+						<tr>
+                            <td><label>Date of Birth</label> </td>
+						<td><p th:text="${#dates.format(volunteerTO.dob, 'dd-MMM-yyyy').toUpperCase()}" ></p></td>
+						</tr>
+						<tr>
+                            <td><label>Address of the Subject</label></td>
+						<td><p th:text="${volunteerTO.address1}  + ' ' + ${volunteerTO.address2}  + ' ' + ${volunteerTO.area} + ' ' + ${volunteerTO.city} "/></td>
+						</tr>
+						<tr>
+                            <td><label>Occupation of the Subject</label></td>
+						<td><p th:text="*{occupation}"/></td>
+						</tr>
+						<tr>
+                            <td><label>Qualification of the Subject</label></td>
+						<td><p th:text="*{education}"/></td>
+						</tr>
+						<tr>
+                            <td><label>Annual Income of the Subject</label></td>
+						<td><p th:text="*{income}" /></td>
+						</tr>
+						<tr>
+                            <td><label>Name of the Nominee</label></td>
+						<td><p th:text="*{nomineeName}"/></td>
+						</tr>
+						<tr>
+                            <td><label>Address of the Nominee</label></td>
+						<td><p th:text="*{nomineeAddress}"/></td>
+						</tr>
+						<tr>
+                            <td> <label>Phone number of the Nominee</label></td>
+						<td><p th:text="*{nomineeMobileNo}"/></td>
+						</tr>
+						<tr>
+                            <td><label>Relationship of the Nominee</label></td>
+						<td><p th:text="*{nomineeRelationship}"/></td>
+						</tr>
+						</tbody>
+						</table>
+						</div>
+						
+<div class="control-group  col-md-1 pull-right">
+						<a onClick="window.print()" id="printbutton"
+							class="btn btn-primary pull-right">Print</a>
+							</div>
+							
+					</form>
+				</div>
+			</div>
+		</div>
+
+	</section>
+
+
+</body>
+</html>

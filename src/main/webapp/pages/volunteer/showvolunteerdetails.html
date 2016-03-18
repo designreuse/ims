@@ -1,0 +1,204 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+
+<body
+	th:replace="layout :: body(section_heading='Volunteer Management')">
+	<section layout:fragment="content" class="content">
+		<div class="row">
+			<div class="col-md-12">
+				<!-- general form elements -->
+				<div class="box box-primary">
+					<div class="box-header">
+						<h3 class="box-title">Add New User</h3>
+					</div>
+					<!-- /.box-header -->
+					<!-- form start -->
+					<form action="#" th:action="@{/admin/volunteer/add}"
+						th:object="${volunteerTO}" method="post">
+						<div class="box-body">
+							<div class="row">
+								<div class="control-group col-md-4">
+									<label>Volunteer Name</label> <input type="text"
+										pattern="^[a-zA-Z][a-zA-Z0-9-_ \.]{5,20}$"
+										class=" form-control" required="required"
+										data-validation-pattern-message="Must be between 5 to 20 with Alphanumberic, -, ."
+										th:field="*{name}" autocomplete="off" />
+									<p class="help-block"></p>
+								</div>
+								<div class="control-group col-md-4">
+									<label>Father's Name</label> <input placeholder="Father's Name"
+										type="text" th:field="*{fatherName}" class="form-control" />
+								</div>
+								<div class="control-group col-md-4">
+									<label>Husband's Name</label> <input
+										placeholder="Husban's Name" type="text"
+										th:field="*{husbandName}" class="form-control" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="control-group col-md-6">
+									<label>Date of Birth</label><input type="date"
+										th:field="*{dob}" class="form-control" />
+								</div>
+								<div class="control-group col-md-6">
+									<label>Gender</label> <select th:field="*{gender}"
+										class="form-control" required="required">
+										<option
+											th:each="gender : ${T(com.azidus.vms.domain.enums.Gender).values()}"
+											th:value="${gender}" th:text="${gender.value}"
+											th:selected="${gender == T(com.azidus.vms.domain.enums.Gender).Male}"></option>
+									</select>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="control-group col-md-6">
+									<label>Address Line1</label> <input placeholder="Address Line1"
+										type="text" th:field="*{address1}" class="form-control" />
+								</div>
+								<div class="control-group col-md-6">
+									<label>Address Line2</label> <input placeholder="Address Line2"
+										type="text" th:field="*{address2}" class="form-control" />
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="control-group col-md-6">
+									<label>Area</label> <input placeholder="Area" type="text"
+										th:field="*{area}" class="form-control" />
+								</div>
+								<div class="control-group col-md-6">
+									<label>City</label> <input placeholder="City" type="text"
+										th:field="*{city}" class="form-control" />
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="control-group col-md-6">
+									<label>Pincode</label> <input placeholder="Pincode" type="text"
+										th:field="*{pincode}" class="form-control" />
+								</div>
+								<div class="control-group col-md-6">
+									<label>State</label> <input placeholder="State" type="text"
+										th:field="*{state}" class="form-control" />
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="control-group col-md-6">
+									<label>Occupation</label> <input placeholder="Occupation"
+										type="text" th:field="*{occupation}" class="form-control" />
+								</div>
+								<div class="control-group col-md-6">
+									<label>ID Proof</label> <input placeholder="Id Proof"
+										type="text" th:field="*{idProof}" class="form-control" />
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="control-group col-md-4 col-xs-4 ">
+									<label>Email </label> <input placeholder="email@example.com"
+										type="email" th:field="*{email}" class="form-control" />
+								</div>
+
+								<div class="control-group col-md-4">
+									<label>Mobile</label>
+									<div class="input-group">
+										<div class="input-group-addon">
+											<i class="fa fa-phone"></i>
+										</div>
+										<input type="text" th:field="*{mobileNo}" class="form-control"
+											data-inputmask="'mask': ['0-999-999-9999', '+099 99 99 9999[9]']"
+											data-mask="" />
+									</div>
+								</div>
+								<div class="col-md-4 col-xs-4 ">
+									<label>Land Line </label>
+									<div class="input-group">
+										<div class="input-group-addon">
+											<i class="fa fa-phone"></i>
+										</div>
+										<input type="text" th:field="*{landlineNo}"
+											class="form-control" />
+									</div>
+								</div>
+								<!-- <div class="form-group col-md-12">
+
+									<div class="col-md-4 col-xs-4 ">
+										<label> Language 1</label> <input placeholder="Language 1"
+											type="text" class="form-control" />
+									</div>
+									<div class="col-md-4 col-xs-4 ">
+										<label> Language 2</label> <input placeholder="Language 2"
+											type="text" class="form-control" />
+									</div>
+									<div class="col-md-4 col-xs-4 ">
+										<label>Other Language </label> <input
+											placeholder="Other Language " type="text"
+											class="form-control" />
+									</div>
+
+								</div> -->
+								<div class="col-md-4 col-xs-4 ">
+									<label>Height </label> <input type="text" th:field="*{height}"
+										class="form-control" required="required" />
+								</div>
+								<div class="col-md-4 col-xs-4 ">
+									<label>Weight </label> <input type="text" th:field="*{weight}"
+										class="form-control" required="required" />
+								</div>
+								<div class="col-md-4 col-xs-4 ">
+									<label>BMI </label> <input type="text" th:field="*{bmi}"
+										class="form-control" />
+								</div>
+								<div class="form-group col-md-12">
+									<div class="col-md-4 col-xs-4 ">
+										<label>Food Habit </label> <select th:field="*{foodHabit}"
+											class="form-control" required="required">
+											<option
+												th:each="foodHabit : ${T(com.azidus.vms.domain.enums.FoodHabit).values()}"
+												th:value="${foodHabit}" th:text="${foodHabit.value}"
+												th:selected="${foodHabit == T(com.azidus.vms.domain.enums.FoodHabit).Veg}"></option>
+										</select>
+									</div>
+									<!--<div class="col-md-4 col-xs-4 ">
+										<label>Smoking Habit </label> <select
+											th:field="*{smokingHabit}" class="form-control"
+											required="required">
+											<option
+												th:each="smokingHabit : ${T(com.azidus.vms.domain.enums.SmokingHabit).values()}"
+												th:value="${smokingHabit}" th:text="${smokingHabit.value}"
+												th:selected="${smokingHabit == T(com.azidus.vms.domain.enums.SmokingHabit).Smoker}"></option>
+										</select>
+									</div>
+									 <div class="col-md-4 col-xs-4 "><label>Alcohol Habit </label> <select th:field="*{alcoholHabit}"
+									class="form-control" required="required"><option
+									th:each="alcoholHabit : ${T(com.azidus.vms.domain.enums.AlcoholHabit).values()}"
+											th:value="${alcoholHabit}" th:text="${alcoholHabit.value}"
+											th:selected="${alcoholHabit == T(com.azidus.vms.domain.enums.AlcoholHabit).Non_Drinker}"></option>
+								</select>
+                                </div>  -->
+								</div>
+
+
+							</div>
+
+
+							<!-- /.box-body -->
+
+							<div class="box-footer">
+								<button type="submit" name="submit" class="btn btn-primary">Submit</button>
+							</div>
+						</div>
+					</form>
+
+					<!-- /.box -->
+				</div>
+			</div>
+		</div>
+
+
+	</section>
+</body>
+</html>

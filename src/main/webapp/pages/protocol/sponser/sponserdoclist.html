@@ -1,0 +1,83 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout" xmlns:dt="http://github.com/dandelion/datatables" xmlns:ddl="http://www.thymeleaf.org/dandelion">
+<head>
+<style>
+.table-responsive
+{
+overflow-x:inherit;
+}
+</style>
+</head>
+
+<body th:replace="layout :: body(section_heading='Sponsor Document List')" >
+<div layout:fragment="header-buttons">
+		<a  th:href="@{/admin/protocol/sponser/register}" class="btn btn-success pull-right" role="button"><i class="fa fa-plus"></i> Add New Sponsor</a>
+	</div>
+	<section layout:fragment="content" class="content">
+		 <div class="panel panel-default">
+                       
+                        <!-- /.panel-heading -->
+                          <div class="panel-body">
+                     <!--   <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover" >
+                                    <thead>
+                                        <tr>
+                                            <th>Sno</th>
+                                            <th>Name</th>
+                                            <th>Address</th>
+                                            <th>contact details of the sponsor company</th>
+                                          
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>US FDA</td>
+                                            <td>Address of US FDA</td>
+                                            <td>9999999999</td>
+                                            
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>Brazil</td>
+                                             <td>Address of Brazil</td>
+                                             <td>9999999999</td>
+                                            
+                                          
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>Chile</td>
+                                             <td>Address of Chile</td>
+                                             <td>9999999999</td>
+                                            
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div> -->
+                            <!-- /.table-responsive -->
+                            <div class="box-body table-responsive"  ddl:bundle-includes="filtering,moment,bootstrap-datepicker">
+						<table id="page" class="table table-bordered table-striped" dt:info="true" dt:table="true" dt:dom="l0rtip"
+							dt:url="@{/admin/protocol/pagination}" dt:serverside="true" dt:processing="false" dt:filterable="true" dt:filterClearSelector="#filterClearButton"   dt:filterSelector="#filterButton"
+>
+							<thead>
+								<tr>
+									<!-- <th dt:property="pkey" dt:name="pkey"  >Pkey</th> -->
+									<th dt:property="name" dt:name="name">Name</th>
+									<th dt:property="address" dt:name="address">Address</th>
+									<th dt:property="contactDetails" dt:name="contactDetails">Company Detail</th>
+									<th style="width: 10%" dt:property="name" dt:name="actions" dt:renderFunction="custom-rendering#sponserSearchAction">Actions</th>
+								</tr>
+							</thead>
+
+
+						</table>
+					</div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+	</section>
+</body>
+
+</html>

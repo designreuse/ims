@@ -1,0 +1,62 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout">
+<head><title>Order Management</title>
+</head>
+<body th:replace="layout :: body(section_heading='Purchase Order Management')">	
+	<section layout:fragment="content" class="content">
+		<div class="row">
+			<div class="col-md-12">
+				<!-- general form elements -->
+				<div class="box box-primary">
+					<div class="box-header">
+						<h3 class="box-title">
+							View Purchase Order ID :  <span th:text="*{pkey}"></span>
+						</h3>
+					</div>
+						<div class="box-body">
+							<div class="row">
+								<div class="control-group col-md-3">
+									<label>Name</label><input type="text" th:value="*{name}" class="form-control"  th:readonly="true" />
+									<p class="help-block"></p>
+								</div>		
+								<div class="control-group col-md-3">
+									<label>Description</label><input type="text" th:value="*{description}" class="form-control"  th:readonly="true" />
+									<p class="help-block"></p>
+								</div>									
+								<div class="control-group col-md-3">
+									<label>Vendor Name</label><input type="text" th:value="*{vendorName}" class="form-control"  th:readonly="true" />
+									<p class="help-block"></p>
+								</div>
+							<!-- 	<div class="control-group col-md-3">
+									<label>Vendor Site</label><input type="text" th:value="*{vendorSite}" class="form-control"  th:readonly="true" />
+									<p class="help-block"></p>
+								</div> -->																																																	
+							</div>	
+							<div class="row">
+								<div class="control-group col-md-3">
+									<label>Status</label><input type="text" th:value="*{status}" class="form-control"  th:readonly="true" />
+									<p class="help-block"></p>
+								</div>								
+								<div class="control-group col-md-3">
+									<label>Payment Method</label><input type="text" th:value="*{paymentMethod}" class="form-control"  th:readonly="true" />
+									<p class="help-block"></p>
+								</div>								
+								<!-- <div class="control-group col-md-3">
+									<label>Shipped Date</label><input type="text" th:value="*{shippedDate}" class="form-control"  th:readonly="true" />
+									<p class="help-block"></p>
+								</div> -->								
+								<div class="control-group col-md-3">
+									<label>Total</label><input type="text" th:value="*{total}" class="form-control"  th:readonly="true" />
+									<p class="help-block"></p>
+								</div>																																					
+								
+							</div>	
+						</div>
+								<div class="box-footer">
+									<a class="btn btn-primary" role="button"
+										th:href="@{/admin/purchaseorder/search}">Back</a></div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

@@ -1,0 +1,224 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+
+<body th:replace="layout :: body(section_heading='Study')">
+	<section layout:fragment="content" class="content">
+		<div class="row">
+			<div class="col-md-12">
+				<!-- general form elements -->
+				<div class="box box-primary">
+					<div class="box-header">
+						<h3 class="box-title">
+							Registration ID AZ<span th:text="*{pkey}"></span>
+						</h3>
+					</div>
+
+					<!-- form start -->
+					<form action="#" th:action="@{/admin/study/adverseEventUpdate}"
+						method="post">
+						<input type="hidden" name="pkey" th:value="${volunteerTO.pkey}" />
+						<div class="box-body">
+							<div class="row">
+								<div class="col-md-4 col-xs-4">
+									<label>Volunteer Name</label> <strong><p
+											th:text="${volunteerTO.name}" style="color: blue;" /></strong>
+									<p class="help-block"></p>
+								</div>
+								<div class="col-md-4 col-xs-4">
+									<label>Date of Birth</label>
+									<p th:field="${volunteerTO.dob}" th:text="${#dates.format(volunteerTO.dob, 'dd-MMM-yyyy').toUpperCase()}" />
+								</div>
+
+								<div class="col-md-4 col-xs-4">
+									<label>Gender</label>
+									<p th:text="${volunteerTO.gender}" />
+								</div>
+								<div class="col-md-4 col-xs-4">
+									<label>Mobile</label>
+									<p th:text="${volunteerTO.mobileNo}" />
+								</div>
+								<div class="col-md-4 col-xs-4">
+									<label>Address</label>
+									<p th:text="${volunteerTO.address1}" />
+									<p th:text="${volunteerTO.address2}" />
+									<p th:text="${volunteerTO.area}" />
+									<p th:text="${volunteerTO.city}" />
+								</div>
+
+							</div>
+							<div class="row"></div>
+
+							<div class="row">
+								<p />
+							</div>
+
+
+							<div class="row">
+								<p />
+							</div>
+							<div class="row">
+								<p />
+							</div>
+							<div class="row">
+								<p />
+							</div>
+							<!-- start -->
+							<div th:object="${volunteerStudyMapTO}">
+								<input type="hidden" name="volunteerPkey" id="volunteerPkey"
+									th:value="${volunteerTO.pkey}" />
+								<div class="row">
+									<div class="col-xs-12"
+										th:if="${eligible} == 'No'" style="color: red;">
+										<strong>This subject is not eligible for study. Last study completion date
+											recorded is
+											<span
+												th:field="${volunteerTO.lastStudyCompletionDate}" th:text="${#dates.format(volunteerTO.lastStudyCompletionDate, 'dd-MMM-yyyy')}" style="color: blue;"/>
+											<p th:if="${next91Days} != null">Subject will be eligible
+												only on or after 91 days period - 
+											<span th:text="${#dates.format(next91Days, 'dd-MMM-yyyy')}"
+												style="color: blue;" /> 
+												
+												</p>
+									
+
+												</strong>
+								
+											</div>
+								</div>
+								<!-- <div class="row">
+
+
+
+									<div class="control-group col-md-4"
+										th:if="${eligible} == 'Yes'">
+										<label>Study No </label> <input placeholder="Study No"
+											type="text" th:field="*{studyNo}" class="form-control"
+											required="required" /></div>
+
+
+										<div class="control-group col-md-4">
+											<label>Study Date </label><input type="date"
+												required="required" th:field="*{studyDate}"
+												class="form-control" style="width: 160px;" />
+										</div>
+									
+
+								</div> -->
+								<!-- <div class="row">
+								<div class="control-group col-md-4">
+									<textarea name="rejectionReason"
+										th:field="*{rejectionReason}"></textarea>
+								</div>
+							</div> -->
+							</div>
+							<!-- end -->
+							<div class="row">
+								<p />
+							</div>
+							<div class="row">
+								<p />
+							</div>
+<!-- 							<div class="row">
+								<div class="control-group col-md-4">
+
+									<label>Volunteer status update</label> <select
+										th:field="*{volunteerStatus}" class="form-control"
+										required="required" style="width: 180px;">
+										<option value="Rejected">Rejected</option>
+										<option value="Eligible_for_Screening">Eligible for
+											Screening</option>
+									</select>
+
+								</div>
+
+								<div class="control-group col-md-4" th:if="${eligible} == 'Yes'">
+									<button type="submit" name="submit" class="btn btn-primary">Save</button>
+								</div>
+							</div> -->
+							
+							<div class="row" style="margin-top: 0px;margin-bottom: 50px;">
+								<div class="control-group col-md-4">
+
+									<label>StudyNo</label> <input type="text" 
+										th:field="${volunteerStudyMapTO.studyNo}" class="form-control"
+										style="width: 180px;" placeholder="StudyNo" required="required"/>
+								</div>
+								
+								<div class="control-group col-md-4">
+
+									<label>Adverse Event</label> <input type="text" 
+										th:field="${volunteerStudyMapTO.adverseEventDetails}" class="form-control"
+										style="width: 180px;" placeholder="Adverse Event" required="required"/>
+								</div>
+
+								<div class="control-group col-md-4">
+									<button type="submit" name="submit" class="btn btn-primary" style="margin-bottom: 0px;margin-top: 25px;">Update</button>
+								</div>
+							</div>
+
+							<!-- Data table start -->
+
+							<div class="row">
+								<div class="col-xs-12">
+									<div class="box">
+										<div class="box-body table-responsive"
+											ddl:bundle-includes="filtering,moment,bootstrap-datepicker">
+											<table id="myTableId" dt:table="true"
+												class="table table-bordered table-striped"
+												dt:url="@{/admin/study/search/studyList(pkey=${pkey})}"
+												dt:name="pkey" dt:serverside="true" dt:dom="l0rtip"
+												dt:processing="true" dt:filterplaceholder="none"
+												dt:filterSelector="#filterButton"
+												dt:filterClearSelector="#filterClearButton">
+												<thead>
+													<tr>
+														<th dt:property="studyNo" dt:filterCssClass="form-control"
+															dt:name="studyNo">Study No</th>
+
+														<th dt:property="studyDate"
+															dt:filterDateFormat="dd-mm-yyyy"
+															dt:filterCssClass="form-control" dt:name="studyDate"
+															dt:renderFunction="toDate" dt:sortInitDirection="desc">Study
+															Date</th>
+
+														<th dt:property="next91Days"
+															dt:filterDateFormat="dd-mm-yyyy"
+															dt:filterCssClass="form-control" dt:name="next91Days" dt:renderFunction="custom-rendering#dtConversionView" 
+															dt:sortInitDirection="desc">Next 91
+															Days</th>
+
+														<th dt:property="next181Days"
+															dt:filterDateFormat="dd-mm-yyyy"
+															dt:filterCssClass="form-control" dt:name="next181Days" dt:renderFunction="custom-rendering#dtConversionView" 
+															dt:sortInitDirection="desc">Next 181
+															Days</th>
+
+														<th dt:property="studyStatus"
+															dt:filterCssClass="form-control" dt:name="studyStatus">Study
+															Status</th>
+															
+														<th dt:property="adverseEventDetails"
+															dt:filterCssClass="form-control" dt:name="adverseEventDetails">Adverse Event</th>	
+
+														 
+													</tr>
+
+												</thead>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+						</div>
+					</form>
+
+
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

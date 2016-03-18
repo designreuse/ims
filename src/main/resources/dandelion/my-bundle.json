@@ -1,0 +1,29 @@
+{
+    "bundle" : "my-bundle",
+    "assets": [
+     	{
+            "name": "jquery",
+            "version": "2.1.1",
+            "type": "js",
+            "locations": {
+                "webapp": "/webjars/jquery/2.1.1/jquery.min.js"
+            }
+        },
+        {
+            "name": "datatables",
+            "version": "1.10.5",
+            "type": "js",
+            "locations": {
+                "webapp": "/webjars/datatables/1.10.5/js/jquery.dataTables.js"
+            }
+        },
+        {
+            "name": "datatables",
+            "version": "1.10.5",
+            "type": "css",
+            "locations": {
+                "webapp": "/webjars/datatables/1.10.5/css/jquery.dataTables.css"
+            }
+        }
+    ]
+}

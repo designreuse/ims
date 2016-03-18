@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+	<mapping map-null="false">
+		<class-a>com.ims.dto.UserTO</class-a>
+		<class-b>com.ims.domain.entity.User</class-b>
+		<field-exclude>
+			<a>password</a>
+			<b>password</b>
+		</field-exclude>
+		<field-exclude type="one-way">
+			<a>role</a>
+			<b>role</b>
+		</field-exclude>
+	</mapping>
+
+	<mapping map-null="false">
+		<class-a>com.ims.dto.PurchaseOrderTO</class-a>
+		<class-b>com.ims.domain.entity.PurchaseOrder</class-b>
+		<field-exclude>
+			<a>ids</a>
+			<b>productId</b>
+		</field-exclude>
+		<field-exclude>
+			<a>names</a>
+			<b>productId</b>
+		</field-exclude>
+	</mapping>
+	
+		<mapping map-null="false">
+		<class-a>com.ims.dto.ProductTO</class-a>
+		<class-b>com.ims.domain.entity.Product</class-b>
+		<field-exclude>
+			<a>names</a>
+			<b>purchaseOrder</b>
+		</field-exclude>
+	</mapping>
+	<mapping map-null="false">
+		<class-a>com.ims.dto.RoleTO</class-a>
+		<class-b>com.ims.domain.entity.Role</class-b>
+	</mapping>
+	
+	<mapping map-null="false">
+		<class-a>com.ims.dto.JobTO</class-a>
+		<class-b>com.ims.domain.entity.Job</class-b>
+	</mapping>
+	
+</mappings>
